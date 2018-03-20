@@ -39,29 +39,20 @@ $(document).ready(function() {
 		
     });
 	
-	/* $("#address").blur(function(){
-	    
-	geocode();
-	}); */
-	
 	
  function activatebutton(){
 	 $("#submit").prop('disabled', false);
 	 
  }
-	
-	
+		
 	$("#submit").click(function(event){	
 		
 		if ($('#address').val()==""){
 			
-			
-
 		}else{
 		submit();
 		}
 	});
-	
 	
 	  $('#address').keyup(function() {
           geocode();
@@ -87,9 +78,6 @@ var lat = response.data.results[0].geometry.location.lat;
 var lng = response.data.results[0].geometry.location.lng;
 $("#lat").val(lat);
 $("#lng").val(lng);
-
-
-
 
 })
 
