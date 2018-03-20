@@ -2,97 +2,24 @@
 
 	<div class="container-fluid">
 	<div class="row  mt-5"  >
-	<div class="col-4"></div>	
-	<div class="col-md-auto " id="orderbtn"><a id='orderlink'  href='#'>Orders</a></div>
-	<div class="col-md-auto ">Manage service</div>
-	<div class="col-md-auto "><a href="#" id="addLink" >Add service</a></div>
+	<div class="col-5 "></div>	
+	
+	<div class="col-md-auto ">New company</div>
 	</div></div>
 	
-<div class="container-fluid " id="comments">
-	<div class="border row">
-		<div id ="sidemenu" class="col-md-auto menu">
+<div class="container-fluid  " id="comments">
+	<div class=" row " >
+		<div id ="sidemenu" class="   col-md-auto menu">
 			<ul><a href="#" alt="Profile">U</a></ul>	
 			<ul><a href="#" alt="Settings" id="settingsbtn" >Y</a></ul>
 			<ul><a href="Servlet_Login?out=1">L</a></ul>
 </div>
 
-	<div class="col-md-3 border"></div>
-	<div class="col-md-2 mt-4 border service-form " id="add" >
- 		 
- 	 <label>Select Company: </label>
-	<div class="mt-4 "  > 
-	<label>Title: </label><br><br>
-	<label>Price: </label><br><br>
-	<label>Tags: </label><br><br>
-	<label>Description: </label><br>
-	
-	</div>
- 	
+	<div class="col-md-2 "> </div>
+	<div class="container-companies" id="container-companies">
+
+ 	</div>
 </div>
-
-<div class="col-md-auto mt-4 border "> <select name="company" id="company" ></select>
-
-<div class=" mt-4 service-form border"  id="add-block" > 
-	<form action="Servlet_newService" method="post" id="newProduct">
- 	<input type="hidden" id="business_id" name="business_id" value="">
-	<input id="title" name="title"  type="text" class=" " placeholder="Service Name"><br><br>
-	<input id="updatePrice" name="updatePrice"  type="text" class=" " placeholder="Price"><br><br>
-	<input id="tags" name="tags"  type="text" class="" placeholder="Tag"><br><br>
-	<textarea id="updateDescription" name="updateDescription"  rows="8" cols="51" class=" mb-1" placeholder="Write some description here"></textarea><br>
-	<div id="uploaded-picture">Here will appears a upload result</div>
- 	<input type="submit" class="mt-2 btn btn-primary btn-sm " id="done" value="Submit"> 
- 	<input type="button" class=" mt-2 btn btn-default btn-sm" id="upload" value="Upload Picture" disabled>
-
-	</form>
-	</div>
-	</div>
-	
-
-
-
-
-<div id="settings" class="service-form mt-4" >
-<div id="addcompanydiv"><a href="#" id="addcompanylink" class="mb-3 col-4 float-right">Add company </a></div>
-
-<div id="addcompany" > 	
- 	<form action="Servlet_NewCompany" method="post" id="newCompanyForm">
-
- 	<div class="d-inline mb-2 col-4 pr-2"><input id="newCompany" name="newCompany"  type="text" class="" placeholder="Business name"> 
- 
- 	 </div>
- 	
-
- 	<div class="d-inline mb-2"><input id="address" name="address"  type="text" class=" col-5" placeholder="Address"> 
-
- 	<input type="button" class="mt-2 mb-3   btn btn-primary btn-sm " id="submit" value="Submit" > 
- 	 	
- 	 	</div>
- 	   <input type="hidden"  id="lat" name="lat" value="">
- 	 <input type="hidden" id="lng" name="lng" value="">
- 	<input type="hidden" id="user" name="user" value="${session.getId()}"></form> 		
-
-<div class="  col-11 business" id="errorMsg"> </div>
-
-<div class="  col-11 business" id="business"> </div>
-
-
-</div>
-
-<br><br>
- 
-
-<div class=" col-11"> <label>Email:  </label>
-<input id="email" name="email"  type="text" class="float-right mb-2 col-7" value="${session.getEmail()}"> </div>
-<form action="Servlet_newProduct" method="post" id="newProduct"> <br>
-<div class=" col-11 mb-2 "> <label>Password: </label>
-<input id="password" name="password"  type="text" class="float-right col-7" placeholder="New password"> </div><br>
-<div class="col-11 mb-2 "><label>Re-type password: </label>
-<input id="password2" name="password2"  type="text" class=" float-right  col-7" placeholder="Repeat password"> <br></div>
- <div class=" col-11"> 	<input type="button" class="mt-2 float-right btn btn-primary btn-sm " id="done" value="Save"></div>
-</form>
-</div><br>
-
-</div></div>
 </div>
 
 <div class="footer container-fluid pt-3 pb-3 pl-5 pr-0 h-200"><p>Footer</p>
@@ -256,7 +183,7 @@ function listCompany(){
 	$.getJSON("Servlet_Companies?user="+'${session.getUsername()}', function(result){
         $.each(result, function(i, field){
         br="<br>";
-        	$("#business").append("<div id='place' value='"+field.business_id+ "'><div class='d-inline pr-2'>"+field.business_name+ "</div><div class='d-inline pl-2 col-3 float-right'><a href='#' id='delete'>Delete</a></div>"+br);            
+        	$("#container-companies").append("<div class='col-md-auto d-inline-block mt-4 border service-form'><div class='col company-name' ><b>"+field.business_name+ "</b></div> <a href='#' class='companyimg' value='"+field.business_id+"'> <img src='images/noimage.png'></a> </div> ");            
         });
     });
 	}

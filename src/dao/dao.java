@@ -49,7 +49,7 @@ public class dao {
 	public boolean newService(Services service) {
 		boolean paluuArvo = true;
 		System.out.println(service.getTitle());
-		sql = "INSERT INTO business_service(business_id, kuva_id, title, price,service_desc,tags) VALUES(?,?,?,?,?,?)";
+		sql = "INSERT INTO business_service(business_id, picture, title, price,service_desc,tags) VALUES(?,?,?,?,?,?)";
 		try {
 			con = yhdista();
 			stmtPrep = con.prepareStatement(sql);
