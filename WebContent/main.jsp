@@ -86,7 +86,6 @@ $("#lng").val(lng);
 console.log(error);
 })
 }
-
 	
 	$("#company").change(function(){			
 		var value=$(this).val();
@@ -94,8 +93,7 @@ console.log(error);
     });
 
     $("#newProduct").validate({ 
-        rules: {
-        	
+        rules: { 	
         	company:{      		
         		required: true
         	},
