@@ -1,27 +1,22 @@
 <%@include file="header.jsp" %>
+<%@ page import="model.Company"%>
 
-<div class="container-fluid">
-	<div class="row  mt-5"  >
-	<div class="col-5"></div>	
-	
-	<div class="col-md-auto "></div>
-	</div></div>
-	
-<div class="container-fluid  " id="comments">
-	<div class=" row " >
-		<div id ="sidemenu" class="col-md-auto menu">
-			<ul><a href="#" alt="Profile">U</a></ul>	
-			<ul><a href="#" alt="Settings" id="settingsbtn" >Y</a></ul>
-			<ul><a href="Servlet_Login?out=1">L</a></ul>
-</div>
+<%
+Company company = null;
+if( request.getAttribute("company")!=null){
+	company = (Company)request.getAttribute("company");	
+}
+%>
 
-<div class="col-md-2 "></div>
+
+<div class="col-sm-1 "></div>
 	<div class="col-md-2 mt-4  service-form " id="add" >
  		 
  	
 	<div class="mt-4 "  > 
 	<label>Name: </label><br><br>
 	<label>Address: </label><br><br>
+	<label>Open time: </label><br><br>
 	<label>Tags: </label><br><br>
 	<label>Description: </label><br>
 	
@@ -32,12 +27,13 @@
 <div class="col-md-auto mt-4  "> 
 
 <div class=" mt-4 service-form "  id="add-block" > 
-	<form action="Servlet_newService" method="post" id="newProduct">
- 	<input type="hidden" id="business_id" name="business_id" value="">
-	<input id="title" name="title"  type="text" class=" " placeholder="Service Name"><br><br>
-	<input id="updatePrice" name="updatePrice"  type="text" class=" " placeholder="Price"><br><br>
-	<input id="tags" name="tags"  type="text" class="" placeholder="Tag"><br><br>
-	<textarea id="updateDescription" name="updateDescription"  rows="8" cols="51" class=" mb-1" placeholder="Write some description here"></textarea><br>
+	<form action="Servlet_editCompany" method="post" id="newProduct">
+ 	<input type="hidden" id="business_id" name="business_id" value="<%out.print(company.getId());%>">
+	<input id="title" name="title"  type="text" class=" " value="<%out.print(company.getName());%>"><br><br>
+	<input id="address" name="address"  type="text" class="" value="<%out.print(company.getAddress());%>"><br><br>
+		<input id="opentime" name="opentime"  type="text" class="" value="<%out.print(company.getOpentime());%>">&nbsp;-
+	<input id="closetime" name="closetime"  type="text" class="" value="<%out.print(company.getClosetime());%>"><br><br>
+	<textarea id="description" name="description"  rows="8" cols="51" class=" mb-1"><%out.print(company.getDescription());%></textarea><br>
 	<div id="uploaded-picture">Here will appears a upload result</div>
  	<input type="submit" class="mt-2 btn btn-primary btn-sm " id="done" value="Submit"> 
  	<input type="button" class=" mt-2 btn btn-default btn-sm" id="upload" value="Upload Picture" disabled>

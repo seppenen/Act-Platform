@@ -1,19 +1,19 @@
 package model;
 
 public class User {
-String username, password, email;
+String username, password, id, email;
 public String getEmail() {
 	return email;
 }
 public void setEmail(String email) {
 	this.email = email;
 }
-int status, id;
+int status;
 
-public int getId() {
+public String getId() {
 	return id;
 }
-public void setId(int id) {
+public void setId(String id) {
 	this.id = id;
 }
 public String getUsername() {

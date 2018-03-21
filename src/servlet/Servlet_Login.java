@@ -48,7 +48,6 @@ public class Servlet_Login extends HttpServlet {
 				session.setAttribute("session", user);
 				response.sendRedirect("main.jsp");
 
-				System.out.println("login OK Session:" + session.getId());
 			} else {
 				request.setAttribute("errMsg", "invalid login cidentials");
 				request.getRequestDispatcher("/index.jsp").forward(request, response);

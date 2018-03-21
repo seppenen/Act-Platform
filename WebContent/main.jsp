@@ -1,21 +1,8 @@
 <%@include file="header.jsp" %>
 
-	<div class="container-fluid">
-	<div class="row  mt-5"  >
-	<div class="col-5"></div>	
-	
-	<div class="col-md-auto ">New company</div>
-	</div></div>
-	
-<div class="container-fluid  " id="comments">
-	<div class=" row " >
-		<div id ="sidemenu" class="col-md-auto menu">
-			<ul><a href="#" alt="Profile">U</a></ul>	
-			<ul><a href="#" alt="Settings" id="settingsbtn" >Y</a></ul>
-			<ul><a href="Servlet_Login?out=1">L</a></ul>
-</div>
 
-	<div class="col-md-2 "> </div>
+
+	
 	<div class="container-companies " id="container-companies">
 
  	</div>

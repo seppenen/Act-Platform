@@ -3,8 +3,24 @@ package model;
 public class Company {
 
 	
-	String id, name, owner, address, hashtag, description, lat, lng;
+	String id, name, owner, address, hashtag, description, lat, lng, opentime, closetime;
 	
+
+	public String getOpentime() {
+		return opentime;
+	}
+
+	public void setOpentime(String opentime) {
+		this.opentime = opentime;
+	}
+
+	public String getClosetime() {
+		return closetime;
+	}
+
+	public void setClosetime(String closetime) {
+		this.closetime = closetime;
+	}
 
 	public String getId() {
 		return id;

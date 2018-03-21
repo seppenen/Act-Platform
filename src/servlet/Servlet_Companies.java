@@ -30,16 +30,19 @@ public class Servlet_Companies extends HttpServlet {
 		dao dao = new dao();
 		
 		User user= dao.loginData(request.getParameter("user"));
+		HttpSession session = request.getSession();
+		User userdata = (User)session.getAttribute("session");
+		System.out.println(userdata.getUsername());
+		
 		try {		
 			String[] sarakkeet={"business_id","business_name"};
-			String strJSON=dao.haeTiedotJSON(sarakkeet,"business","user_id",String.valueOf(user.getId()),0);
-			
-			if(user.getStatus()==1) 	strJSON=dao.haeTiedotJSON(sarakkeet,"business","","",0);
-			
-			PrintWriter out = response.getWriter(  );
+			String strJSON=dao.haeTiedotJSON(sarakkeet,"business","user_id",String.valueOf(user.getId()),0);	
+			if(user.getStatus()==1) 	
+			strJSON=dao.haeTiedotJSON(sarakkeet,"business","","",0);		
+			PrintWriter out = response.getWriter();
 		    response.setContentType("text/html"); 
 		    out.println(strJSON);
-		    System.out.println(strJSON);
+		    
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	

@@ -27,7 +27,7 @@ public class dao {
 
 			Class.forName("org.sqlite.JDBC");
 			con = DriverManager.getConnection(url);
-			System.out.println("DB OK!");
+			
 			return con;
 
 		} catch (SQLException e) {
@@ -93,7 +93,9 @@ public class dao {
 	public boolean dataCheck(String sarake, String taulu, String hakusarake, String hakuarvo1, String ehto,
 			String hakuarvo2) throws Exception {
 		boolean paluu = true;
+		
 		sql = "SELECT " + sarake + " FROM " + taulu + " WHERE " + hakusarake + "=?";
+		
 		if (hakuarvo2.length() > 0) {
 			sql += " and " +ehto+ "=?";
 		}
@@ -105,6 +107,7 @@ public class dao {
 				if (hakuarvo2.length() > 0) {
 					stmtPrep.setString(2, hakuarvo2);
 				}
+				System.out.println(sql);
 				rs = stmtPrep.executeQuery();
 				if (rs != null) { 
 					if (!rs.next())
@@ -132,7 +135,7 @@ public class dao {
 			rs = stmtPrep.executeQuery();
 
 			while (rs.next()) {
-				user.setId(rs.getInt("user_id"));
+				user.setId(rs.getString("user_id"));
 				user.setUsername(rs.getString("username"));
 				user.setEmail(rs.getString("email"));
 				user.setStatus(rs.getInt("status"));
@@ -161,7 +164,7 @@ public class dao {
 		if (sort > 0) {
 			sql += " ORDER BY " + sort;
 		}
-		System.out.println(sql);
+		
 		con = yhdista();
 		if (con != null) { // jos yhteys onnistui
 			stmtPrep = con.prepareStatement(sql);

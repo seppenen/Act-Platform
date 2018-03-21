@@ -123,6 +123,12 @@ width:70%;
 
 }
 
+.company-name, .error
+{
+text-align: center;
+
+}
+
 .service-form
 {
 
@@ -131,4 +137,21 @@ font-size:12px;
 }
 </style>
 <div class="logo container-fluid pt-3 pb-3 pl-5 pr-0 h-500"><h2>Actify</h2>
+</div>
+
+	<div class="container-fluid">
+	<div class="row  mt-5"  >
+	<div class="col-5"></div>	
+	
+	<div class="col-md-auto ">New company</div>
+	
+	</div>
+	</div>
+	
+<div class="container-fluid  " id="comments">
+	<div class=" row " >
+		<div id ="sidemenu" class="col-md-2 menu">
+			<ul><a href="#" alt="Profile">U</a></ul>	
+			<ul><a href="#" alt="Settings" id="settingsbtn" >Y</a></ul>
+			<ul><a href="Servlet_Login?out=1">L</a></ul>
 </div>
