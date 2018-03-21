@@ -35,15 +35,17 @@ public class Servlet_editCompany extends HttpServlet {
 		try {
 			
 			if(dao.dataCheck("business_id", "business", "business_id", id, "user_id", user.getId()) || user.getStatus()==1) {
-			
+				
 				Company company = dao_business.haeCompany(id);
 				request.setAttribute("company", company);		
 				String jsp = "/editCompany.jsp"; 
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(jsp);
-				dispatcher.forward(request, response);
+				dispatcher.forward(request, response);	
+			}else{
 				request.setAttribute("errMsg", "NO ACCESS");
 				request.getRequestDispatcher("/main.jsp").forward(request, response);
 			}
+			
 			
 		} catch (Exception e) {			
 			e.printStackTrace();
