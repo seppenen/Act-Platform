@@ -46,7 +46,7 @@ public class Servlet_Login extends HttpServlet {
 			if (dao.dataCheck("username", "users", "username", username, "password", password)) {
 				User user = dao.loginData(username);
 				session.setAttribute("session", user);
-				response.sendRedirect("dashboard.jsp");
+				response.sendRedirect("main.jsp");
 
 				System.out.println("login OK Session:" + session.getId());
 			} else {

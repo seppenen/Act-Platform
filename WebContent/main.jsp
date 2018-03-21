@@ -16,7 +16,7 @@
 </div>
 
 	<div class="col-md-2 "> </div>
-	<div class="container-companies" id="container-companies">
+	<div class="container-companies " id="container-companies">
 
  	</div>
 </div>
@@ -28,7 +28,6 @@
 </body>
 
 <script type="text/javascript">
-
 $(document).ready(function() {
 	
 	listCompany();
@@ -37,13 +36,12 @@ $(document).ready(function() {
 		$("#sidemenu").prepend("<ul ><a href='#' alt='Users' id='userstn'>G</a></ul >");		
 	}
 });
-
 function listCompany(){	
 	
 	$.getJSON("Servlet_Companies?user="+'${session.getUsername()}', function(result){
         $.each(result, function(i, field){
         br="<br>";
-        	$("#container-companies").append("<div class='col-md-auto d-inline-block mt-4 border service-form'><div class='col company-name' ><b>"+field.business_name+ "</b></div> <a href='#' class='companyimg' value='"+field.business_id+"'> <img src='images/noimage.png'></a> </div> ");            
+        	$("#container-companies").append("<div class='col-md-auto d-inline-block mt-1 border service-form'><div class='col company-name' ><b>"+field.business_name+ "</b></div> <a href='/editCompany.jsp?id="+field.business_id+"' class='companyimg' value='"+field.business_id+"'> <img src='images/noimage.png'></a> </div> ");            
         });
     });
 	}

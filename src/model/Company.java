@@ -3,7 +3,16 @@ package model;
 public class Company {
 
 	
-	String name, owner, address, hashtag, description, lat, lng;
+	String id, name, owner, address, hashtag, description, lat, lng;
+	
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getLat() {
 		return lat;

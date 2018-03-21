@@ -54,11 +54,11 @@ response.sendRedirect("index.jsp");
 
 .footer {
 	
-position: absolute;
+
 margin-top:300px;
-	font-weight: 500;
-	color: white;
-    background-color:  #b61483  ;
+font-weight: 500;
+color: white;
+background-color:  #b61483  ;
   padding: 0 90px;
 }
 
@@ -116,6 +116,7 @@ width:150px;
 height:150px;
 }
 
+
 .container-companies
 {
 width:70%;
@@ -126,7 +127,6 @@ width:70%;
 {
 
 
-text-align: center;
 font-size:12px;	
 }
 </style>

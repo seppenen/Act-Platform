@@ -9,29 +9,29 @@ import model.Company;
 
 public class Dao_business extends dao{
  
-public ArrayList<Company> haeCompany() throws Exception{		
-	ArrayList<Company> ravintolat = new ArrayList<Company>();
-	sql = "SELECT * FROM restaurants ";
+public ArrayList<Company> haeCompany(int id) throws Exception{		
+	ArrayList<Company> companies = new ArrayList<Company>();
+	sql = "SELECT * FROM business ";
 	sql+= "WHERE user_id = ? "; 
 		
 	con=yhdista();
 	if(con!=null){ //jos yhteys onnistui
 		stmtPrep = con.prepareStatement(sql); 
-		stmtPrep.setInt(1, 1);		
+		stmtPrep.setInt(1, id);		
 			
 		rs = stmtPrep.executeQuery();  
 		if(rs!=null){ //jos kysely onnistui									
 			while(rs.next()){
-				Company business = new Company();
-				business.setName(rs.getString("business_name"));
-				business.setAddress(rs.getString("business_address"));
-				business.setHashtag(rs.getString("business_hashtag"));
+				Company company = new Company();
+				company.setName(rs.getString("business_name"));
+				company.setAddress(rs.getString("business_address"));
+				company.setHashtag(rs.getString("business_hashtag"));
 			
-				ravintolat.add(business);
+				companies.add(company);
 			}					
 		}
 		con.close();
 	}			
-	return ravintolat;
+	return companies;
 }
 }
