@@ -26,13 +26,11 @@ public class Servlet_Companies extends HttpServlet {
        
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Servlet_HaeVeneet.doGet()");
+		System.out.println("Servlet_Companies.doGet()");
 		dao dao = new dao();
 		
 		User user= dao.loginData(request.getParameter("user"));
-		HttpSession session = request.getSession();
-		User userdata = (User)session.getAttribute("session");
-		System.out.println(userdata.getUsername());
+
 		
 		try {		
 			String[] sarakkeet={"business_id","business_name"};

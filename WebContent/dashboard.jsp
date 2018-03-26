@@ -1,7 +1,7 @@
 <%@include file="header.jsp" %>
 
 	<div class="container-fluid">
-	<div class="row  mt-5"  >
+	<div class="row  mt-4"  >
 	<div class="col-4"></div>	
 	<div class="col-md-auto " id="orderbtn"><a id='orderlink'  href='#'>Orders</a></div>
 	<div class="col-md-auto ">Manage service</div>

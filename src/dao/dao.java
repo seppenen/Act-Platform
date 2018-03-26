@@ -68,32 +68,10 @@ public class dao {
 		}
 		return paluuArvo;
 	}
-	public boolean newCompany(Company Company) {
-		boolean paluuArvo = true;
-		System.out.println(Company.getName());
-		sql = "INSERT INTO business(user_id, business_name, business_address, lat, lng) VALUES(?,?,?,?,?)";
-		try {
-			con = yhdista();
-			stmtPrep = con.prepareStatement(sql);
-			stmtPrep.setString(1, Company.getOwner());
-			stmtPrep.setString(2, Company.getName());
-			stmtPrep.setString(3, Company.getAddress());
-			stmtPrep.setString(4, Company.getLat());
-			stmtPrep.setString(5, Company.getLng());
-
-			stmtPrep.executeUpdate();
-			con.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-			paluuArvo = false;
-		}
-		return paluuArvo;
-	}
 
 	public boolean dataCheck(String sarake, String taulu, String hakusarake, String hakuarvo1, String ehto,
 			String hakuarvo2) throws Exception {
-		boolean paluu = true;
-		
+		boolean paluu = true;		
 		sql = "SELECT " + sarake + " FROM " + taulu + " WHERE " + hakusarake + "=?";
 		
 		if (hakuarvo2.length() > 0) {
@@ -107,7 +85,7 @@ public class dao {
 				if (hakuarvo2.length() > 0) {
 					stmtPrep.setString(2, hakuarvo2);
 				}
-				System.out.println(sql);
+				
 				rs = stmtPrep.executeQuery();
 				if (rs != null) { 
 					if (!rs.next())
@@ -120,8 +98,7 @@ public class dao {
 			e.printStackTrace();
 		}
 		System.out.println("boolean" + " "+paluu);
-		return paluu;
-		
+		return paluu;	
 	}
 
 	public User loginData(String username) {

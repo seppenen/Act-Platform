@@ -1,0 +1,77 @@
+package model;
+
+public class Order {
+	
+	String id, user_id, service_id, business_id, title, date, time, status;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+
+	public String getService_id() {
+		return service_id;
+	}
+
+	@Override
+	public String toString() {
+		return "Order [user_id=" + user_id + ", service_id=" + service_id + ", business_id=" + business_id + ", title="
+				+ title + ", date=" + date + ", time=" + time + ", status=" + status + "]";
+	}
+
+	public void setService_id(String service_id) {
+		this.service_id = service_id;
+	}
+
+	public String getBusiness_id() {
+		return business_id;
+	}
+
+	public void setBusiness_id(String business_id) {
+		this.business_id = business_id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+}

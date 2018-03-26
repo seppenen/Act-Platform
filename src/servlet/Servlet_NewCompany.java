@@ -7,7 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.dao;
+import dao.Dao_business;
+
 import model.Company;
 
 
@@ -29,7 +30,7 @@ public class Servlet_NewCompany extends HttpServlet {
 		System.out.println("Servlet_NewCompany.doPost()");
 		try {
 			
-		dao dao = new dao();
+		Dao_business dao = new Dao_business();
 		Company company = new Company();	
 		System.out.println();
 		company.setLat(request.getParameter("lat"));

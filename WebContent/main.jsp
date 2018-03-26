@@ -1,10 +1,18 @@
 <%@include file="header.jsp" %>
 
 
-
 	
-	<div class="container-companies " id="container-companies">
-
+	
+<div class="container-fluid mt-5  " id="comments">
+	<div class=" row " >
+		<div id ="sidemenu" class="col-md-2 menu">
+			<ul><a href="main.jsp" alt="Profile">U</a></ul>
+			<ul ><a href='#' alt='Users' id='userstn'>G</a></ul >	
+			<ul><a href="#" alt="Settings" id="settingsbtn" >Y</a></ul>
+			<ul><a href="Servlet_Login?out=1">L</a></ul>
+</div>
+	<div class=" container-companies " id="container-companies">
+	
  	</div>
 </div>
 </div>
@@ -19,11 +27,6 @@ $(document).ready(function() {
 	
 	listCompany();
 	
-
-	
-	if (${session.getStatus()}==1){
-		$("#sidemenu").prepend("<ul ><a href='#' alt='Users' id='userstn'>G</a></ul >");		
-	}
 });
 function listCompany(){	
 	
@@ -39,7 +42,7 @@ function listCompany(){
 	
 $(document).on("click", "#companyItem",function() {
 	
-	document.location="Servlet_editCompany?id=" +$(this).attr('value');
+	document.location="Servlet_tilaukset?id=" +$(this).attr('value');
 });
 	
 	

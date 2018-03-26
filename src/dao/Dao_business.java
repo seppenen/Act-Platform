@@ -29,7 +29,6 @@ public Company haeCompany(String id) throws Exception{
 				company.setClosetime(rs.getString("closetime"));
 				company.setDescription(rs.getString("description"));
 
-		
 				
 			}					
 		}
@@ -37,4 +36,27 @@ public Company haeCompany(String id) throws Exception{
 	}			
 	return company;
 }
+
+public boolean newCompany(Company Company) {
+	boolean paluuArvo = true;
+	
+	sql = "INSERT INTO business(user_id, business_name, business_address, lat, lng) VALUES(?,?,?,?,?)";
+	try {
+		con = yhdista();
+		stmtPrep = con.prepareStatement(sql);
+		stmtPrep.setString(1, Company.getOwner());
+		stmtPrep.setString(2, Company.getName());
+		stmtPrep.setString(3, Company.getAddress());
+		stmtPrep.setString(4, Company.getLat());
+		stmtPrep.setString(5, Company.getLng());
+
+		stmtPrep.executeUpdate();
+		con.close();
+	} catch (Exception e) {
+		e.printStackTrace();
+		paluuArvo = false;
+	}
+	return paluuArvo;
+}
+
 }

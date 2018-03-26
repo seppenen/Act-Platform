@@ -39,7 +39,7 @@ public class Servlet_Login extends HttpServlet {
 		dao dao = new dao();
 
 		HttpSession session = request.getSession(true);
-		session.setMaxInactiveInterval(20 * 60);
+		
 		String username = (request.getParameter("username"));
 		String password = (request.getParameter("password"));
 		try {

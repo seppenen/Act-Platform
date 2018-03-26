@@ -9,15 +9,36 @@ if( request.getAttribute("company")!=null){
 %>
 
 
+	<div class="container-fluid nav-menu  ">
+	<div class="row  mt-4 mb-1"  >
+	<div class="col-4 "></div>	
+	<div class="col-md-auto ">General</div>	
+	<div class="col-md-auto ">Manage resources</div>
+	<div class="col-md-auto ">Contacts</div>
+	
+	</div>
+	</div>
+	
+<div class="container-fluid" id="comments">
+	<div class=" row " >
+		<div id ="sidemenu" class="col-md-2 menu">
+			<ul><a href="main.jsp" alt="Profile">U</a></ul>
+			<ul ><a href='#' alt='Users' id='userstn'>G</a></ul >	
+			<ul><a href="#" alt="Settings" id="settingsbtn" >Y</a></ul>
+			<ul><a href="Servlet_Login?out=1">L</a></ul>
+</div>
+
+
+
 <div class="col-sm-1 "></div>
-	<div class="col-md-2 mt-4  service-form " id="add" >
+	<div class="col-md-auto mt-4  service-form " id="add" >
  		 
  	
 	<div class="mt-4 "  > 
 	<label>Name: </label><br><br>
 	<label>Address: </label><br><br>
 	<label>Open time: </label><br><br>
-	<label>Tags: </label><br><br>
+	
 	<label>Description: </label><br>
 	
 	</div>
@@ -52,9 +73,7 @@ if( request.getAttribute("company")!=null){
 $(document).ready(function() {
 	
 	listCompany();	
-	if (${session.getStatus()}==1){
-		$("#sidemenu").prepend("<ul ><a href='#' alt='Users' id='userstn'>G</a></ul >");		
-	}
+	
 });
 
 function listCompany(){	
