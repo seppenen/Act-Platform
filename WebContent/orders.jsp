@@ -47,12 +47,7 @@ if( request.getAttribute("tilaukset")!=null){
 		out.print("<td> View Complete </td>");
 		out.print("</tr>");
 		
-	/*	out.print("</div>");
-		out.print("\n<img src='images/modify.png' class='icon muokkaa' id='muokkaa_"+asiakkaat.get(i).getAsiakas_id()+"' name='"+asiakkaat.get(i).getEtunimi()+" "+asiakkaat.get(i).getSukunimi()+"' title='Muokkaa'>");
-		out.print("\n<img src='images/delete.png' class='icon poista' id='poista_"+asiakkaat.get(i).getAsiakas_id()+"' name='"+asiakkaat.get(i).getEtunimi()+" "+asiakkaat.get(i).getSukunimi()+"' title='Poista'>");
-		out.print("</td>");
-		out.print("</tr>")
-		*/
+
 	}	
 }
 %>
@@ -74,21 +69,6 @@ if( request.getAttribute("tilaukset")!=null){
 
 <script type="text/javascript">
 
-$(document).ready(function() {
-	
-	listCompany();	
-	
-});
-
-function listCompany(){	
-	
-	$.getJSON("Servlet_Companies?user="+'${session.getUsername()}', function(result){
-        $.each(result, function(i, field){
-        br="<br>";
-        	$("#container-companies").append("<div class='col-md-auto d-inline-block mt-4 border service-form'><div class='col company-name' ><b>"+field.business_name+ "</b></div> <a href='#' class='companyimg' value='"+field.business_id+"'> <img src='images/noimage.png'></a> </div> ");            
-        });
-    });
-	}
 	
 document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 
