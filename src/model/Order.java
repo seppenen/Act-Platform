@@ -2,7 +2,7 @@ package model;
 
 public class Order {
 	
-	String id, user_id, service_id, business_id, title, date, time, status;
+	String id, user_id, service_id, business_id, title, start, end, status;
 
 	public String getId() {
 		return id;
@@ -27,7 +27,7 @@ public class Order {
 	@Override
 	public String toString() {
 		return "Order [user_id=" + user_id + ", service_id=" + service_id + ", business_id=" + business_id + ", title="
-				+ title + ", date=" + date + ", time=" + time + ", status=" + status + "]";
+				+ title + ", start=" + start + ", end=" + end + ", status=" + status + "]";
 	}
 
 	public void setService_id(String service_id) {
@@ -50,20 +50,22 @@ public class Order {
 		this.title = title;
 	}
 
-	public String getDate() {
-		return date;
+
+
+	public String getStart() {
+		return start;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public void setStart(String start) {
+		this.start = start;
 	}
 
-	public String getTime() {
-		return time;
+	public String getEnd() {
+		return end;
 	}
 
-	public void setTime(String time) {
-		this.time = time;
+	public void setEnd(String end) {
+		this.end = end;
 	}
 
 	public String getStatus() {

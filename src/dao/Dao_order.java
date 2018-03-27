@@ -21,10 +21,10 @@ public class Dao_order extends dao{
 			if(rs!=null){ //jos kysely onnistui									
 				while(rs.next()){
 					Order tilaus = new Order();
-					tilaus.setId(rs.getString("order_id"));
+					tilaus.setId(rs.getString("id"));
 					tilaus.setService_id(rs.getString("service_id"));
-					tilaus.setTime(rs.getString("time"));
-					tilaus.setDate(rs.getString("date"));
+					tilaus.setStart(rs.getString("start"));
+					tilaus.setEnd(rs.getString("end"));
 					tilaus.setTitle(rs.getString("title"));
 					tilaus.setUser_id(rs.getString("user_id"));
 					tilaus.setStatus(rs.getString("status"));
@@ -47,8 +47,8 @@ public class Dao_order extends dao{
 			stmtPrep.setString(2, order.getService_id());
 			stmtPrep.setString(3, order.getBusiness_id());
 			stmtPrep.setString(4, order.getTitle());
-			stmtPrep.setString(5, order.getDate());
-			stmtPrep.setString(6, order.getTime());
+			stmtPrep.setString(5, order.getStart());
+			stmtPrep.setString(6, order.getEnd());
 			stmtPrep.setString(7, order.getStatus());
 
 			stmtPrep.executeUpdate();

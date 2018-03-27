@@ -13,14 +13,23 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-<div class="container" style="margin-top:20px">
-	<form action="Servlet_Login" method="post" id="login-form" >
-		<p><label>Username: </label><input type="text" id="username" name="username"></p>
-		<p><label>Password: </label><input type="password" id="password" name="password"></p>
-<input type="submit" id ="login" value="Login"></form><br>
-
+<div class="container-fluid pt-3 pb-3 pl-5 mb-5 h-500"><h2>Login</h2>
 </div>
+<div class="container-fluid mt-5 " >
+<div class="row"> 
+<div class="col-md-5 ">
+</div>
+<div class="col-md-4 ">
+<form action="Servlet_Login" method="post" id="login-form" >
+
+<p><label>Username:</label> <br><input type="text" id="username" name="username"></p>
+
+<p><label>Password: </label><br><input type="password" id="password" name="password"></p>
+<input type="submit" id ="login" value="Login"></form>
+</div>
+</div>
+
+
 
 
 <div id="dialog" title="Login">

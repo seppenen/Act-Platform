@@ -14,12 +14,12 @@ import model.User;
 
 public class dao {
 
-	public Connection con = null;
-	public ResultSet rs = null;
-	public PreparedStatement stmtPrep = null;
-	public String sql;
+	public static Connection con = null;
+	public static ResultSet rs = null;
+	public  static PreparedStatement stmtPrep = null;
+	public static String sql;
 
-	public Connection yhdista() throws Exception {
+	public static Connection yhdista() throws Exception {
 
 		String url = "jdbc:sqlite:/Users/alexandrseppenen/Apache/targo.sqlite";
 
@@ -126,7 +126,7 @@ public class dao {
 	}
 
 
-	public String haeTiedotJSON(String[] sarakkeet, String taulu, String ehtoSarake, String ehtoArvo, int sort)
+	public static  String haeTiedotJSON(String[] sarakkeet, String taulu, String ehtoSarake, String ehtoArvo, int sort)
 			throws Exception {
 		String palautusJSON = "";
 		String sarStr = "";

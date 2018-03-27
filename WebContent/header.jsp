@@ -22,12 +22,21 @@ response.sendRedirect("index.jsp");
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+ 
+ <link href='cal/fullcalendar.min.css' rel='stylesheet' />
+<link href='cal/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+<script src='cal/lib/moment.min.js'></script>
+<script src='cal/lib/jquery.min.js'></script>
+<script src='cal/fullcalendar.min.js'></script>
  </head>
 <body>
 <style> 
 .icon_mini{
 	height:20px;
 	vertical-align:bottom;
+}
+.table-top{
+	text-align:center;
 }
 @font-face {
     font-family: 'SignifyLite';
@@ -119,12 +128,19 @@ text-align: center;
 .nav-menu
 {
 
-font-size:14px;	
+font-size:16px;	
 }
 .service-form
 {
 
 font-size:12px;	
+}
+
+#calendar .fc-day:hover
+{
+
+background: #ccc;
+transition: all .5s;
 }
 </style>
 <div class="logo container-fluid pt-3 pb-3 pl-5 pr-0 h-500"><h2>Actify</h2>

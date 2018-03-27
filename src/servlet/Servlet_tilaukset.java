@@ -31,7 +31,8 @@ public class Servlet_tilaukset extends HttpServlet {
 		
 			ArrayList<Order> tilaukset = tilaus.haeTilaukset(id);
 			System.out.println(tilaukset.toString());
-			request.setAttribute("tilaukset", tilaukset);		
+			request.setAttribute("tilaukset", tilaukset);
+			request.setAttribute("id", id);
 			String jsp = "/orders.jsp"; 
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(jsp);
 			dispatcher.forward(request, response);	

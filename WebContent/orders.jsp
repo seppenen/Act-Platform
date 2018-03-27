@@ -1,6 +1,35 @@
 <%@include file="header.jsp" %>
 <%@ page import="model.Order"%>
+<% String id= request.getParameter("id"); %>
+<script>
 
+  $(document).ready(function() {
+
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay,listWeek'
+      },
+      defaultDate: '2018-03-12',
+      editable: true,
+      
+      navLinks: true, // can click day/week names to navigate views
+      eventLimit: true, // allow "more" link when too many events
+      events: {
+        url: 'Servlet_tilauksetJSON?id='+<%out.print(id);%>,
+        error: function() {
+          $('#script-warning').show();
+        }
+      },
+      loading: function(bool) {
+        $('#loading').toggle(bool);
+      }
+    });
+
+  });
+
+</script>
 	
 <div class="container-fluid " id="comments">
 	<div class=" row mt-5 " >
@@ -12,18 +41,24 @@
 		
 </div>
 
-<div class="container " >
-<div class="container nav-menu  ">
-	<div class="row  mb-1"  >
-	<div class="col-4 "></div>	
-	<div class="col-md-auto ">Orders</div>	
-	<div class="col-md-auto ">Manage resources</div>
-	<div class="col-md-auto ">Manage company</div>
+<div class="container  " >
+
+	<div class="row  nav-menu"  >
+	<div class="col-3 "></div>	
+	<div class="col-md-2  ">Calendar</div>	
+	<div class="col-md-2  ">Manage resources</div>
+	<div class="col-md-2 ">Company details</div>
 	
 	</div>
-	</div>
+	
+	
+	
+	 <div class="mt-2 pt-3 border-top"id='calendar'></div>
+	 
 <table class="table table-sm table-hover mt-4 orders">
+ <div class="col-md-12 mt-2 table-top">Latest:</div>
   <thead class="thead-dark">
+ 
     <tr>
       <th scope="col">#</th>
       <th scope="col">Name</th>
@@ -35,6 +70,7 @@
   <tbody>
 <%
 
+
 if( request.getAttribute("tilaukset")!=null){
 	ArrayList <Order> order = (ArrayList<Order>)request.getAttribute("tilaukset");	
 
@@ -42,7 +78,7 @@ if( request.getAttribute("tilaukset")!=null){
 		out.print("\n<tr>");
 		out.print("<th scope='row'>" + order.get(i).getId()+"</th>");
 		out.print("<td>" + order.get(i).getTitle()+"</td>");
-		out.print("<td>" + order.get(i).getDate()+"</td>");
+		out.print("<td>" + order.get(i).getStart()+"</td>");
 		out.print("<td>" + order.get(i).getStatus()+"</td>");
 		out.print("<td> View Complete </td>");
 		out.print("</tr>");
@@ -54,6 +90,7 @@ if( request.getAttribute("tilaukset")!=null){
 
 </tbody>
 	</table>
+	
 	</div>
 
 </div>
