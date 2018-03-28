@@ -6,6 +6,7 @@
   $(document).ready(function() {
 
     $('#calendar').fullCalendar({
+ 
       header: {
         left: 'prev,next today',
         center: 'title',
@@ -16,15 +17,26 @@
       
       navLinks: true, // can click day/week names to navigate views
       eventLimit: true, // allow "more" link when too many events
+      eventColor: '#323741',
+      eventTextColor: 'white',
       events: {
         url: 'Servlet_tilauksetJSON?id='+<%out.print(id);%>,
+       
         error: function() {
           $('#script-warning').show();
         }
       },
       loading: function(bool) {
         $('#loading').toggle(bool);
-      }
+      },
+      
+      dayClick: function(date) {
+		var clickDate=date.format();
+    	    alert('Clicked on: ' + clickDate);
+
+
+
+    	  }
     });
 
   });
