@@ -11,29 +11,23 @@ import model.Company;
 import model.Services;
 import model.User;
 
-
 public class dao {
 
 	public static Connection con = null;
 	public static ResultSet rs = null;
-	public  static PreparedStatement stmtPrep = null;
+	public static PreparedStatement stmtPrep = null;
 	public static String sql;
 
 	public static Connection yhdista() throws Exception {
 
-		String url = "jdbc:sqlite:/Users/alexandrseppenen/Apache/targo.sqlite";
+		String url = "jdbc:mysql://localhost:3306/targo?autoReconnect=true&useSSL=false";
 
 		try {
-
-			Class.forName("org.sqlite.JDBC");
-			con = DriverManager.getConnection(url);
-			
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection(url, "root", "phbzrtht");
 			return con;
-
 		} catch (SQLException e) {
-
 			throw new RuntimeException(e);
-
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);
 
@@ -69,64 +63,42 @@ public class dao {
 		return paluuArvo;
 	}
 
-	public boolean dataCheck(String sarake, String taulu, String hakusarake, String hakuarvo1, String ehto,
+	public boolean iftrue(String sarake, String taulu, String hakusarake, String hakuarvo1, String ehto,
 			String hakuarvo2) throws Exception {
-		boolean paluu = true;		
+		boolean paluu = true;
 		sql = "SELECT " + sarake + " FROM " + taulu + " WHERE " + hakusarake + "=?";
-		
+
 		if (hakuarvo2.length() > 0) {
-			sql += " and " +ehto+ "=?";
+			sql += " AND " + ehto + "=?";
 		}
 		try {
 			con = yhdista();
-			if (con != null) { 
+			if (con != null) {
 				stmtPrep = con.prepareStatement(sql);
 				stmtPrep.setString(1, hakuarvo1);
 				if (hakuarvo2.length() > 0) {
 					stmtPrep.setString(2, hakuarvo2);
+
+					System.out.println(sql + " " + hakuarvo1 + " " + hakuarvo2);
+
 				}
-				
+
 				rs = stmtPrep.executeQuery();
-				if (rs != null) { 
-					if (!rs.next())
-						paluu = false;
-				}		
+
+				if (!rs.next()) {
+					paluu = false;
+				}
 				con.close();
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("boolean" + " "+paluu);
-		return paluu;	
+		System.out.println("boolean" + " " + paluu);
+		return paluu;
 	}
 
-	public User loginData(String username) {
-
-		User user= new User();
-		sql = "SELECT * FROM users WHERE username = ?";
-		try {
-			con = yhdista();
-			stmtPrep = con.prepareStatement(sql);
-			stmtPrep.setString(1, username);
-			rs = stmtPrep.executeQuery();
-
-			while (rs.next()) {
-				user.setId(rs.getString("user_id"));
-				user.setUsername(rs.getString("username"));
-				user.setEmail(rs.getString("email"));
-				user.setStatus(rs.getInt("status"));
-			}
-			con.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-			
-		}
-		return user;
-	}
-
-
-	public static  String haeTiedotJSON(String[] sarakkeet, String taulu, String ehtoSarake, String ehtoArvo, int sort)
+	public static String haeTiedotJSON(String[] sarakkeet, String taulu, String ehtoSarake, String ehtoArvo, int sort)
 			throws Exception {
 		String palautusJSON = "";
 		String sarStr = "";
@@ -141,7 +113,7 @@ public class dao {
 		if (sort > 0) {
 			sql += " ORDER BY " + sort;
 		}
-		
+
 		con = yhdista();
 		if (con != null) { // jos yhteys onnistui
 			stmtPrep = con.prepareStatement(sql);

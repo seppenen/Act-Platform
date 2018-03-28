@@ -2,6 +2,13 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+
+<%
+		String user =null;
+		user= (String) request.getAttribute("errMsg");
+		if (user==null) user="";	%>
+
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -12,36 +19,37 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <title>Insert title here</title>
 </head>
+<style> 
+
+label {
+display: block;
+float: left;
+width: 8em;
+}</style>
+
 <body>
 <div class="container-fluid pt-3 pb-3 pl-5 mb-5 h-500"><h2>Login</h2>
 </div>
 <div class="container-fluid mt-5 " >
 <div class="row"> 
-<div class="col-md-5 ">
+<div class="col-md-4 ">
 </div>
 <div class="col-md-4 ">
 <form action="Servlet_Login" method="post" id="login-form" >
 
-<p><label>Username:</label> <br><input type="text" id="username" name="username"></p>
+<p><label>Username:</label> <input type="text" id="username" name="username"></p>
 
-<p><label>Password: </label><br><input type="password" id="password" name="password"></p>
+<p><label>Password: </label><input type="password" id="password" name="password"></p>
 <input type="submit" id ="login" value="Login"></form>
-</div>
-</div>
-
-
-
-
-<div id="dialog" title="Login">
-<div id="divId">
-             
-            </div>
-<%
-		String user =null;
-		user= (String) request.getAttribute("errMsg");
-		if (user==null) user="";	%>
 <div id="messageDiv"><%=user%></div>
 </div>
+
+</div>
+
+
+
+
+
 
 <script>
 

@@ -34,7 +34,7 @@ public class Servlet_editCompany extends HttpServlet {
 
 		try {
 			
-			if(dao.dataCheck("business_id", "business", "business_id", id, "user_id", user.getId()) || user.getStatus()==1) {
+			if(dao.iftrue("business_id", "business", "business_id", id, "user_id", user.getId()) || user.getStatus()==1) {
 				
 				Company company = dao_business.haeCompany(id);
 				request.setAttribute("company", company);		

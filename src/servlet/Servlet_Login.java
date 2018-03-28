@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.Dao_user;
 import dao.dao;
 import model.User;
 
@@ -36,15 +37,17 @@ public class Servlet_Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("Servlet_login.doPost()");
-		dao dao = new dao();
+		Dao_user dao = new Dao_user();
 
-		HttpSession session = request.getSession(true);
-		
+	
 		String username = (request.getParameter("username"));
 		String password = (request.getParameter("password"));
+		
 		try {
-			if (dao.dataCheck("username", "users", "username", username, "password", password)) {
-				User user = dao.loginData(username);
+			User user = dao.haeAsiakas(username, password);
+			HttpSession session = request.getSession(true);
+			if (user!=null){
+				
 				session.setAttribute("session", user);
 				response.sendRedirect("main.jsp");
 
