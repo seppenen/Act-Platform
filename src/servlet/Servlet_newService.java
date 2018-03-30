@@ -1,13 +1,14 @@
 package servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.dao;
+import dao.Dao_service;
 import model.Services;
 
 
@@ -32,7 +33,7 @@ public class Servlet_newService extends HttpServlet {
 		
 		try {
 			
-			dao dao = new dao();
+		Dao_service dao= new Dao_service();
 		Services service=new Services();
 		service.setTitle(request.getParameter("title"));		
 		service.setBusiness_id(Integer.parseInt(request.getParameter("business_id")));

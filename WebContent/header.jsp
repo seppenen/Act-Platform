@@ -28,6 +28,8 @@ response.sendRedirect("index.jsp");
 <script src='cal/lib/moment.min.js'></script>
 <script src='cal/lib/jquery.min.js'></script>
 <script src='cal/fullcalendar.min.js'></script>
+<script src='jquery-ui.min.js'></script>
+
  </head>
 <body>
 <style> 

@@ -10,7 +10,8 @@ import model.Order;
 public class Dao_order extends dao{
 
 	public ArrayList<Order> haeTilaukset(String hakusana) throws Exception{	
-		ArrayList<Order> tilaukset = new ArrayList<Order>();
+		ArrayList<Order> tilaukset = new ArrayList();
+		
 		sql = "SELECT * FROM orders WHERE business_id=?"; 		
 		con=yhdista();
 		if(con!=null){ 
@@ -18,11 +19,13 @@ public class Dao_order extends dao{
 			stmtPrep.setString(1, hakusana);
 			
     		rs = stmtPrep.executeQuery();  
-			if(rs!=null){ //jos kysely onnistui									
+			if(rs!=null){ //jos kysely onnistui	
+				
 				while(rs.next()){
 					Order tilaus = new Order();
 					tilaus.setId(rs.getString("id"));
 					tilaus.setService_id(rs.getString("service_id"));
+					tilaus.setBusiness_id(rs.getString("business_id"));
 					tilaus.setStart(rs.getString("start"));
 					tilaus.setEnd(rs.getString("end"));
 					tilaus.setTitle(rs.getString("title"));
@@ -35,6 +38,33 @@ public class Dao_order extends dao{
 		}			
 		return tilaukset;
 	}
+	
+	public ArrayList haeTilauksetJson(String id) throws Exception{	
+		ArrayList<String> tilaukset2 =null;
+		System.out.println("Dao_Orders.haeTilauksetJson");
+	
+		int i=0;
+		sql = "SELECT * FROM orders WHERE business_id=?  "; 		
+		con=yhdista();
+		if(con!=null){ 
+			stmtPrep = con.prepareStatement(sql); 
+			stmtPrep.setString(1, id);
+
+    		rs = stmtPrep.executeQuery();  
+    		if(rs!=null){
+      			tilaukset2 = new ArrayList();
+				while(rs.next()){
+					
+					tilaukset2.add(rs.getString("start"));
+				}	
+
+    		}
+    		con.close();
+		}		
+	
+		return tilaukset2;
+	}
+	
 	
 	public boolean uusiTulaus(Order order) {
 		boolean paluuArvo = true;

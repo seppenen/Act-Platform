@@ -2,19 +2,14 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.Dao_order;
 import dao.dao;
-import model.Company;
-import model.Order;
 
 /**
  * Servlet implementation class Servlet_tilaukset
@@ -33,6 +28,7 @@ public class Servlet_tilauksetJSON extends HttpServlet {
 		String strJSON = dao.haeTiedotJSON(sarakkeet,"orders","business_id",id,0);
 		PrintWriter out = response.getWriter(  );
 	    response.setContentType("text/html"); 
+	    System.out.println(strJSON);
 	    out.println(strJSON);	
 		
 	} catch (Exception e) {			

@@ -2,7 +2,15 @@ package model;
 
 public class Order {
 	
-	String id, user_id, service_id, business_id, title, start, end, status;
+	String id, user_id, service_id, business_id, title, start, end, status, kpl;
+
+	public String getKpl() {
+		return kpl;
+	}
+
+	public void setKpl(String kpl) {
+		this.kpl = kpl;
+	}
 
 	public String getId() {
 		return id;
@@ -24,10 +32,13 @@ public class Order {
 		return service_id;
 	}
 
+	
+
 	@Override
 	public String toString() {
-		return "Order [user_id=" + user_id + ", service_id=" + service_id + ", business_id=" + business_id + ", title="
-				+ title + ", start=" + start + ", end=" + end + ", status=" + status + "]";
+		return "Order [id=" + id + ", user_id=" + user_id + ", service_id=" + service_id + ", business_id="
+				+ business_id + ", title=" + title + ", start=" + start + ", end=" + end + ", status=" + status
+				+ ", kpl=" + kpl + "]";
 	}
 
 	public void setService_id(String service_id) {

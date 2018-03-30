@@ -128,8 +128,6 @@ $(document).ready(function() {
 		
 		if ($('#address').val()==""){
 			
-			
-
 		}else{
 		submit();
 		}
@@ -297,6 +295,7 @@ function submit(){
     .fail(function(){
  alert('Ajax Submit Failed ...'); 
     });
+    
 };
 
 

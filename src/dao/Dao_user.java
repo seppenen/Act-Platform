@@ -4,15 +4,15 @@ import model.User;
 
 public class Dao_user extends dao {
 
-	public User haeAsiakas(String username, String password) {
+	public User haeAsiakas(String email, String password) {
 
 		User user= null;
-		sql = "SELECT * FROM users WHERE username = ? AND password=?";
+		sql = "SELECT * FROM users WHERE email = ? AND password=?";
 		
 		try {
 			con = yhdista();
 			stmtPrep = con.prepareStatement(sql);
-			stmtPrep.setString(1, username);
+			stmtPrep.setString(1, email);
 			stmtPrep.setString(2, password);
 			rs = stmtPrep.executeQuery();	
 		

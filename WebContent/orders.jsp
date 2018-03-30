@@ -66,6 +66,7 @@
 	
 	
 	 <div class="mt-2 pt-3 border-top"id='calendar'></div>
+	 <div id="dialog"> </div>
 	 
 <table class="table table-sm table-hover mt-4 orders">
  <div class="col-md-12 mt-2 table-top">Latest:</div>

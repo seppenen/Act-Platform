@@ -7,9 +7,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
-import model.Company;
 import model.Services;
-import model.User;
 
 public class dao {
 
@@ -40,28 +38,7 @@ public class dao {
 		}
 	}
 
-	public boolean newService(Services service) {
-		boolean paluuArvo = true;
-		System.out.println(service.getTitle());
-		sql = "INSERT INTO business_service(business_id, picture, title, price,service_desc,tags) VALUES(?,?,?,?,?,?)";
-		try {
-			con = yhdista();
-			stmtPrep = con.prepareStatement(sql);
-			stmtPrep.setInt(1, service.getBusiness_id());
-			stmtPrep.setInt(2, 1);
-			stmtPrep.setString(3, service.getTitle());
-			stmtPrep.setInt(4, service.getPrice());
-			stmtPrep.setString(5, service.getDescription());
-			stmtPrep.setString(6, service.getTag());
 
-			stmtPrep.executeUpdate();
-			con.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-			paluuArvo = false;
-		}
-		return paluuArvo;
-	}
 
 	public boolean iftrue(String sarake, String taulu, String hakusarake, String hakuarvo1, String ehto,
 			String hakuarvo2) throws Exception {
@@ -78,11 +55,7 @@ public class dao {
 				stmtPrep.setString(1, hakuarvo1);
 				if (hakuarvo2.length() > 0) {
 					stmtPrep.setString(2, hakuarvo2);
-
-					System.out.println(sql + " " + hakuarvo1 + " " + hakuarvo2);
-
 				}
-
 				rs = stmtPrep.executeQuery();
 
 				if (!rs.next()) {
