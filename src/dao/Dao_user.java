@@ -17,14 +17,13 @@ public class Dao_user extends dao {
 			rs = stmtPrep.executeQuery();	
 		
 		
-			if(rs!=null){ 	
-				String[] sarakkeet={"business_id","business_name"};
+			if(rs!=null){ 								
 				while(rs.next()){
 				user= new User();
 				user.setId(rs.getString("user_id"));
 				user.setUsername(rs.getString("username"));
 				user.setEmail(rs.getString("email"));
-				user.setCompany(haeTiedotJSON(sarakkeet, "business","user_id", user.getId(),0));
+				user.setCompany(rs.getString("email"));
 				user.setStatus(rs.getInt("status"));
 				}
 			}

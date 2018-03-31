@@ -47,7 +47,7 @@ public class Servlet_tilastoJson extends HttpServlet {
 		    response.setContentType("text/html"); 
 		
 		    out.println(strJSON);
-		    out.println((user.getCompany()));
+		    
 		    
 		/* int length = 6;
 		if (request.getParameter("length") != null) {
