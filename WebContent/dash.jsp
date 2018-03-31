@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%
+
+if(session.getAttribute("session")==null){
+
+response.sendRedirect("index.jsp");
+}
+%>
     <%@ page import="model.User"%>  
 <%@ page import="java.util.ArrayList"%> 
     <%@ page import="model.Order"%>
@@ -182,21 +189,83 @@ if( request.getAttribute("tilaukset")!=null){
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script>
     
-    var timeFormat = 'YYYY-MM-DD';
+    var timeFormat = 'MMM DD';
     var labels= [newDate(-6), newDate(-5),newDate(-4),newDate(-3),newDate(-2),newDate(-1),newDate(-0)]; // Dates
     
     var data=[];
 
     var businessName;
    
+    
+    function addData(data) {
+  	  console.log(data);
+ 
+  	  myChart.data.datasets.forEach((dataset) => {
+  	        dataset.data.push(data);
+  	    });
+  	  myChart.update();
+  	}
+    
+    
+   // tilastot();
+    tilastot2();
+   
+   
+    function tilastot2(){
+    		    
+          $.ajax({
+                    type: 'GET',
+                    url: 'Servlet_tilastoJson?id='+${session.getId()},
+                    success: function(data){
+                        var orders=[];
+                        var labels=[];
 
+                        var paikat = JSON.parse(data); 
+
+
+                       /* for(var i=0;i<paikat.length;i++){
+                          console.log(paikat[i]); 
+                            var paikka={
+                            "id" : parseFloat(paikat[i].title),  
+                            "start" : parseFloat(paikat[i].start)
+                            };                 
+                            
+                            
+                              
+                        }   */
+                        
+                        console.log(paikat);
+                  
+                    },
+                    error: function(){  
+                        console.log(2);                                         
+                    }
+                });  
+    }
+    		  
+    	 function tilastot(){		  
+  	  $.ajax({
+  		  url: "Servlet_tilastoJson?id="+<%out.print(id);%>+"&length="+labels.length, 
+  		  success: function(result){
+  			  
+		 data=(Array.from(result));
+  		 
+		 setTimeout(function() {
+		 addData(data);
+		 },2000);
+  		  
+	    }});
+		
+    }
+    
+    
 	function newDate(days) {
 		
 		return moment().add(days, 'd').format(timeFormat);	
 	}
 	
       var config = {
-    	  type: 'line',
+    	  type: 'bar',
     	    
     	  data: {
     	    datasets: [        
@@ -225,12 +294,12 @@ if( request.getAttribute("tilaukset")!=null){
       $(document).ready(function() {
 
     	  var newDataset = {
-  				label: businessName,
+  				label: "test",
   				backgroundColor: 'blue',
   				fill: false,
   				data: data.reverse(),
-  				backgroundColor: 'transparent',
-  	            borderColor: '#007bff',
+  				 // backgroundColor: 'transparent',
+  	            borderColor: 'transparent',
   	            borderWidth: 4,
   	            pointBackgroundColor: '#007bff'
   			};
@@ -244,15 +313,7 @@ if( request.getAttribute("tilaukset")!=null){
     	  	}
       });
       
-      function addData(data) {
-    	  console.log(data);
-    	
-    	  
-    	  myChart.data.datasets.forEach((dataset) => {
-    	        dataset.data.push(data);
-    	    });
-    	  myChart.update();
-    	}
+     
       
       var ctx = document.getElementById("myChart");
       var myChart = new Chart(ctx, config);
@@ -292,15 +353,7 @@ if( request.getAttribute("tilaukset")!=null){
     	      	 tilastot();
     		}
       
-      tilastot();
-      function tilastot(){
-    	  
-    	  $.ajax({url: "Servlet_tilastoJson?id="+<%out.print(id);%>+"&length="+labels.length, success: function(result){
- 		 data=(Array.from(result));
-    		  addData(data);
-  	    }});
-		
-      }
+     
 
     </script>
 

@@ -12,7 +12,7 @@ public class Dao_order extends dao{
 	public ArrayList<Order> haeTilaukset(String hakusana) throws Exception{	
 		ArrayList<Order> tilaukset = new ArrayList();
 		
-		sql = "SELECT * FROM orders WHERE business_id=?"; 		
+		sql = "SELECT * FROM orders WHERE owner=?"; 		
 		con=yhdista();
 		if(con!=null){ 
 			stmtPrep = con.prepareStatement(sql); 
@@ -40,29 +40,29 @@ public class Dao_order extends dao{
 	}
 	
 	public ArrayList haeTilauksetJson(String id) throws Exception{	
-		ArrayList<String> tilaukset2 =null;
+		ArrayList tilaukset =null;
 		System.out.println("Dao_Orders.haeTilauksetJson");
 	
 		int i=0;
-		sql = "SELECT * FROM orders WHERE business_id=?  "; 		
+		sql = "SELECT * FROM orders WHERE start IS NOT NULL"; 		
 		con=yhdista();
 		if(con!=null){ 
 			stmtPrep = con.prepareStatement(sql); 
-			stmtPrep.setString(1, id);
+			
 
     		rs = stmtPrep.executeQuery();  
     		if(rs!=null){
-      			tilaukset2 = new ArrayList();
+      			tilaukset = new ArrayList();
 				while(rs.next()){
 					
-					tilaukset2.add(rs.getString("start"));
+					tilaukset.add(rs.getString("start"));
 				}	
 
     		}
     		con.close();
 		}		
 	
-		return tilaukset2;
+		return tilaukset;
 	}
 	
 	

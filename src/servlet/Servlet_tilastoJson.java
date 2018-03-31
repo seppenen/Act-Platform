@@ -13,9 +13,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.Dao_order;
+import dao.dao;
+import jdk.nashorn.internal.parser.JSONParser;
 import model.Order;
+import model.User;
+import netscape.javascript.JSObject;
 
 /**
  * Servlet implementation class Servlet_tilastoJson
@@ -27,8 +32,24 @@ public class Servlet_tilastoJson extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("Servlet_tilastoJson");
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("session");
+		
+		
+		//String id = request.getParameter("id");
+		dao dao= new dao();
 		String id = request.getParameter("id");
-		int length = 6;
+		try {		
+			String[] sarakkeet={"title","start"};
+			String strJSON=dao.haeTiedotJSON(sarakkeet,"orders","owner",id,0);	
+	
+			PrintWriter out = response.getWriter();
+		    response.setContentType("text/html"); 
+		
+		    out.println(strJSON);
+		    out.println((user.getCompany()));
+		    
+		/* int length = 6;
 		if (request.getParameter("length") != null) {
 
 			length = Integer.parseInt(request.getParameter("length"));
@@ -62,7 +83,7 @@ public class Servlet_tilastoJson extends HttpServlet {
 					int q = 0;
 					System.out.println(taulukko[j] + " check date");
 					for (int i = 0; i < tilasto.size(); i++) {
-
+						System.out.println(tilasto.get(i) + "  ");
 						if (taulukko[j].equals(tilasto.get(i).toString().substring(0, 10))) {
 							q++;
 
@@ -79,7 +100,10 @@ public class Servlet_tilastoJson extends HttpServlet {
 					out.print(result[i]);
 				}
 
-			}
+			} */
+		
+		
+		
 
 		} catch (Exception e) {
 			e.printStackTrace();

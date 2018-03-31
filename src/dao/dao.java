@@ -11,12 +11,12 @@ import model.Services;
 
 public class dao {
 
-	public static Connection con = null;
-	public static ResultSet rs = null;
-	public static PreparedStatement stmtPrep = null;
-	public static String sql;
+	public  Connection con = null;
+	public  ResultSet rs = null;
+	public  PreparedStatement stmtPrep = null;
+	public  String sql;
 
-	public static Connection yhdista() throws Exception {
+	public  Connection yhdista() throws Exception {
 
 		String url = "jdbc:mysql://localhost:3306/targo?autoReconnect=true&useSSL=false";
 
@@ -71,7 +71,7 @@ public class dao {
 		return paluu;
 	}
 
-	public static String haeTiedotJSON(String[] sarakkeet, String taulu, String ehtoSarake, String ehtoArvo, int sort)
+	public  String haeTiedotJSON(String[] sarakkeet, String taulu, String ehtoSarake, String ehtoArvo, int sort)
 			throws Exception {
 		String palautusJSON = "";
 		String sarStr = "";
@@ -118,6 +118,7 @@ public class dao {
 					palautusJSON += "}";
 					palautusJSON += ",";
 				}
+				System.out.println(palautusJSON);
 				palautusJSON += "]";
 			}
 			con.close();

@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.Dao_order;
 import dao.Dao_user;
+import model.Order;
 import model.User;
 
 /**
@@ -47,9 +50,17 @@ public class Servlet_Login extends HttpServlet {
 			User user = dao.haeAsiakas(email, password);
 			
 			if (user != null) {
+				
+				Dao_order tilaus = new Dao_order();
+				ArrayList<Order> tilaukset = tilaus.haeTilaukset(user.getId());
+
+				
 				HttpSession session = request.getSession(true);
 				session.setAttribute("session", user);
-				response.sendRedirect("main.jsp");
+				request.setAttribute("tilaukset", tilaukset);
+			
+				request.getRequestDispatcher("/dash.jsp").forward(request, response);
+
 				
 
 			} else {

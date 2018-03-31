@@ -21,7 +21,7 @@ public class Servlet_tilauksetJSON extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	System.out.println("Servlet_tilauksetJSON.doGet()");
 	String id= request.getParameter("id");
-
+	dao dao= new dao();
 	try {
 		
 		String[] sarakkeet={"id", "title","start"};
