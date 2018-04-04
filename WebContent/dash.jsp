@@ -42,8 +42,9 @@ response.sendRedirect("index.jsp");
   </head>
 
   <body>
-    <nav class="navbar navbar-dark bg-dark p-0">
-      <div class="navbar-brand col-sm-3 bg-dark col-md-2 mr-0" >Logo</div>
+  <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
+      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
           <a class="nav-link" href="#">Sign out</a>
@@ -57,37 +58,37 @@ response.sendRedirect("index.jsp");
           <div class="sidebar-sticky">
             <ul class="nav flex-column ">
               <li class="nav-item ">
-                <a class="nav-link " href="#">
+                <a class="nav-link " href="dash.jsp">
                   <span data-feather="home"></span>
                   Dashboard 
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="calendar.jsp">
                   <span data-feather="calendar"></span>
                   Calendar
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="services.jsp">
                   <span data-feather="box"></span>
                   Services
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="users.jsp">
                   <span data-feather="users"></span>
                   Customers
                 </a>
               </li>
                <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="companies.jsp">
                   <span data-feather="shopping-cart"></span>
                   Companies
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="settings.jsp">
                   <span data-feather="settings"></span>
                   Settings
                 </a>
@@ -107,19 +108,19 @@ response.sendRedirect("index.jsp");
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="7" value="7" href="#">
+                <a class="nav-link report" id="7" value="7" href="#">
                   <span data-feather="file-text"></span>
                   Last week
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" value="30" href="#">
+                <a class="nav-link report"  value="30" href="#">
                   <span data-feather="file-text"></span>
                   Last month
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" value="90" href="#">
+                <a class="nav-link report" value="90" href="#">
                   <span data-feather="file-text"></span>
                   Last quarter
                 </a>
@@ -137,7 +138,7 @@ response.sendRedirect("index.jsp");
           <canvas class="my-4" id="myChart" width="900" height="380"></canvas>
 
          
-          <table class="table table-sm table-hover mt-4 orders">
+          <table class="table table-md table-hover mt-4 orders">
  		<div class="col-md-12 mt-2 table-top"><h2>Latest Activity</h2></div>
           <thead class="thead-dark">
 
@@ -149,24 +150,11 @@ response.sendRedirect("index.jsp");
       <th scope="col">Action</th>
     </tr>
   </thead>
-  <tbody>
-<%
+  <tbody id="tilaukset">
 
-if( request.getAttribute("tilaukset")!=null){
-	ArrayList <Order> order = (ArrayList<Order>)request.getAttribute("tilaukset");	
 
-	for(int i=0;i<order.size();i++){
-		out.print("\n<tr>");
-		out.print("<th scope='row'>" + order.get(i).getId()+"</th>");
-		out.print("<td>" + order.get(i).getTitle()+"</td>");
-		out.print("<td>" + order.get(i).getStart()+"</td>");
-		out.print("<td>" + order.get(i).getStatus()+"</td>");
-		out.print("<td> View Complete </td>");
-		out.print("</tr>");
-			}	
 
-}
- %>
+	
 
 
 
@@ -187,6 +175,7 @@ if( request.getAttribute("tilaukset")!=null){
     <script>
     var a=$.Deferred();
     var b=$.Deferred();
+    var colorIteration=0;
     
     var timeFormat = 'YYYY-MM-DD';
     var timeFormat2 = 'DD MMM';
@@ -244,7 +233,7 @@ if( request.getAttribute("tilaukset")!=null){
 	  				}]
 	  			},
 	  			legend: {
-	  	            display: false,
+	  	            display: true,
 	  	          },
 	          }
 	        };
@@ -288,7 +277,7 @@ if( request.getAttribute("tilaukset")!=null){
     	console.log("getData");
     	
     	for (var i=0; i<userServices.length; i++){
-    		
+    	
         $.ajax({
                   type: 'GET',
                   url: 'Servlet_tilastoJson?id='+userServices[i],
@@ -337,16 +326,18 @@ if( request.getAttribute("tilaukset")!=null){
 	}
 	   
       function dataPush(label){
-  
-    	  for (var i=0; i<parsedData.length; i++){
-    		  
+    	  
+  var color=['Red', 'Blue', 'Purple', 'Yellow','green', 'black','pink'];
+    	
+  		for (var i=0; i<parsedData.length; i++){
+    		
     		  if(parsedData[i]>0){
     			  	
     	  console.log("dataPush()");
     	
     	   newDataset = {
   				label: label,
-  				backgroundColor: 'blue',
+  				backgroundColor: color[colorIteration],
   				fill: false,
   				data: parsedData,
   				 // backgroundColor: 'transparent',
@@ -361,6 +352,7 @@ if( request.getAttribute("tilaukset")!=null){
   			 
   			 
   			parsedData=[];
+  			colorIteration++;
     		  }
     	  }   
     	  
@@ -368,14 +360,22 @@ if( request.getAttribute("tilaukset")!=null){
      
     
       
-      $(".nav-link").on("click", function() { 
+      $(".report").on("click", function() { 
     	  
     	  labelFunction($(this).attr("value"));
 
       });
 
       
-      
+
+      $.getJSON("Servlet_tilaukset", function(result){
+                         $.each(result, function(i, field) {
+                          
+                           $("#tilaukset").append("<tr><th scope='row'>"+field.id+"</th><td>"+field.title+"</td> <td>"+field.start.toString().substring(0, 10)+" "+field.start.toString().substring(11)+"</td><td>"+field.status+"</td> <td> View Complete </td></tr>");
+                      });
+                  });
+      		
+
     </script>
 
   </body>

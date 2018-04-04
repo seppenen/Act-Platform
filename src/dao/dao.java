@@ -118,7 +118,7 @@ public class dao {
 					palautusJSON += "}";
 					palautusJSON += ",";
 				}
-				System.out.println(palautusJSON);
+				
 				palautusJSON += "]";
 			}
 			con.close();

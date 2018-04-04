@@ -15,9 +15,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.Dao_order;
+import dao.dao;
 import model.Order;
+import model.User;
 
 /**
  * Servlet implementation class Servlet_tilaukset
@@ -31,20 +34,22 @@ public class Servlet_tilaukset extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("Servlet_tilaukset.doGet()");
 
-		String id = request.getParameter("id");
-
-		Dao_order tilaus = new Dao_order();
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("session");
+		
+		
+	
+		dao dao= new dao();
 
 		try {
 
-			ArrayList<Order> tilaukset = tilaus.haeTilaukset(id);
-
-			request.setAttribute("tilaukset", tilaukset);
-			System.out.println(tilaukset.toString());
-			request.setAttribute("id", id);
-			String jsp = "/dash.jsp";
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(jsp);
-			dispatcher.forward(request, response);
+			String[] sarakkeet={"id","title","start","status"};
+			String strJSON=dao.haeTiedotJSON(sarakkeet,"orders","owner",user.getId(),"id");	
+	
+			PrintWriter out = response.getWriter();
+		    response.setContentType("text/html"); 
+		
+		    out.println(strJSON);
 
 		} catch (Exception e) {
 			e.printStackTrace();
