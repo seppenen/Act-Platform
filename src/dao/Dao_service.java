@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.ArrayList;
+
 import model.Services;
 
 public class Dao_service extends dao{
@@ -7,7 +9,7 @@ public class Dao_service extends dao{
 	public boolean newService(Services service) {
 		boolean paluuArvo = true;
 		System.out.println(service.getTitle());
-		sql = "INSERT INTO business_service(business_id, picture, title, price,service_desc,tags) VALUES(?,?,?,?,?,?)";
+		sql = "SELECT * FROM business_service WHERE email = ?";
 		try {
 			con = yhdista();
 			stmtPrep = con.prepareStatement(sql);
@@ -26,4 +28,30 @@ public class Dao_service extends dao{
 		}
 		return paluuArvo;
 	}
+	
+	public ArrayList haeServices(String id) {
+		ArrayList palvelut =null;
+		
+		sql = "SELECT * FROM business_service WHERE id = ?";
+		try {
+			con = yhdista();
+			stmtPrep = con.prepareStatement(sql);
+			stmtPrep.setString(1, id);
+			rs = stmtPrep.executeQuery();
+			if(rs!=null){ 								
+				while(rs.next()){
+				
+				palvelut.add(rs.getInt("service_id"));
+				
+				}
+				}
+			
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		return palvelut;
+	}
+	
 }

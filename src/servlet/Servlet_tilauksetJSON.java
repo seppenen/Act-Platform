@@ -8,8 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import dao.Dao_service;
 import dao.dao;
+import model.User;
 
 /**
  * Servlet implementation class Servlet_tilaukset
@@ -20,15 +23,16 @@ public class Servlet_tilauksetJSON extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	System.out.println("Servlet_tilauksetJSON.doGet()");
-	String id= request.getParameter("id");
-	dao dao= new dao();
+	HttpSession session = request.getSession();
+	User user = (User)session.getAttribute("session");
+	Dao_service dao = new Dao_service();
 	try {
 		
-		String[] sarakkeet={"id", "title","start"};
-		String strJSON = dao.haeTiedotJSON(sarakkeet,"orders","business_id",id,0);
+		String[] sarakkeet={"service_id"};
+		String strJSON = dao.haeTiedotJSON(sarakkeet,"business_service","owner",user.getId(),"");
 		PrintWriter out = response.getWriter(  );
 	    response.setContentType("text/html"); 
-	    System.out.println(strJSON);
+	    
 	    out.println(strJSON);	
 		
 	} catch (Exception e) {			

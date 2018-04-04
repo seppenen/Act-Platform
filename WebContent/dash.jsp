@@ -136,11 +136,9 @@ response.sendRedirect("index.jsp");
 
           <canvas class="my-4" id="myChart" width="900" height="380"></canvas>
 
-          <button id="addbtn" value="Test">Test</button>
-           <button id="addbtn2" value="Test">Test</button>
-           <button id="addbtn3" value="Test">Test</button>
+         
           <table class="table table-sm table-hover mt-4 orders">
- 		<div class="col-md-12 mt-2 table-top"><h2>Section title</h2></div>
+ 		<div class="col-md-12 mt-2 table-top"><h2>Latest Activity</h2></div>
           <thead class="thead-dark">
 
     <tr>
@@ -187,116 +185,170 @@ if( request.getAttribute("tilaukset")!=null){
     <!-- Graphs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script>
+    var a=$.Deferred();
+    var b=$.Deferred();
     
-    var timeFormat = 'MMM DD';
-    var labels= [newDate(-6), newDate(-5),newDate(-4),newDate(-3),newDate(-2),newDate(-1),newDate(-0)]; // Dates
+    var timeFormat = 'YYYY-MM-DD';
+    var timeFormat2 = 'DD MMM';
+    var labels= []; 
+    var chartlabels= [];// Dates
+    var parsedData=[];
+    var userServices=[];
+    var newDataset;
     
-    var data=[];
+    $( document ).ready(function() {
+    	
+  	  if(labels[0]==null){
+  			console.log("newDate");
+  		labelFunction(30);
 
-    var businessName;
-   
-    
-    function addData(data) {
-  	  console.log(data);
- 
-  	  myChart.data.datasets.forEach((dataset) => {
-  	        dataset.data.push(data);
-  	    });
-  	  myChart.update();
   	}
+  	    	     
+  });
+    
+    function labelFunction(num){
+  	  console.log("labelFunction");
+  	 	 labels.length = 0;
+  	 	chartlabels.length = 0;
+  		 	for (i=0; i<num;i++){
+  	      	labels.push(newDate(0-i, timeFormat));
+  	      chartlabels.push(newDate(0-i, timeFormat2));
+  	      	
+  	      	}
+  		 	b.resolve();
+  		 //	labels.reverse();
+  	      	myChart.update();
+  	      	 
+        	 
+  		}
     
     
-   // tilastot();
-    tilastot2();
-   
-   
-    function tilastot2(){
-    		    
-          $.ajax({
-                    type: 'GET',
-                    url: 'Servlet_tilastoJson?id='+${session.getId()},
-                    success: function(data){
-                        var orders=[];
-                        var labels=[];
+    var  config = {
+	      	  type: 'bar',
+	            beginAtZero: false,
 
-                        var paikat = JSON.parse(data); 
-
-
-                       /* for(var i=0;i<paikat.length;i++){
-                          console.log(paikat[i]); 
-                            var paikka={
-                            "id" : parseFloat(paikat[i].title),  
-                            "start" : parseFloat(paikat[i].start)
-                            };                 
-                            
-                            
-                              
-                        }   */
-                        
-                        console.log(paikat);
-                  
-                    },
-                    error: function(){  
-                        console.log(2);                                         
-                    }
-                });  
-    }
-    		  
-    	 function tilastot(){		  
-  	  $.ajax({
-  		  url: "Servlet_tilastoJson?id="+<%out.print(id);%>+"&length="+labels.length, 
-  		  success: function(result){
-  			  
-		 data=(Array.from(result));
-  		 
-		 setTimeout(function() {
-		 addData(data);
-		 },2000);
-  		  
-	    }});
-		
-    }
+	      	    
+	      	  data: {
+	      	    datasets: [],
+	      	    labels: chartlabels,
+	      	  },     
+	          options: {
+	          	scales: {
+	  				xAxes: [{
+	  		
+	  				}],
+	  				yAxes: [{
+	  					ticks: {
+	  	                    beginAtZero:false
+	  	                }
+	  				}]
+	  			},
+	  			legend: {
+	  	            display: false,
+	  	          },
+	          }
+	        };
     
-    
-	function newDate(days) {
-		
-		return moment().add(days, 'd').format(timeFormat);	
-	}
+    function parseData(data){
+    	
 	
-      var config = {
-    	  type: 'bar',
-    	    
-    	  data: {
-    	    datasets: [        
-    	        ],
-    	    labels: labels,
-    	  },     
-        options: {
-        	scales: {
-				xAxes: [{
-		
-				}],
-				yAxes: [{
-					scaleLabel: {
-						
-						labelString: 'value'
-					}
-				}]
-			},
-			legend: {
-	            display: false,
-	          },
-        }
-      };
- 
- 
-      $(document).ready(function() {
+    	if (parsedData.length>0)
+    	{
+    		parsedData=[]; 
+    		
+    	}
+    	
+    	
+        var paikat = JSON.parse(data); 
+		var label;
+        
 
-    	  var newDataset = {
-  				label: "test",
+         for(var i=0;i<labels.length;i++){
+				var q=0;
+      	   for(var j=0;j<paikat.length;j++){
+      		
+                if (paikat[j].start.toString().substring(0, 10)==labels[i]){
+                	console.log(paikat[j].start.toString().substring(0, 10));
+              	 q++; 
+              	 label=paikat[j].title;
+              	 
+                }
+       
+                 } 
+      	 parsedData[i]=q;
+             }
+         dataPush(label);
+
+  
+         }
+    
+
+    function getData(){
+
+    	console.log("getData");
+    	
+    	for (var i=0; i<userServices.length; i++){
+    		
+        $.ajax({
+                  type: 'GET',
+                  url: 'Servlet_tilastoJson?id='+userServices[i],
+                		                   
+                  success: function(data){
+                	  
+              		 parseData(data);
+           				
+                  },
+                  error: function(){  
+                      console.log(2);                                         
+                  }
+              });          
+    	}
+    
+  }
+    
+   
+    var ctx = document.getElementById("myChart");
+    var myChart = new Chart(ctx, config);
+    
+
+     function haeServices(){	
+    	
+  	 $.ajax({
+  		  url: "Servlet_tilauksetJSON",
+  		 success: function(result){
+  			var jsonData = JSON.parse(result);
+		// var data=(Array.from(result));
+  		 		  
+  				 for(var i=0;i<jsonData.length;i++){
+  					userServices[i]=jsonData[i].service_id;
+  		  }
+		
+		a.resolve();
+	    }});
+	
+	
+    }
+    
+     haeServices();
+     $.when(a, b).done(getData);
+    
+	function newDate(days,f) {		
+		return moment().add(days, 'd').format(f);	
+	}
+	   
+      function dataPush(label){
+  
+    	  for (var i=0; i<parsedData.length; i++){
+    		  
+    		  if(parsedData[i]>0){
+    			  	
+    	  console.log("dataPush()");
+    	
+    	   newDataset = {
+  				label: label,
   				backgroundColor: 'blue',
   				fill: false,
-  				data: data.reverse(),
+  				data: parsedData,
   				 // backgroundColor: 'transparent',
   	            borderColor: 'transparent',
   	            borderWidth: 4,
@@ -306,34 +358,15 @@ if( request.getAttribute("tilaukset")!=null){
   			config.data.datasets.push(newDataset);
   			myChart.update();
   			
-  			if(labels[0]==null){
-    	  		labelFunction(7);
-    	  		
-    	  	}
-      });
-      
+  			 
+  			 
+  			parsedData=[];
+    		  }
+    	  }   
+    	  
+      }
      
-      
-      var ctx = document.getElementById("myChart");
-      var myChart = new Chart(ctx, config);
-      
-      $("#addbtn2").on("click", function() {
-      	
-    	  var newDataset = {
-    				label: businessName,
-    				backgroundColor: 'red',
-    				fill: false,
-    				data: data2.reverse(),
-    				backgroundColor: 'transparent',
-    	            borderColor: 'red',
-    	            borderWidth: 4,
-    	            pointBackgroundColor: 'red'
-    			};
-
-    			config.data.datasets.push(newDataset);
-    			myChart.update();
-      	
-      });
+    
       
       $(".nav-link").on("click", function() { 
     	  
@@ -341,19 +374,8 @@ if( request.getAttribute("tilaukset")!=null){
 
       });
 
-      function labelFunction(num){
-    	 	 labels.length = 0;
-    		 	for (i=0; i<num;i++){
-    	      	labels.push(newDate(0-i));	 
-    	      	}
-    		 	labels.reverse();
-    	      	myChart.update();
-    	      
-    	      	 tilastot();
-    		}
       
-     
-
+      
     </script>
 
   </body>

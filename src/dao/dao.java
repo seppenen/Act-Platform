@@ -71,7 +71,7 @@ public class dao {
 		return paluu;
 	}
 
-	public  String haeTiedotJSON(String[] sarakkeet, String taulu, String ehtoSarake, String ehtoArvo, int sort)
+	public  String haeTiedotJSON(String[] sarakkeet, String taulu, String ehtoSarake, String ehtoArvo, String string)
 			throws Exception {
 		String palautusJSON = "";
 		String sarStr = "";
@@ -83,12 +83,12 @@ public class dao {
 		if (ehtoSarake.length() > 0) {
 			sql += " WHERE " + ehtoSarake + "=?";
 		}
-		if (sort > 0) {
-			sql += " ORDER BY " + sort;
+		if (string!="") {
+			sql += " ORDER BY " + string;
 		}
 
 		con = yhdista();
-		if (con != null) { // jos yhteys onnistui
+		if (con != null) { 
 			stmtPrep = con.prepareStatement(sql);
 			if (ehtoSarake.length() > 0) {
 				stmtPrep.setString(1, ehtoArvo);

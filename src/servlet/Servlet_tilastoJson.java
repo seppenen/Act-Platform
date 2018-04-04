@@ -34,14 +34,15 @@ public class Servlet_tilastoJson extends HttpServlet {
 		System.out.println("Servlet_tilastoJson");
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("session");
+		String id=  request.getParameter("id");
 		
-		
-		//String id = request.getParameter("id");
+	
 		dao dao= new dao();
-		String id = request.getParameter("id");
+	
 		try {		
+			
 			String[] sarakkeet={"title","start"};
-			String strJSON=dao.haeTiedotJSON(sarakkeet,"orders","owner",id,0);	
+			String strJSON=dao.haeTiedotJSON(sarakkeet,"orders","service_id",id,"start");	
 	
 			PrintWriter out = response.getWriter();
 		    response.setContentType("text/html"); 

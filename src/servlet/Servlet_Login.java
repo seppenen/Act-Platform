@@ -41,6 +41,7 @@ public class Servlet_Login extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("Servlet_login.doPost()");
 		Dao_user dao = new Dao_user();
+		
 
 		String email = (request.getParameter("inputEmail"));
 		String password = (request.getParameter("inputPassword"));
@@ -54,14 +55,12 @@ public class Servlet_Login extends HttpServlet {
 				Dao_order tilaus = new Dao_order();
 				ArrayList<Order> tilaukset = tilaus.haeTilaukset(user.getId());
 
-				
 				HttpSession session = request.getSession(true);
 				session.setAttribute("session", user);
 				request.setAttribute("tilaukset", tilaukset);
 			
 				request.getRequestDispatcher("/dash.jsp").forward(request, response);
 
-				
 
 			} else {
 				request.setAttribute("errMsg", "Invalid login cidentials");

@@ -7,6 +7,7 @@ public class Dao_user extends dao {
 	public User haeAsiakas(String email, String password) {
 
 		User user= null;
+		
 		sql = "SELECT * FROM users WHERE email = ? AND password=?";
 		
 		try {
@@ -23,7 +24,7 @@ public class Dao_user extends dao {
 				user.setId(rs.getString("user_id"));
 				user.setUsername(rs.getString("username"));
 				user.setEmail(rs.getString("email"));
-				user.setCompany(rs.getString("email"));
+				
 				user.setStatus(rs.getInt("status"));
 				}
 			}
