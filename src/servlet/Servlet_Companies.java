@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.Dao_user;
 import dao.dao;
@@ -25,8 +26,8 @@ public class Servlet_Companies extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Servlet_Companies.doGet()");
 		dao dao = new dao();
-		Dao_user dao_user= new Dao_user(); 
-		User user= dao_user.haeAsiakas(request.getParameter("user"));
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("session");
 
 		
 		try {		

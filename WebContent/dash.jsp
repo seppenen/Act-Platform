@@ -14,10 +14,7 @@ response.sendRedirect("index.jsp");
     
     <% String id= request.getParameter("id");
     
-    
-    
-  
-    	
+
 %>
 
 
@@ -38,25 +35,123 @@ response.sendRedirect("index.jsp");
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
    
-    <link href="dashboard.css" rel="stylesheet">
+   <style>
+   
+   
+   body {
+  font-size: .875rem;
+}
+
+.feather {
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+}
+
+/*
+ * Sidebar
+ */
+.hat{
+position: sticky-top;
+height: 55px;
+color: #fff;
+padding-top: 10px;
+
+
+}
+
+#calendar .fc-day:hover
+{
+
+background: #ccc;
+transition: all .5s;
+} 
+
+.sidebar-sticky {
+ 
+  position: fixed;
+  top: 48px; /* Height of navbar */
+
+  padding-top: 20px;
+* Scrollable contents if viewport is shorter than content. */
+}
+
+.cal .nav-link {
+  font-weight: 500;
+  color: #333;
+}
+
+.cal .nav-link:hover {
+  font-weight: 500;
+  color: #ddd;
+  border-radius: 5px;
+  
+transition: all .5s;
+  background-color: #323741;
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #333;
+}
+
+
+.sidebar .nav-link .feather {
+  margin-right: 4px;
+  color: #999;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+
+
+.navbar-brand {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, .25);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.sub-class{
+margin-left: 23px;
+font-size: 13px;
+}
+
+.form-control-dark {
+  color: #fff;
+  background-color: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+/*
+ * Utilities
+ */
+
+.border-top { border-top: 1px solid #e5e5e5; }
+.border-bottom { border-bottom: 1px solid #e5e5e5; }
+
+   
+   </style>
+   
   </head>
 
   <body>
-  <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
-      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-      <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-          <a class="nav-link" href="#">Sign out</a>
-        </li>
-      </ul>
-    </nav>
-
+ 
+ <div class="container-fluid hat bg-dark sticky-top"> <h3>Logo</h3></div>
     <div class="container-fluid ">
       <div class="row ">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        <nav class="col-md-2 sidebar">
           <div class="sidebar-sticky">
-            <ul class="nav flex-column ">
+            <ul class="nav flex-column">
               <li class="nav-item ">
                 <a class="nav-link " href="dash.jsp">
                   <span data-feather="home"></span>
@@ -69,11 +164,17 @@ response.sendRedirect("index.jsp");
                   Calendar
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" id="services">
                 <a class="nav-link" href="services.jsp">
                   <span data-feather="box"></span>
                   Services
                 </a>
+
+  		 <div id="servicedrop" class="sub-class ">
+  		<ul class="nav flex-column">
+  		<li> <a class="nav-link" href="newService.jsp">Add service</a></li>
+  		<li> <a class="nav-link" href="services.jsp">Modify service</a></li>  </ul></div>
+  		 
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="users.jsp">
@@ -96,42 +197,29 @@ response.sendRedirect("index.jsp");
              
             </ul>
 
-            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-              <span>Reports</span>
-             
-            </h6>
-            <ul class="nav flex-column mb-2">
-              <li class="nav-item">
-                <a class="nav-link" value="1" href="#">
-                  <span data-feather="file-text"></span>
-                  Current day
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link report" id="7" value="7" href="#">
-                  <span data-feather="file-text"></span>
-                  Last week
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link report"  value="30" href="#">
-                  <span data-feather="file-text"></span>
-                  Last month
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link report" value="90" href="#">
-                  <span data-feather="file-text"></span>
-                  Last quarter
-                </a>
-              </li>
-            </ul>
+          
           </div>
         </nav>
 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h1 class="h2">Dashboard</h1>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 mt-3 px-4">
+          <div class="d-flex cal justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+       <h1 class="h2">Dashboard</h1>    
+       
+        <ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link report " value="1" href="#">Day</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link report" value="7" href="#">Week</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link report" value="30" href="#">Month</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link report" value="90" href="#">Quarter</a>
+  </li>
+</ul>
+
            
           </div>
 
@@ -173,6 +261,20 @@ response.sendRedirect("index.jsp");
     <!-- Graphs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script>
+    
+    $(document).ready(function () {
+    	 $("#servicedrop").hide(); 
+    	  $("#services").mouseenter(function(){
+    	    $("#servicedrop").show(); 
+    	  });
+
+    	  $("#services").mouseleave(function(){
+    	    $("#servicedrop").hide(); 
+    	  });
+
+    	 
+    	});
+    	
     var a=$.Deferred();
     var b=$.Deferred();
     var colorIteration=0;
@@ -337,12 +439,14 @@ response.sendRedirect("index.jsp");
     	
     	   newDataset = {
   				label: label,
-  				backgroundColor: color[colorIteration],
+  				 backgroundColor: color[colorIteration],
   				fill: false,
   				data: parsedData,
   				 // backgroundColor: 'transparent',
-  	            borderColor: 'transparent',
-  	            borderWidth: 4,
+  				
+  	           // backgroundColor: 'transparent',
+  	          
+  	            borderWidth: 0,
   	            pointBackgroundColor: '#007bff'
   			};
 

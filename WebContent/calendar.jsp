@@ -54,6 +54,7 @@ response.sendRedirect("index.jsp");
         center: 'title',
         right: 'month,agendaWeek,agendaDay,listWeek'
       },
+      firstDay: 1,
       defaultDate: '2018-03-12',
       editable: true,
       
@@ -65,7 +66,7 @@ response.sendRedirect("index.jsp");
         url: 'Servlet_calendar',
        
         error: function() {
-          $('#script-warning').show();
+         
         }
       },
       loading: function(bool) {
@@ -76,9 +77,15 @@ response.sendRedirect("index.jsp");
 		var clickDate=date.format();
     	    alert('Clicked on: ' + clickDate);
 
+    	  },
 
+      eventClick: function(calEvent, jsEvent, view) {
+
+    	    alert('Event: ' + calEvent.title+" "+calEvent.id);
 
     	  }
+    	  
+ 
     });
 
   });
@@ -138,35 +145,7 @@ response.sendRedirect("index.jsp");
               </li>
              
             </ul>
-            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-              <span>Reports</span>
-             
-            </h6>
-            <ul class="nav flex-column mb-2">
-              <li class="nav-item">
-                <a class="nav-link" value="1" href="#">
-                  <span data-feather="file-text"></span>
-                  Current day
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link report" id="7" value="7" href="#">
-                  <span data-feather="file-text"></span>
-                  Last week
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link report"  value="30" href="#">
-                  <span data-feather="file-text"></span>
-                  Last month
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link report" value="90" href="#">
-                  <span data-feather="file-text"></span>
-                  Last quarter
-                </a>
-              </li>
+          
             </ul>
           </div>
         </nav>

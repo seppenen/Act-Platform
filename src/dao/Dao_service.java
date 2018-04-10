@@ -9,16 +9,19 @@ public class Dao_service extends dao{
 	public boolean newService(Services service) {
 		boolean paluuArvo = true;
 		System.out.println(service.getTitle());
-		sql = "SELECT * FROM business_service WHERE email = ?";
+		sql = "INSERT INTO business_service (business_id, title, price, service_desc, timefrom, timeto, days, hours, owner) VALUES (?,?,?,?,?,?,?,?,?)";
 		try {
 			con = yhdista();
 			stmtPrep = con.prepareStatement(sql);
 			stmtPrep.setInt(1, service.getBusiness_id());
-			stmtPrep.setInt(2, 1);
-			stmtPrep.setString(3, service.getTitle());
-			stmtPrep.setInt(4, service.getPrice());
-			stmtPrep.setString(5, service.getDescription());
-			stmtPrep.setString(6, service.getTag());
+			stmtPrep.setString(2, service.getTitle());
+			stmtPrep.setString(3, service.getPrice());
+			stmtPrep.setString(4, service.getDescription());
+			stmtPrep.setString(5, service.getFrom());
+			stmtPrep.setString(6, service.getTo());
+			stmtPrep.setString(7, service.getDays());
+			stmtPrep.setString(8, service.getHours());
+			stmtPrep.setString(9, service.getOwner());
 
 			stmtPrep.executeUpdate();
 			con.close();

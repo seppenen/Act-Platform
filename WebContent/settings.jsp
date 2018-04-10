@@ -38,15 +38,9 @@ response.sendRedirect("index.jsp");
   </head>
 
   <body>
-  <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
-      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-      <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-          <a class="nav-link" href="#">Sign out</a>
-        </li>
-      </ul>
-    </nav>
+  
+  <div class="container-fluid bg-dark h-200">Targo</div>
+
 
       <div class="container-fluid">
       <div class="row">
@@ -91,42 +85,13 @@ response.sendRedirect("index.jsp");
               </li>
              
             </ul>
-            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-              <span>Reports</span>
-             
-            </h6>
-            <ul class="nav flex-column mb-2">
-              <li class="nav-item">
-                <a class="nav-link" value="1" href="#">
-                  <span data-feather="file-text"></span>
-                  Current day
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link report" id="7" value="7" href="#">
-                  <span data-feather="file-text"></span>
-                  Last week
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link report"  value="30" href="#">
-                  <span data-feather="file-text"></span>
-                  Last month
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link report" value="90" href="#">
-                  <span data-feather="file-text"></span>
-                  Last quarter
-                </a>
-              </li>
-            </ul>
+           
           </div>
         </nav>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h1 class="h2">Settings</h1>
+            <h1 class="display-4">Settings</h1>
            
           </div>
 

@@ -7,9 +7,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.Dao_service;
 import model.Services;
+import model.User;
 
 
 
@@ -30,6 +32,8 @@ public class Servlet_newService extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Servlet_newService.doPost()");
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("session");
 		
 		try {
 			
@@ -37,16 +41,22 @@ public class Servlet_newService extends HttpServlet {
 		Services service=new Services();
 		service.setTitle(request.getParameter("title"));		
 		service.setBusiness_id(Integer.parseInt(request.getParameter("business_id")));
-		service.setPrice(Integer.parseInt(request.getParameter("updatePrice")));
-		service.setTag(request.getParameter("tags"));
-		service.setDescription(request.getParameter("updateDescription"));
-		if(dao.newService(service)){
-			response.sendRedirect("dashboard.jsp");
-			System.out.println("Service OK");
+		service.setPrice(request.getParameter("price"));
+		service.setOwner(user.getId());
+		service.setFrom(request.getParameter("from"));
+		service.setTo(request.getParameter("to"));
+		service.setDays(request.getParameter("days"));
+		service.setHours(request.getParameter("hours"));
+		service.setDescription(request.getParameter("description"));
+		
+		if(dao.newService(service)) {
+			System.out.println("Company OK " + user.getId());
+			
 		}else{
-			response.sendRedirect("dashboard.jsp?ok=0");
-			System.out.println("service NOt OK");
+			
+			System.out.println("Company NO OK");
 		}
+	
 		
 	} catch (Exception e) {
 		// TODO Auto-generated catch block

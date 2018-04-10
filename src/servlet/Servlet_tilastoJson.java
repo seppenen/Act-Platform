@@ -33,7 +33,7 @@ public class Servlet_tilastoJson extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("Servlet_tilastoJson");
 		HttpSession session = request.getSession();
-		User user = (User)session.getAttribute("session");
+
 		String id=  request.getParameter("id");
 		
 	
