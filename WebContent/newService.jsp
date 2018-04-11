@@ -71,7 +71,7 @@
 
         <main role="main" class=" col-md-9 ml-sm-auto col-lg-10 pt-3 ml-1  px-4">
           <div class="d-flex cal justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h1 class="h2">Add service</h1>
+            <h1 class="h2 pl-3 pt-3 ">Add service</h1>
            
           </div>
 <div class=" mb-3 bg-white border">

@@ -66,17 +66,17 @@
         </nav>
 
         
-        <main role="main" class=" col-md-9 ml-sm-auto col-lg-10 pt-3 ml-1  px-4">
+   <main role="main" class=" col-md-9 ml-sm-auto col-lg-10 pt-3 ml-1  px-4">
           <div class="d-flex cal justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h1 class="h2">Services</h1>
+            <h1 class="h2 pl-3 pt-3">Services</h1>
            
           </div>
-          <form class="pl-4 mb-3 form-inline ">
+          <form class="pl-3 mb-3 form-inline ">
       <input class="form-control col-md-auto " type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     
-<div id="servicecards" class="col-md-auto ml-3 mr-3 mx-auto">
+<div id="servicecards" class="col-md-auto mx-auto">
   <div class="card mb-3 bg-white border">
   <img class="card-img-top" src="images/banner.png" alt="Card image cap">
   <div class="card-body ">
