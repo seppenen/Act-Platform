@@ -1,61 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%
-
-if(session.getAttribute("session")==null){
-
-response.sendRedirect("index.jsp");
-}
-%>
-    <%@ page import="model.User"%>  
-<%@ page import="java.util.ArrayList"%> 
-    <%@ page import="model.Order"%>
-    <%! @SuppressWarnings("unchecked") %>
-    
-    <% String id= request.getParameter("id");
- 	
-%>
-
-
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    
-
-    <title>Dashboard</title>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
-   <script type="text/javascript" src="jquery.timepicker.js"></script>
-  <link rel="stylesheet" type="text/css" href="jquery.timepicker.css">  
-    <link href="dashboard.css" rel="stylesheet">
-  </head>
-
-  <body>
-  <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
-      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-      <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-          <a class="nav-link" href="#">Sign out</a>
-        </li>
-      </ul>
-    </nav>
-
-      <div class="container-fluid">
-      <div class="row">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+<%@include file="header.jsp" %>
+<script type="text/javascript" src="jquery.timepicker.js"></script>
+  <link rel="stylesheet" type="text/css" href="jquery.timepicker.css">
+  <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+  
+  <body class="bg-light">
+ 
+<div class="container-fluid hat sticky-top"> <h3>TARGO</h3></div>
+    <div class="container bg-light">
+      <div class="row ">
+        <nav class="bg-light col-md-2 sidebar">
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
-              <li class="nav-item">
-                       <a class="nav-link " href="dash.jsp">
+              <li class="nav-item ">
+                <a class="nav-link " href="dash.jsp">
                   <span data-feather="home"></span>
                   Dashboard 
                 </a>
@@ -66,17 +23,31 @@ response.sendRedirect("index.jsp");
                   Calendar
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" id="services">
                 <a class="nav-link" href="services.jsp">
                   <span data-feather="box"></span>
                   Services
                 </a>
+
+  		 <div id="servicedrop" class="sub-class ">
+  		<ul class="nav flex-column">
+  		<li> <a class="nav-link" href="newService.jsp">Add service</a></li>
+  		<li> <a class="nav-link" href="services.jsp">Modify service</a></li>  
+  		</ul></div>
+  		 
               </li>
-              <li class="nav-item">
+              <li class="nav-item" id="customers">
                 <a class="nav-link" href="users.jsp">
                   <span data-feather="users"></span>
                   Customers
                 </a>
+                
+                 <div id="customerdrop" class="sub-class ">
+  		<ul class="nav flex-column">
+  		<li> <a class="nav-link" href="newService.jsp">El Medano</a></li>
+  		<li> <a class="nav-link" href="services.jsp">Kite surf school</a></li> 
+  		<li> <a class="nav-link" href="services.jsp">Some company</a></li> 
+  		</ul></div>
               </li>
                <li class="nav-item">
                 <a class="nav-link" href="companies.jsp">
@@ -92,35 +63,19 @@ response.sendRedirect("index.jsp");
               </li>
              
             </ul>
-            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-              <span>Options</span>
-             
-            </h6>
-            <ul class="nav flex-column mb-2">
-              <li class="nav-item">
-                <a class="nav-link" value="1" href="services.jsp">
-                  <span data-feather="file-text"></span>
-                 Modify service
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link report" id="7" value="7" href="newService.jsp">
-                  <span data-feather="file-text"></span>
-                  Add service
-                </a>
-              </li>
-         
-            </ul>
+
+          
           </div>
         </nav>
 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+
+        <main role="main" class=" col-md-9 ml-sm-auto col-lg-10 pt-3 ml-1  px-4">
+          <div class="d-flex cal justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <h1 class="h2">Add service</h1>
            
           </div>
-
-          <form action="Servlet_newService" method="post" id="newProduct" class="col-md-8 mx-auto">
+<div class=" mb-3 bg-white border">
+          <form action="Servlet_newService" method="post" id="newProduct" class="   p-3  mx-auto">
   <div class=" form-group">
     <label for="title">Title</label>
     <input  class="form-control" name="title" id="title" placeholder="Name">
@@ -136,7 +91,7 @@ response.sendRedirect("index.jsp");
     <div class="col-md-2  ">   
       <input class="form-control" name="from" id="from" placeholder="00.00">
     </div> 
-    <label for="exampleFormControlInput1"> - </label>
+    <label for=""> - </label>
     <div class="col-md-2">
       <input class="form-control"  name="to" id="to" placeholder="00.00">
     </div>
@@ -145,13 +100,13 @@ response.sendRedirect("index.jsp");
     </div>
   </div>  </div>
   <div class="form-group">
-    <label for="exampleFormControlSelect1">Company</label>
+    <label for="">Company</label>
     <select name="company" id="company" class="form-control" >
       
     </select>
   </div>
   <div class="form-group">
-    <label for="exampleFormControlSelect2">Availability / hour</label>
+    <label for="">Availability / hour</label>
     <select  class="form-control" name="hours" id="hours">
       <option value="1">1</option>
       <option value="2">2</option>
@@ -161,31 +116,47 @@ response.sendRedirect("index.jsp");
     </select>
   </div>
   <div class="form-group">
-    <label for="exampleFormControlTextarea1">Description</label>
+    <label >Description</label>
     <textarea class="form-control" name="description" id="description" rows="4"></textarea>
   </div>
-  <label for="exampleFormControlTextarea1">Upload picture</label>
-  <div class="mb-3 input-group">
+
+
   
-  <div class="custom-file">
-    <input type="file" class="custom-file-input" id="imageinput">
-    <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
-  </div>
-  <div class="input-group-append">
-    
-    <button class="btn btn-primary" type="button">Upload</button>
-    
-  </div>
-  
-</div>
- <label class="mb-3" for="exampleFormControlTextarea1">Picture size 841x120</label>
  <input type="hidden" id="business_id" name="business_id" value="">
-  <div class="form-group">
-  <input type="submit" class="mt-2 btn btn-primary btn-md " id="done" value="Submit"> 
- </div>
+ <input type="hidden" id="image" name="image" value="">
+
+  
 </form>
 
-       
+     
+     <label class="mb-3 pl-3" for="exampleFormControlTextarea1">Picture size 841x120</label>
+ 
+   
+  <form action="Servlet_upload" enctype="multipart/form-data" method="post" id="kuva"  class="was-validated">
+ 
+
+
+
+  <div class="input-group p-3">
+
+  <div class="custom-file">
+        <input type="file" class="custom-file-input" name="uploadFile" id="upLoadFile" required />
+        <label class="custom-file-label" for="uploadFile">Choose file</label>
+        </div> 
+        <div class="input-group-append">
+        <input class="btn btn-primary" type="button" value="Upload" onclick="lataa()" /> 
+        
+ </div></div> 
+      <label class="mb-3 pl-3" id="picture"></label>
+ 
+ </form>
+  
+    <div class="form-group">
+  <button class="m-3 btn btn-primary btn-md " id="done" type="button" disabled >Submit</button>
+<img src="images/spinner.gif" class="mx-auto " id="spinner">
+ </div>
+</div>   
+</div> 
   </div>
         </main>
       </div>
@@ -195,10 +166,16 @@ response.sendRedirect("index.jsp");
       feather.replace()
     </script>
 
-    <!-- Graphs -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+
     <script>
     
+   $('.custom-file-input').on('change', function() { 
+    	   let fileName = $(this).val().split('\\').pop(); 
+    	   $(this).next('.custom-file-label').addClass("selected").html(fileName); 
+    	});
+   
+	$("#spinner").hide();
+
     $('#to').timepicker({ 'timeFormat': 'H:i' });
     $('#from').timepicker({ 'timeFormat': 'H:i' });
  
@@ -224,7 +201,23 @@ response.sendRedirect("index.jsp");
   	$("#business_id").val(value);		
       });
       
-      
+      $('#done').click(function() {
+    	 if(  $("#newProduct").valid()){
+    		 
+    		   $.ajax({
+                   type: "POST",
+                   url: "Servlet_newService",
+                   data: $('#newProduct').serialize(),
+                   success: function () {
+                 	  $('#newProduct').trigger("reset");
+                 	 $('#picture').html("<h6>Service successfully added</h6>");
+                           
+                   }
+               });
+    	 }
+    	  
+      });
+     
       $("#newProduct").validate({ 
           rules: {
           	
@@ -274,21 +267,64 @@ response.sendRedirect("index.jsp");
   				required: "This field is required.",
   						
   			}
-  		},	 
-          submitHandler: function (form) {
+  		}
+  		
+   
+      });
+      
+      
+      function lataa(){	
+    	  
+    	  console.log("lataa()")
+  		var paatteet = ["png", "jpg", "gif"]; 
+  		var paate = document.getElementById("upLoadFile").value.split(".")[1];
+  		var kelvollinen = 0;
+  		
+  		for(var i=0;i<paatteet.length;i++){
+  			if(paatteet[i]==paate.toLowerCase()){
+  				console.log("kelvollinen");
+  				kelvollinen=1;
+  				break;
+  			}
+  		}		
+  		if(kelvollinen==1&&document.getElementById("upLoadFile").value.length>0){
+  		 
+  			event.stopPropagation();
+          event.preventDefault();
+          var files = files;
+          var form = document.getElementById('kuva');
+          var data = new FormData(form);
+          postFilesData(data);
+  			
+  			$("#spinner").show();
+  			
+  		  function postFilesData(data) {
               $.ajax({
-                  type: "POST",
-                  url: "Servlet_newService",
-                  data: $(form).serialize(),
-                  success: function () {
-                	  $('#newProduct').trigger("reset");
-                          
+                  url :  'Servlet_upload',
+                  type : 'POST',
+                  data : data,
+                  cache : false,
+                 
+                  processData : false,
+                  contentType : false,
+                  success : function(data) {
+                	  $("#done").prop('disabled', false);
+                    
+                    $('#picture').html("Loaded file: "+data);
+                    $('#image').val(data);
+                    
+                  },
+                  error : function(jqXHR, textStatus, errorThrown) {
+                      alert('ERRORS: ' + textStatus);
                   }
               });
-              return false; // required to block normal submit since you used ajax
+              
+              
           }
+  		}
+  		$("#spinner").hide();
   		
-      });
+  	}
       
     </script>
 

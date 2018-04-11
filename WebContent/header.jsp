@@ -1,141 +1,86 @@
-<%
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%
 
+    if(session.getAttribute("savePath")==null){
+    	String savePath ="/Users/alexandrseppenen/eclipse-workspace/Targo/WebContent/images/uploads/";
+    	session.setAttribute("savePath", savePath);		
+    }
+    
 if(session.getAttribute("session")==null){
 
 response.sendRedirect("index.jsp");
 }
 %>
+    <%@ page import="model.User"%>  
+<%@ page import="java.util.ArrayList"%> 
+    <%@ page import="model.Order"%>
+    <%! @SuppressWarnings("unchecked") %>
+    
+    <% String id= request.getParameter("id");
+    
 
-<%@ page import="model.User"%>  
-<%@ page import="java.util.ArrayList"%>  
-<%! @SuppressWarnings("unchecked") %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+%>
 
-<head>
-<meta charset="utf-8">
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+
+    <title>Dashboard</title>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
- <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
- 
- <link href='cal/fullcalendar.min.css' rel='stylesheet' />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+   <link href='cal/fullcalendar.min.css' rel='stylesheet' />
+
 <link href='cal/fullcalendar.print.min.css' rel='stylesheet' media='print' />
 <script src='cal/lib/moment.min.js'></script>
 <script src='cal/lib/jquery.min.js'></script>
-<script src='cal/fullcalendar.min.js'></script>
-<script src='jquery-ui.min.js'></script>
-
- </head>
-<body>
-<style> 
-.icon_mini{
-	height:20px;
-	vertical-align:bottom;
-}
-.table-top{
-	text-align:center;
-}
-@font-face {
-    font-family: 'SignifyLite';
-    src: url('signifylite-webfont.eot');
-    src: url('signifylite-webfont.eot?#iefix') format('embedded-opentype'),
-         url('signifylite-webfont.woff') format('woff'),
-         url('signifylite-webfont.ttf') format('truetype'),
-         url('signifylite-webfont.svg#SignifyLite') format('svg');
-    font-weight: 600;
-    font-style: normal;
-
+<script src='cal/fullcalendar.min.js'></script> 
+   <style>
+   
+   
+   body {
+  font-size: 15px;
 }
 
-.logo {
-		font-weight: 500;
-	color: white;
-    background-color:  #b61483  ;
-  padding: 0 90px;
+.shadow{
+-webkit-box-shadow: 0px 0px 0px 1px rgba(237, 238, 240, 1);
+-moz-box-shadow:    0px 0px 0px 1px rgba(237, 238, 240, 1);
+box-shadow:         0px 0px 0px 1px rgba(237, 238, 240, 1);
 }
 
-.footer {
-	
-margin-top:300px;
-font-weight: 500;
-color: white;
-background-color:  #b61483  ;
-  padding: 0 90px;
+
+
+.feather {
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
 }
 
-a {
-color: black;
-}
-a:hover{
-	color: black;
-text-decoration: none;
-}
-.icon{
-	height:30px;
-}
-.topmenu a{
-font-family: 'SignifyLite';
-font-size: 20px;
-padding-left: 10px;
-color: #2973fa;
-}
-.signify {
-font-family: 'SignifyLite';
-font-size: 20px;
-padding-left: 10px;
-color: #2973fa;
-
-}
-.menu ul{
-height:50px;
-font-family: 'SignifyLite';
-font-size: 30px;
-padding-left: 0px;
-
-}
-.orders {
-font-size:12px;	
-}
-.business
-{
-padding-left: 50px;
-font-size:12px;	
-}
-.button-service
-{
-margin-top:20px;	
+table {
+border: 1px solid #dddd; 
 }
 
-.companyimg
-{
-width:150px;
-height:150px;
-}
 
-.container-companies
-{
-width:70%;
+.hat{
 
-}
-.company-name, .error
-{
-text-align: center;
+height: 65px;
+color: #fff;
+padding-top: 15px;
+background-color: rgb(74, 118, 168);
+-webkit-box-shadow: 0px 3px 11px 0px rgba(50, 50, 50, 0.26);
+-moz-box-shadow:    0px 3px 11px 0px rgba(50, 50, 50, 0.26);
+box-shadow:         0px 3px 11px 0px rgba(50, 50, 50, 0.26);
 
-}
-.nav-menu
-{
 
-font-size:16px;	
-}
-.service-form
-{
-
-font-size:12px;	
 }
 
 #calendar .fc-day:hover
@@ -143,7 +88,103 @@ font-size:12px;
 
 background: #ccc;
 transition: all .5s;
+} 
+
+#spinner{
+margin-top: 0;
+margin-left: 10px;
+ width: 20px;
+  height: 20px;
 }
-</style>
-<div class="logo container-fluid pt-3 pb-3 pl-5 pr-0 h-500"><h2>Actify</h2>
-</div>
+
+.sidebar-sticky {
+ position: fixed;
+
+ margin-left: 0px;
+
+  padding-top: 30px;
+
+}
+
+.cal .nav-link {
+  font-weight: 400;
+  color: #333;
+}
+
+.cal .nav-link:hover {
+  font-weight: 400;
+  
+  border-radius: 5px;
+  
+transition: all .2s;
+  background-color: #e8f1f7;
+}
+
+.sidebar .nav-link {
+  font-weight: 400;
+  color: rgb(40, 84, 116)
+}
+
+.sidebar .nav-link:hover{
+  font-weight: 400;
+ 
+
+}
+
+
+.sidebar .nav-link .feather {
+  margin-right: 4px;
+  color: rgb(153, 177, 197)
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: rgb(40, 84, 116)
+  
+}
+
+
+
+
+.sub-class{
+margin-left: 30px;
+font-size: 14px;
+
+
+}
+
+
+
+.border-top { border-top: 1px solid #e5e5e5; }
+.border-bottom { border-bottom: 1px solid #e5e5e5; }
+
+   
+   </style>
+   
+  </head>
+  
+  <script>
+
+  $(document).ready(function () {
+	  
+  	 $("#servicedrop").hide(); 
+  	  $("#services").mouseenter(function(){
+  	    $("#servicedrop").slideDown("fast");
+  	  });
+
+  	  $("#services").mouseleave(function(){
+  	    $("#servicedrop").slideUp("fast"); 
+  	  });
+  	  
+ 	 $("#customerdrop").hide(); 
+ 	  $("#customers").mouseenter(function(){
+ 	    $("#customerdrop").slideDown("fast");
+ 	  });
+
+ 	  $("#customers").mouseleave(function(){
+ 	    $("#customerdrop").slideUp("fast"); 
+ 	  });
+
+  	 
+  	});
+  </script>

@@ -1,48 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%
-
-if(session.getAttribute("session")==null){
-
-response.sendRedirect("index.jsp");
-}
-%>
-    <%@ page import="model.User"%>  
-<%@ page import="java.util.ArrayList"%> 
-    <%@ page import="model.Order"%>
-    <%! @SuppressWarnings("unchecked") %>
-    
-    <% String id= request.getParameter("id");
- 	
-%>
+<%@include file="header.jsp" %>
 
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    
 
-    <title>Dashboard</title>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
-   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
- 
- <link href='cal/fullcalendar.min.css' rel='stylesheet' />
-<link href='cal/fullcalendar.print.min.css' rel='stylesheet' media='print' />
-<script src='cal/lib/moment.min.js'></script>
-<script src='cal/lib/jquery.min.js'></script>
-<script src='cal/fullcalendar.min.js'></script>
-<script src='jquery-ui.min.js'></script> 
-    <link href="dashboard.css" rel="stylesheet">
-  </head>
 <script>
 
   $(document).ready(function() {
@@ -55,7 +14,7 @@ response.sendRedirect("index.jsp");
         right: 'month,agendaWeek,agendaDay,listWeek'
       },
       firstDay: 1,
-      defaultDate: '2018-03-12',
+      
       editable: true,
       
       navLinks: true, // can click day/week names to navigate views
@@ -91,24 +50,20 @@ response.sendRedirect("index.jsp");
   });
 
 </script>
-  <body>
-  <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
-      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-      <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-          <a class="nav-link" href="#">Sign out</a>
-        </li>
-      </ul>
-    </nav>
 
-      <div class="container-fluid">
-      <div class="row">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+
+
+
+  <body class="bg-light">
+ 
+<div class="container-fluid hat sticky-top"> <h3>TARGO</h3></div>
+    <div class="container bg-light">
+      <div class="row ">
+        <nav class="bg-light col-md-2 sidebar">
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
-              <li class="nav-item">
-                       <a class="nav-link " href="dash.jsp">
+              <li class="nav-item ">
+                <a class="nav-link " href="dash.jsp">
                   <span data-feather="home"></span>
                   Dashboard 
                 </a>
@@ -119,17 +74,31 @@ response.sendRedirect("index.jsp");
                   Calendar
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" id="services">
                 <a class="nav-link" href="services.jsp">
                   <span data-feather="box"></span>
                   Services
                 </a>
+
+  		 <div id="servicedrop" class="sub-class ">
+  		<ul class="nav flex-column">
+  		<li> <a class="nav-link" href="newService.jsp">Add service</a></li>
+  		<li> <a class="nav-link" href="services.jsp">Modify service</a></li>  
+  		</ul></div>
+  		 
               </li>
-              <li class="nav-item">
+              <li class="nav-item" id="customers">
                 <a class="nav-link" href="users.jsp">
                   <span data-feather="users"></span>
                   Customers
                 </a>
+                
+                 <div id="customerdrop" class="sub-class ">
+  		<ul class="nav flex-column">
+  		<li> <a class="nav-link" href="newService.jsp">El Medano</a></li>
+  		<li> <a class="nav-link" href="services.jsp">Kite surf school</a></li> 
+  		<li> <a class="nav-link" href="services.jsp">Some company</a></li> 
+  		</ul></div>
               </li>
                <li class="nav-item">
                 <a class="nav-link" href="companies.jsp">
@@ -144,19 +113,17 @@ response.sendRedirect("index.jsp");
                 </a>
               </li>
              
-            </ul>
-          
-            </ul>
+            </ul>       
           </div>
         </nav>
 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h1 class="h2">Calendar</h1>
+        <main role="main" class=" col-md-9 ml-sm-auto col-lg-10 pt-3 ml-1  px-4">
+          <div class="d-flex cal justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <h1 class="h2 pt-3 pl-3">Calendar</h1>
            
           </div>
 
-          <div id='calendar'></div>
+          <div class="bg-white p-2 border" id='calendar'></div>
        
   </div>
         </main>

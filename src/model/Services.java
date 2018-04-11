@@ -2,7 +2,13 @@ package model;
 
 public class Services {
 
-	String title, description, to, from, days, owner, price, hours;
+	String title, description, to, from, days, owner, price, hours, image;
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
 	public String getHours() {
 		return hours;
 	}

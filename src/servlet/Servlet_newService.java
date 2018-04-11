@@ -47,6 +47,7 @@ public class Servlet_newService extends HttpServlet {
 		service.setTo(request.getParameter("to"));
 		service.setDays(request.getParameter("days"));
 		service.setHours(request.getParameter("hours"));
+		service.setImage(request.getParameter("image"));
 		service.setDescription(request.getParameter("description"));
 		
 		if(dao.newService(service)) {

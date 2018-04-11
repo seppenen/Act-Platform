@@ -1,6 +1,6 @@
 <%@include file="header.jsp" %>
 <%@ page import="model.Order"%>
-<% String id= request.getParameter("id"); %>
+<% String id = request.getParameter("id"); %>
 <script>
 
   $(document).ready(function() {
