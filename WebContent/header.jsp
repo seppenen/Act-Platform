@@ -3,7 +3,7 @@
     <%
 
     if(session.getAttribute("savePath")==null){
-    	String savePath ="/Users/alexandrseppenen/eclipse-workspace/Targo/WebContent/images/uploads/";
+    	String savePath ="/Users/alexandrseppenen/eclipse-workspace/Targo/WebContent/images/";
     	session.setAttribute("savePath", savePath);		
     }
     
@@ -52,9 +52,9 @@ response.sendRedirect("index.jsp");
 }
 
 .shadow{
--webkit-box-shadow: 0px 0px 0px 1px rgba(237, 238, 240, 1);
--moz-box-shadow:    0px 0px 0px 1px rgba(237, 238, 240, 1);
-box-shadow:         0px 0px 0px 1px rgba(237, 238, 240, 1);
+-webkit-background-clip: padding-box;
+
+box-shadow: 0 0.5px 2px 0 rgba(0, 0, 0, .2);
 }
 
 
@@ -72,9 +72,9 @@ border: 1px solid #dddd;
 
 .hat{
 
-height: 65px;
+height: 50px;
 color: #fff;
-padding-top: 15px;
+padding-top: 10px;
 background-color: rgb(74, 118, 168);
 -webkit-box-shadow: 0px 3px 11px 0px rgba(50, 50, 50, 0.26);
 -moz-box-shadow:    0px 3px 11px 0px rgba(50, 50, 50, 0.26);
@@ -143,7 +143,10 @@ transition: all .2s;
   
 }
 
-
+ .errors {
+      color: red;
+     
+   }
 
 
 .sub-class{
@@ -151,6 +154,10 @@ margin-left: 30px;
 font-size: 14px;
 
 
+}
+
+.service-item-hover{
+background-color: black;
 }
 
 
@@ -166,6 +173,8 @@ font-size: 14px;
   <script>
 
   $(document).ready(function () {
+	  
+	 
 	  
   	 $("#servicedrop").hide(); 
   	  $("#services").mouseenter(function(){

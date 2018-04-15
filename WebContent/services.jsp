@@ -67,7 +67,7 @@
 
         
    <main role="main" class=" col-md-9 ml-sm-auto col-lg-10 pt-3 ml-1  px-4">
-          <div class="d-flex cal justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+          <div class="d-flex cal justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 ">
             <h1 class="h2 pl-3 pt-3">Services</h1>
            
           </div>
@@ -77,23 +77,8 @@
     </form>
     
 <div id="servicecards" class="col-md-auto mx-auto">
-  <div class="card mb-3 bg-white border">
-  <img class="card-img-top" src="images/banner.png" alt="Card image cap">
-  <div class="card-body ">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-  </div>
-</div>
-<div class="card mb-3 bg-white border " >
-    <img class="card-img-top" src="images/banner.png" alt="Card image cap">
-
-  <div class="card-body">
   
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-  </div>
+
 </div>
 
        
@@ -110,15 +95,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script>
 
- 
-      
-      $(".report").on("click", function() { 
-    	  
-    	  labelFunction($(this).attr("value"));
 
-      });
+    $(document).ready(function () {
+    	
+    	 $(document).on('mouseover', '.item-box', function(event) {
+            alert(this.id);
+       });
 
-      
+    $.getJSON("Servlet_services", function(result){
+    	
+        $.each(result, function(i, field) { 
+        
+        	
+         $("#servicecards").append("<div id='"+field.service_id+"' class=' item-box card mb-3'><img  class='service-item-hover card-img-top' src='images/uploads/"+field.picture+"' alt='Card image cap'> <div class='card-body '><h5 class='card-title'>"+field.title+"</h5></div></div>");
+     });
+ });
+
+    });
+    
+  
       
     </script>
 

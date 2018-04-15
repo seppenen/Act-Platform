@@ -11,7 +11,7 @@ public class Dao_service extends dao{
 	
 	public boolean newService(Services service) {
 		boolean paluuArvo = true;
-		System.out.println(service.getTitle());
+		
 		sql = "INSERT INTO business_service (business_id, title, price, service_desc, timefrom, timeto, days, hours, owner, picture) VALUES (?,?,?,?,?,?,?,?,?,?)";
 		try {
 			con = yhdista();
@@ -24,7 +24,7 @@ public class Dao_service extends dao{
 			stmtPrep.setString(6, service.getTo());
 			stmtPrep.setString(7, service.getDays());
 			stmtPrep.setString(8, service.getHours());
-			stmtPrep.setString(9, service.getHours());
+			stmtPrep.setString(9, service.getOwner());
 			stmtPrep.setString(10, service.getImage());
 
 			stmtPrep.executeUpdate();

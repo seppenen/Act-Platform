@@ -123,7 +123,7 @@
            
           </div>
 
-          <div class="bg-white p-2 border" id='calendar'></div>
+          <div class="shadow bg-white m-2 p-2  " id='calendar'></div>
        
   </div>
         </main>

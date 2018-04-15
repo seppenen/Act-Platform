@@ -21,19 +21,23 @@ import model.User;
 @WebServlet("/Servlet_services")
 public class Servlet_services extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
+	@SuppressWarnings({ "null", "unchecked" })
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Servlet_services.doGet()");
-		Dao_service servicelist = new Dao_service();
+		
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("session");
-
+		dao dao= new dao();
 		try {		
 			
-			ArrayList <Services>services = servicelist.haeServices(user.getId());
-			request.setAttribute("services", services);	
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/services.jsp");
-			dispatcher.forward(request, response);	
+			String[] sarakkeet={"service_id","title","picture"};
+			String strJSON=dao.haeTiedotJSON(sarakkeet,"business_service","owner",user.getId(),"business_id");	
+			
+			PrintWriter out = response.getWriter();
+			response.setContentType("text/html"); 
+		    System.out.println(strJSON);
+		    out.println(strJSON);		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	

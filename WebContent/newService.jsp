@@ -74,7 +74,7 @@
             <h1 class="h2 pl-3 pt-3 ">Add service</h1>
            
           </div>
-<div class=" mb-3 bg-white border">
+<div class=" mb-3 bg-white shadow">
           <form action="Servlet_newService" method="post" id="newProduct" class="   p-3  mx-auto">
   <div class=" form-group">
     <label for="title">Title</label>
@@ -108,6 +108,7 @@
   <div class="form-group">
     <label for="">Availability / hour</label>
     <select  class="form-control" name="hours" id="hours">
+      <option value="-1"></option>
       <option value="1">1</option>
       <option value="2">2</option>
       <option value="3">3</option>
@@ -187,7 +188,7 @@
       });
       selectCompany();
       function selectCompany(){
-    		$("#company").append("<option>Select</option>");
+    		$("#company").append("<option id='-1'></option>");
     		$.getJSON("Servlet_Companies?user="+'${session.getUsername()}', function(result){
     	        $.each(result, function(i, field){
     	        	$("#company").append("<option value='"+field.business_id+"'>"+field.business_name+"</option>");
@@ -196,7 +197,9 @@
     	    });
     	}
       
-      $("#company").change(function(){			
+      $("#company").change(function(){	
+    	  $("#hours option[value='-1']").remove();
+    	  $("#company option[id='-1']").remove(); 
   		var value=$(this).val();
   	$("#business_id").val(value);		
       });
@@ -219,11 +222,12 @@
       });
      
       $("#newProduct").validate({ 
+    	  errorClass: 'errors',
           rules: {
           	
-          	company:{      		
-          		required: true
-          	},
+        	  company: { 
+        		  required : true 
+        		  },
           	
           	title: {
                   required: true,
@@ -239,7 +243,11 @@
               to: {
                   required: true
               },
+              
               days: {
+                  required: true
+              },
+              hours: {
                   required: true
               },
               description: {
@@ -276,7 +284,7 @@
       function lataa(){	
     	  
     	  console.log("lataa()")
-  		var paatteet = ["png", "jpg", "gif"]; 
+  		var paatteet = ["png", "jpg", "gif","jpeg"]; 
   		var paate = document.getElementById("upLoadFile").value.split(".")[1];
   		var kelvollinen = 0;
   		
@@ -285,6 +293,8 @@
   				console.log("kelvollinen");
   				kelvollinen=1;
   				break;
+  			}else{
+  				$('#picture').html("<span style='color:red'>Wrong format</span>");
   			}
   		}		
   		if(kelvollinen==1&&document.getElementById("upLoadFile").value.length>0){
@@ -312,6 +322,7 @@
                     
                     $('#picture').html("Loaded file: "+data);
                     $('#image').val(data);
+                    console.log(data);
                     
                   },
                   error : function(jqXHR, textStatus, errorThrown) {
@@ -325,6 +336,7 @@
   		$("#spinner").hide();
   		
   	}
+      
       
     </script>
 

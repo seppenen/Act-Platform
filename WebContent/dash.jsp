@@ -86,12 +86,12 @@
 </ul>
    
           </div>
-          <canvas class=" shadow bg-white " id="myChart" ></canvas>
+          <canvas class=" shadow bg-white   " id="myChart" ></canvas>
          
           <table class="table  table-md table-hover mt-4 orders">
  		<div class="col-md-12 mt-2 table-top"><h2>Latest Activity</h2></div>
         
-         <thead style="background-color:rgb(74, 118, 168);">
+         <thead class="shadow" style="background-color:rgb(74, 118, 168);">
 
     <tr style="color:#fff;">
       <th scope="col">#</th>
@@ -102,7 +102,7 @@
     </tr>
   </thead>
   
-  <tbody class="border bg-white" id="tilaukset">
+  <tbody class="shadow bg-white" id="tilaukset">
 
 
 </tbody>

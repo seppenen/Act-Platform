@@ -30,19 +30,20 @@ public class Servlet_upload extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		System.out.println("Servlet_Upload.doPost()");
-    	String savePath = request.getServletContext().getRealPath("") + "uploads"; 
-    	HttpSession session = request.getSession(true);
-    	savePath = session.getAttribute("savePath").toString();
-    	System.out.println("Polku on: " + savePath); //Sh
+    	String savePath = "/Users/alexandrseppenen/eclipse-workspace/Targo/WebContent/images/" ;
+    	
+    	System.out.println("Polku on: " + savePath);
     	
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Servlet_Upload.doPost()");
-    	String savePath = request.getServletContext().getRealPath("") + "uploads"; 
+		String savePath = "/Users/alexandrseppenen/eclipse-workspace/Targo/WebContent/images/uploads" ;
+    	
+    	
     	HttpSession session = request.getSession(true);
-    	savePath = session.getAttribute("savePath").toString();
+    	
     	System.out.println("Polku on: " + savePath); //Shows the path from where server is serving not the path of your source code        
         File fileSaveDir = new File(savePath);
         if (!fileSaveDir.exists()) {

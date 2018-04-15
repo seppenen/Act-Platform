@@ -36,7 +36,9 @@ public class Servlet_newService extends HttpServlet {
 		User user = (User)session.getAttribute("session");
 		
 		try {
-			
+			String str = request.getParameter("image");
+			str= str.substring(0, str.length() - 2);
+			System.out.println("Company OK " + str+"K");
 		Dao_service dao= new Dao_service();
 		Services service=new Services();
 		service.setTitle(request.getParameter("title"));		
@@ -47,11 +49,11 @@ public class Servlet_newService extends HttpServlet {
 		service.setTo(request.getParameter("to"));
 		service.setDays(request.getParameter("days"));
 		service.setHours(request.getParameter("hours"));
-		service.setImage(request.getParameter("image"));
+		service.setImage(str);
 		service.setDescription(request.getParameter("description"));
 		
 		if(dao.newService(service)) {
-			System.out.println("Company OK " + user.getId());
+			
 			
 		}else{
 			
