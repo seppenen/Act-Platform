@@ -101,60 +101,64 @@ if( request.getAttribute("company")!=null){
     <script>
       feather.replace()
     </script>
-	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+
+	
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYGmROPS0aVzBLHXoT1zWHEpIipah9w2A&libraries=places&callback=initAutocomplete" async defer></script>
     <script>
   
- var coords=$.Deferred();
+
     $("#spinner").hide();
 
     function initAutocomplete() {
     
-    var  autocomplete = new google.maps.places.Autocomplete((document.getElementById('address'))); 
+	new google.maps.places.Autocomplete((document.getElementById('address'))); 
      
     }
     
-    $("#address").blur(function() {
-        geocode();
-      });
 
-   
-    
     function geocode(){
-    	var georesult=false;
-    	var location=$('#address').val();
-		axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
-    	params:{
-    	address:location,
-    	key:'AIzaSyDYGmROPS0aVzBLHXoT1zWHEpIipah9w2A'
-    	}
-    	}).then(function(response){
     	
-    	var lat = response.data.results[0].geometry.location.lat;
-    	var lng = response.data.results[0].geometry.location.lng;
+    	var a=$.Deferred();
+   
+    	var location=$('#address').val(); 	
+    	
+    	$.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address='+location+'&key=AIzaSyDYGmROPS0aVzBLHXoT1zWHEpIipah9w2A', function(response){
+    		
+    	var lat = response.results[0].geometry.location.lat;
+    	var lng = response.results[0].geometry.location.lng;
+    	console.log(lat+ " "+lng);
+    
+    	if(lat!="" && lng!=""){    		
+    	
     	$("#lat").val(lat);
     	$("#lng").val(lng);
-    	
-    	georesult=true;
-    	console.log(lat + " "+ lng);
 
+    	a.resolve();
+    	
+    	}else{
+    		
+    		geocode();
+    		
+    	}
     	})
 
-    	.catch(function(error){
-    		if(!georesult){
-    			geocode();
-    		}
-    		console.log(error);
-    	})
-    	
-    	
+    	return a;
     	
     	}
     
+ 
     $('#done').click(function() {
+    
+    	const coords = geocode();
     	
-   	 if(  $("#newProduct").valid()){
-   		 
+    	coords.done(function(){
+    		
+    		
+   			 console.log("coords.done");
+   	 if($("#newProduct").valid()){
+   		
+	 
    		   $.ajax({
                   type: "POST",
                   url: "Servlet_newService",
@@ -164,10 +168,11 @@ if( request.getAttribute("company")!=null){
                 	 $('#picture').html("<h6>Service successfully added</h6>");
                           
                   }
-              });
+              }); 
    	 }
-   	  
-     });
+   	 });
+    
+    });
     
       $("#newProduct").validate({ 
     	  errorClass: 'errors',

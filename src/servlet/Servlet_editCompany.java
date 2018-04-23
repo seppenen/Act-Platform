@@ -30,7 +30,11 @@ public class Servlet_editCompany extends HttpServlet {
 		dao dao = new dao();
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("session");
-
+		if(user == null) {
+			
+			response.sendRedirect("index.jsp");
+			
+		}
 		try {
 			
 			if(dao.iftrue("*", "business", "business_id", id, "user_id", user.getId()) || user.getStatus()==1) {
