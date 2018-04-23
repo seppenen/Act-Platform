@@ -32,7 +32,7 @@ response.sendRedirect("index.jsp");
     <meta name="author" content="">
     
 
-    <title>Targo Project</title>
+    <title> Project</title>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -156,6 +156,7 @@ font-size: 14px;
 
 }
 
+
 .service-item-hover{
 background-color: black;
 }
@@ -170,30 +171,129 @@ background-color: black;
    
   </head>
   
+  
+ <body class="bg-light">
+  <div class="container-fluid hat sticky-top"> <h3>Company</h3></div>
+    <div class="container bg-light">
+      <div class="row ">
+        <nav class="bg-light col-md-1 sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item ">
+                <a class="nav-link " href="dash.jsp">
+                  <span data-feather="home"></span>
+                  Dashboard 
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="calendar.jsp">
+                  <span data-feather="calendar"></span>
+                  Calendar
+                </a>
+              </li>
+              <li class="nav-item" id="services">
+                <a class="nav-link" href="services.jsp">
+                  <span data-feather="box"></span>
+                  Services
+                </a>
+
+  		 <div id="servicedrop" class="sub-class " style="display: none;">
+  		<ul class="nav flex-column">
+  		<li> <a class="nav-link" href="newService.jsp">Add service</a></li>
+  		<li> <a class="nav-link" href="services.jsp">Modify service</a></li>  
+  		</ul></div>
+  		 
+              </li>
+              <li class="nav-item" id="customers">
+                <a class="nav-link" href="users.jsp">
+                  <span data-feather="users"></span>
+                  Customers
+                </a>
+                
+             
+              </li>
+               <li class="nav-item" id="companylink">
+                <a class="nav-link" href="companies.jsp">
+                  <span data-feather="shopping-cart"></span>
+                  Companies
+                </a>
+                <div id="companydrop" class="sub-class " style="display: none;">
+  		<ul class="nav flex-column" id ="listcompany">
+  		
+  		
+  		</ul></div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="settings.jsp">
+                  <span data-feather="settings"></span>
+                  Settings
+                </a>
+              </li>
+             
+            </ul>
+
+          
+          </div>
+        </nav>
+        
   <script>
 
   $(document).ready(function () {
 	  
-	 
+	 var a=0;
 	  
-  	 $("#servicedrop").hide(); 
-  	  $("#services").mouseenter(function(){
-  	    $("#servicedrop").slideDown("fast");
+  	
+  	  $("#services").mouseover(function(){
+  		 if(a==0){ 
+  			 
+  		 $("#servicedrop").slideDown("fast");
+  		a=1;
+  		 }
+  	  
   	  });
 
   	  $("#services").mouseleave(function(){
-  	    $("#servicedrop").slideUp("fast"); 
+  		if(a==1){ 
+  			
+  	   
+
+  		 $("#servicedrop").slideUp("fast"); 
+  		  a=0;
+
+  		}
   	  });
   	  
- 	 $("#customerdrop").hide(); 
- 	  $("#customers").mouseenter(function(){
- 	    $("#customerdrop").slideDown("fast");
+  	  
+  
+ 	 
+  	  
+ 	
+ 	  $("#companylink").mouseover(function(){
+ 		 if(a==0){ 
+ 			 $("#companydrop").slideDown("fast");
+ 			 a=1;
+ 		 }
+ 	   
  	  });
 
- 	  $("#customers").mouseleave(function(){
- 	    $("#customerdrop").slideUp("fast"); 
+ 	  $("#companylink").mouseleave(function(){
+ 		 if(a==1){ 
+ 			 
+ 			
+ 			 $("#companydrop").slideUp("fast");
+ 			  a=0;
+		  	
+ 		 }
+ 	    
  	  });
 
   	 
   	});
+  
+	$.getJSON("Servlet_Companies", function(result){
+        $.each(result, function(i, field){
+       
+        	$("#listcompany").append("<li> <a class='nav-link' href='Servlet_editCompany?id="+field.business_id+"'>"+field.business_name+"</a></li>");            
+        });
+    });
   </script>

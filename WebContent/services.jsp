@@ -1,69 +1,6 @@
 <%@include file="header.jsp" %>
 
-<body class="bg-light">
- 
-<div class="container-fluid hat sticky-top"> <h3>TARGO</h3></div>
-    <div class="container bg-light">
-      <div class="row ">
-        <nav class="bg-light col-md-2 sidebar">
-          <div class="sidebar-sticky">
-            <ul class="nav flex-column">
-              <li class="nav-item ">
-                <a class="nav-link " href="dash.jsp">
-                  <span data-feather="home"></span>
-                  Dashboard 
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="calendar.jsp">
-                  <span data-feather="calendar"></span>
-                  Calendar
-                </a>
-              </li>
-              <li class="nav-item" id="services">
-                <a class="nav-link" href="services.jsp">
-                  <span data-feather="box"></span>
-                  Services
-                </a>
 
-  		 <div id="servicedrop" class="sub-class ">
-  		<ul class="nav flex-column">
-  		<li> <a class="nav-link" href="newService.jsp">Add service</a></li>
-  		<li> <a class="nav-link" href="services.jsp">Modify service</a></li>  
-  		</ul></div>
-  		 
-              </li>
-              <li class="nav-item" id="customers">
-                <a class="nav-link" href="users.jsp">
-                  <span data-feather="users"></span>
-                  Customers
-                </a>
-                
-                 <div id="customerdrop" class="sub-class ">
-  		<ul class="nav flex-column">
-  		<li> <a class="nav-link" href="newService.jsp">El Medano</a></li>
-  		<li> <a class="nav-link" href="services.jsp">Kite surf school</a></li> 
-  		<li> <a class="nav-link" href="services.jsp">Some company</a></li> 
-  		</ul></div>
-              </li>
-               <li class="nav-item">
-                <a class="nav-link" href="companies.jsp">
-                  <span data-feather="shopping-cart"></span>
-                  Companies
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="settings.jsp">
-                  <span data-feather="settings"></span>
-                  Settings
-                </a>
-              </li>
-             
-            </ul>
-
-          
-          </div>
-        </nav>
 
         
    <main role="main" class=" col-md-9 ml-sm-auto col-lg-10 pt-3 ml-1  px-4">

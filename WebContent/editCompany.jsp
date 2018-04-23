@@ -1,91 +1,238 @@
-<%@include file="header.jsp" %>
+
 <%@ page import="model.Company"%>
+
+
+<%@include file="header.jsp" %>
 
 <%
 Company company = null;
 if( request.getAttribute("company")!=null){
 	company = (Company)request.getAttribute("company");	
 }
-%>
+%><script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+
+   <main role="main" class=" col-md-9 ml-sm-auto col-lg-10 pt-3 ml-1  px-4">
+    <div class="d-flex cal justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <h1 class="h2 pl-3 pt-3 ">Edit company</h1>
+           
+          </div>
+<div class=" mb-3 bg-white shadow">
+          <form action="Servlet_newService" method="post" id="newProduct" class="   p-3  mx-auto">
+  <div class=" form-group">
+    <label for="title">Full Name</label>
+    <input  class="form-control" name="name" id="name" value="${company.getName()}">
+  </div>
+  <div class=" form-group">
+    <label for="title">Alias</label>
+    <input  class="form-control" name="alias" id="alias" value="">
+  </div>
+  <div class=" form-group">
+    <label for="title">Phone</label>
+    <input  class="form-control" name="phone" id="phone" value="">
+  </div>
+    <div class=" form-group ">
+    <label for="price">Address</label>
+     <div class="autocomplete">
+    <input class="form-control col-md-auto"  name="address" id="address" value="${company.getAddress()}">
+  </div>
+   </div>
+    <div class=" form-group">
+    <label for="availiblity">Open hours</label>
+  
+   <div class="form-row ">
+    <div class="col-md-2  ">   
+      <input class="form-control" name="from" id="from" placeholder="00.00">
+    </div> 
+    <label for=""> - </label>
+    <div class="col-md-2">
+      <input class="form-control"  name="to" id="to" placeholder="00.00">
+    </div>
+     <div class="col-md-auto">
+   
+    <select  class="form-control" name="day" id="day">
+     
+      <option value="mon">Monday</option>
+      <option value="tue">Tuesday</option>
+      <option value="wed">Wednesday</option>
+      <option value="thu">Thursday</option>
+      <option value="fri">Friday</option>
+      <option value="sat">Saturday</option>
+      <option value="sun">Sunday</option>
+    </select>    </div>
+    
+         <div class="col-md-auto">
+   
+    <button class="btn btn-primary btn-md " id="addday" type="button"  >Add</button>
+  </div>
+    
+    
+  </div>  </div>
+  
+  <div class="form-group">
+    <label >Description</label>
+    <textarea class="form-control" name="description" id="description" rows="4"></textarea>
+  </div>
 
 
-	<div class="container-fluid nav-menu  ">
-	<div class="row  mt-4 mb-1"  >
-	<div class="col-4 "></div>	
-	<div class="col-md-auto ">General</div>	
-	<div class="col-md-auto ">Manage resources</div>
-	<div class="col-md-auto ">Contacts</div>
-	
-	</div>
-	</div>
-	
-<div class="container-fluid" id="comments">
-	<div class=" row " >
-		<div id ="sidemenu" class="col-md-2 menu">
-			<ul><a href="main.jsp" alt="Profile">U</a></ul>
-			<ul ><a href='#' alt='Users' id='userstn'>G</a></ul >	
-			<ul><a href="#" alt="Settings" id="settingsbtn" >Y</a></ul>
-			<ul><a href="Servlet_Login?out=1">L</a></ul>
-</div>
+  
+ <input type="hidden" id="business_id" name="business_id" value="${company.getId()}">
+<input type="hidden"  id="lat" name="lat" value="">
+<input type="hidden" id="lng" name="lng" value="">
+<input type="hidden" id="user" name="user" value="${session.getId()}">
 
+  
+</form>
 
+ 
+  
+    <div class="form-group">
+  <button class="m-3 btn btn-primary btn-md " id="done" type="button"  >Submit</button>
+<img src="images/spinner.gif" class="mx-auto " id="spinner">
+ </div>
+</div>   
+</div> 
+  </div>
+        </main>
+      </div>
 
-<div class="col-sm-1 "></div>
-	<div class="col-md-auto mt-4  service-form " id="add" >
- 		 
- 	
-	<div class="mt-4 "  > 
-	<label>Name: </label><br><br>
-	<label>Address: </label><br><br>
-	<label>Open time: </label><br><br>
-	
-	<label>Description: </label><br>
-	
-	</div>
- 	
-</div>
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYGmROPS0aVzBLHXoT1zWHEpIipah9w2A&libraries=places&callback=initAutocomplete" async defer></script>
+    <script>
+  
+ var coords=$.Deferred();
+    $("#spinner").hide();
 
-<div class="col-md-auto mt-4  "> 
+    function initAutocomplete() {
+    
+    var  autocomplete = new google.maps.places.Autocomplete((document.getElementById('address'))); 
+     
+    }
+    
+    $("#address").blur(function() {
+        geocode();
+      });
 
-<div class=" mt-4 service-form "  id="add-block" > 
-	<form action="Servlet_editCompany" method="post" id="newProduct">
- 	<input type="hidden" id="business_id" name="business_id" value="<%out.print(company.getId());%>">
-	<input id="title" name="title"  type="text" class=" " value="<%out.print(company.getName());%>"><br><br>
-	<input id="address" name="address"  type="text" class="" value="<%out.print(company.getAddress());%>"><br><br>
-		<input id="opentime" name="opentime"  type="text" class="" value="<%out.print(company.getOpentime());%>">&nbsp;-
-	<input id="closetime" name="closetime"  type="text" class="" value="<%out.print(company.getClosetime());%>"><br><br>
-	<textarea id="description" name="description"  rows="8" cols="51" class=" mb-1"><%out.print(company.getDescription());%></textarea><br>
-	<div id="uploaded-picture">Here will appears a upload result</div>
- 	<input type="submit" class="mt-2 btn btn-primary btn-sm " id="done" value="Submit"> 
- 	<input type="button" class=" mt-2 btn btn-default btn-sm" id="upload" value="Upload Picture" disabled>
+   
+    
+    function geocode(){
+    	var georesult=false;
+    	var location=$('#address').val();
+		axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
+    	params:{
+    	address:location,
+    	key:'AIzaSyDYGmROPS0aVzBLHXoT1zWHEpIipah9w2A'
+    	}
+    	}).then(function(response){
+    	
+    	var lat = response.data.results[0].geometry.location.lat;
+    	var lng = response.data.results[0].geometry.location.lng;
+    	$("#lat").val(lat);
+    	$("#lng").val(lng);
+    	
+    	georesult=true;
+    	console.log(lat + " "+ lng);
 
-	</form>
-	</div>
-	</div>
+    	})
 
-<div class="footer container-fluid pt-3 pb-3 pl-5 pr-0 h-200" ><p>Footer</p>
-</div>
+    	.catch(function(error){
+    		if(!georesult){
+    			geocode();
+    		}
+    		console.log(error);
+    	})
+    	
+    	
+    	
+    	}
+    
+    $('#done').click(function() {
+    	
+   	 if(  $("#newProduct").valid()){
+   		 
+   		   $.ajax({
+                  type: "POST",
+                  url: "Servlet_newService",
+                  data: $('#newProduct').serialize(),
+                  success: function () {
+                	  $('#newProduct').trigger("reset");
+                	 $('#picture').html("<h6>Service successfully added</h6>");
+                          
+                  }
+              });
+   	 }
+   	  
+     });
+    
+      $("#newProduct").validate({ 
+    	  errorClass: 'errors',
+          rules: {
+          	
+        	  company: { 
+        		  required : true 
+        		  },
+          	
+          	title: {
+                  required: true,
+                  minlength: 2
+              },
+              price: {
+                  required: true,
+                  number: true,
+              },
+              from: {
+                  required: true
+              },
+              to: {
+                  required: true
+              },
+              
+              days: {
+                  required: true
+              },
+              hours: {
+                  required: true
+              },
+              description: {
+                  required: true,
+                  minlength: 2
+              }
+          },	
+          messages: {
+          	company: {     
+  				required: "This field is required.",						
+  			},
+  			title: {
+  				required: "This field is required.",
+  				minlength: "Must be a number"
+  			},
+  			price: {
+  				required: "This field is required.",
+  				number: "Must be a number"				
+  			},
+  			updateDescription: {
+  				required: "This field is required.",
+  				number: "Must be a number"				
+  			},	
+  			tags: {
+  				required: "This field is required.",
+  						
+  			}
+  		}
+  		
+   
+      });
+      
+      
+     
+      
+    </script>
 
-</body>
-
-<script type="text/javascript">
-
-$(document).ready(function() {
-	
-	listCompany();	
-	
-});
-
-function listCompany(){	
-	
-	$.getJSON("Servlet_Companies?user="+'${session.getUsername()}', function(result){
-        $.each(result, function(i, field){
-        br="<br>";
-        	$("#container-companies").append("<div class='col-md-auto d-inline-block mt-4 border service-form'><div class='col company-name' ><b>"+field.business_name+ "</b></div> <a href='#' class='companyimg' value='"+field.business_id+"'> <img src='images/noimage.png'></a> </div> ");            
-        });
-    });
-	}
-	
-document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
-
+  </body>
 </html>
+
