@@ -3,8 +3,24 @@ package model;
 public class Company {
 
 	
-	String id, name, owner, address, hashtag, description, lat, lng, opentime, closetime;
+	String id, name, owner, phone, address, alias, description, lat, lng, opentime, day, closetime;
 	
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getDay() {
+		return day;
+	}
+
+	public void setDay(String day) {
+		this.day = day;
+	}
 
 	public String getOpentime() {
 		return opentime;
@@ -62,12 +78,13 @@ public class Company {
 		this.description = description;
 	}
 
-	public String getHashtag() {
-		return hashtag;
+
+	public String getAlias() {
+		return alias;
 	}
 
-	public void setHashtag(String hashtag) {
-		this.hashtag = hashtag;
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 
 	public String getName() {
@@ -88,9 +105,12 @@ public class Company {
 
 	@Override
 	public String toString() {
-		return "Restaurant [name=" + name + ", address=" + address + "]";
+		return "Company [id=" + id + ", name=" + name + ", owner=" + owner + ", address=" + address + ", hashtag="
+				+ alias + ", description=" + description + ", lat=" + lat + ", lng=" + lng + ", opentime=" + opentime
+				+ ", day=" + day + ", closetime=" + closetime + "]";
 	}
 
+	
 
 	
 	

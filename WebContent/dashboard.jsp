@@ -1,5 +1,8 @@
 <%@include file="header.jsp" %>
 
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
 	<div class="container-fluid">
 	<div class="row  mt-4"  >
 	<div class="col-4"></div>	
@@ -69,7 +72,7 @@
  	 	</div>
  	   <input type="hidden"  id="lat" name="lat" value="">
  	 <input type="hidden" id="lng" name="lng" value="">
- 	<input type="hidden" id="user" name="user" value="${session.getId()}"></form> 		
+ 	<input type="hidden" id="user" name="user" value="${session.getId()}"> </form> 		
 
 <div class="  col-11 business" id="errorMsg"> </div>
 

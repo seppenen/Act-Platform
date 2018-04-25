@@ -42,13 +42,12 @@ public class Servlet_newService extends HttpServlet {
 		Dao_service dao= new Dao_service();
 		Services service=new Services();
 		service.setTitle(request.getParameter("title"));		
-		service.setBusiness_id(Integer.parseInt(request.getParameter("business_id")));
+		service.setBusiness_id(request.getParameter("company"));
 		service.setPrice(request.getParameter("price"));
+		service.setHour(request.getParameter("hours"));
 		service.setOwner(user.getId());
-		service.setFrom(request.getParameter("from"));
-		service.setTo(request.getParameter("to"));
-		service.setDays(request.getParameter("days"));
-		service.setHours(request.getParameter("hours"));
+		
+		
 		service.setImage(str);
 		service.setDescription(request.getParameter("description"));
 		
@@ -57,7 +56,7 @@ public class Servlet_newService extends HttpServlet {
 			
 		}else{
 			
-			System.out.println("Company NO OK");
+			System.out.println("Service NO OK");
 		}
 	
 		

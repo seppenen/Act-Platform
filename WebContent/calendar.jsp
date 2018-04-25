@@ -7,11 +7,11 @@
   $(document).ready(function() {
 
     $('#calendar').fullCalendar({
- 
+    themeSystem: 'bootstrap4',
       header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'month,agendaWeek,agendaDay,listWeek'
+    	  left: 'prev,next today',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay,listMonth'
       },
       firstDay: 1,
       
@@ -57,7 +57,7 @@
 
         <main role="main" class=" col-md-9 ml-sm-auto col-lg-10 pt-3 ml-1  px-4">
           <div class="d-flex cal justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h1 class="h2 pt-3 pl-3">Calendar</h1>
+            <h1 class="display-4 h2 pt-3 pl-3">Calendar</h1>
            
           </div>
 

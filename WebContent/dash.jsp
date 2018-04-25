@@ -1,11 +1,9 @@
 <%@include file="header.jsp" %>
 
 
-
-
         <main role="main" class=" col-md-9 ml-sm-auto col-lg-10 pt-3 ml-1  px-4">
           <div class="d-flex cal justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-       <h2 class="pl-3 pt-3">Dashboard</h2>    
+       <h2 class="display-4 pl-3 pt-3">Dashboard</h2>    
        
         <ul class="nav nav-pills pt-1">
   <li class="nav-item">
@@ -23,7 +21,7 @@
 </ul>
    
           </div>
-          <canvas class=" shadow bg-white   " id="myChart" ></canvas>
+          <canvas class=" shadow bg-white " id="myChart" ></canvas>
          
           <table class="table  table-md table-hover mt-4 orders">
  		<div class="col-md-12 mt-2 table-top"><h2>Latest Activity</h2></div>

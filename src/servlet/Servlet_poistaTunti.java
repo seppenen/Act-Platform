@@ -10,44 +10,47 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.Dao_user;
-import dao.dao;
+
+import dao.Dao_business;
 import model.User;
 
 /**
- * Servlet implementation class Servlet_ravintolat
+ * Servlet implementation class Servlet_poistaTunti
  */
-@WebServlet("/Servlet_Companies")
-public class Servlet_Companies extends HttpServlet {
+@WebServlet("/Servlet_poistaTunti")
+public class Servlet_poistaTunti extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
 
-	@SuppressWarnings("static-access")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Servlet_Companies.doGet()");
-		dao dao = new dao();
+		System.out.println("Servlet_PoistaTunti.doGet()");
+		
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("session");
-
-		
-		try {		
-			String[] sarakkeet={"business_id","alias"};
-			String strJSON=dao.haeTiedotJSON(sarakkeet,"business","user_id",String.valueOf(user.getId()),"");	
-			if(user.getStatus()==1) {
-				strJSON=dao.haeTiedotJSON(sarakkeet,"business","","","");
+		if(user == null) {
+			
+			response.sendRedirect("index.jsp");			
+		}
+		String id = request.getParameter("id");
+	
+		Dao_business dao = new Dao_business();
+		try {
+			if(dao.poistaTunti(id)) {
+				
+				PrintWriter out = response.getWriter();
+			    response.setContentType("text/html"); 
+			   
+			    out.println("1");
+				
 			}
-					
-			PrintWriter out = response.getWriter();
-		    response.setContentType("text/html"); 
-		    System.out.println(strJSON);
-		    out.println(strJSON);
-		    
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}	
+		}
 	}
 
-
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

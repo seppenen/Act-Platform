@@ -63,4 +63,31 @@ public class Dao_user extends dao {
 		}
 		return user;
 	}
+	
+	public boolean haeCompany(User user) {
+
+		boolean ok=false;
+		
+		sql = "SELECT business_id FROM business WHERE user_id = ?";
+		try {
+			con = yhdista();
+			stmtPrep = con.prepareStatement(sql);
+			stmtPrep.setString(1, user.getId());
+			
+			rs = stmtPrep.executeQuery();
+			
+			if(rs!=null){ 								
+				while(rs.next()){
+		
+				ok=true;
+				}
+			}
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		return ok;
+	}
+	
 }

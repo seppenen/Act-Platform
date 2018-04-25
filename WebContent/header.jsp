@@ -39,11 +39,13 @@ response.sendRedirect("index.jsp");
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
    <link href='cal/fullcalendar.min.css' rel='stylesheet' />
+      <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet' />
 
 <link href='cal/fullcalendar.print.min.css' rel='stylesheet' media='print' />
 <script src='cal/lib/moment.min.js'></script>
 <script src='cal/lib/jquery.min.js'></script>
 <script src='cal/fullcalendar.min.js'></script> 
+
    <style>
    
    
@@ -199,7 +201,7 @@ background-color: black;
 
   		 <div id="servicedrop" class="sub-class " style="display: none;">
   		<ul class="nav flex-column">
-  		<li> <a class="nav-link" href="newService.jsp">Add service</a></li>
+  		<li> <a class="nav-link" href="newService.jsp">New service</a></li>
   		<li> <a class="nav-link" href="services.jsp">Modify service</a></li>  
   		</ul></div>
   		 
@@ -219,7 +221,7 @@ background-color: black;
                 </a>
                 <div id="companydrop" class="sub-class " style="display: none;">
   		<ul class="nav flex-column" id ="listcompany">
-  		
+  		<li> <a class="nav-link" href="newCompany.jsp">New company</a></li>
   		
   		</ul></div>
               </li>
@@ -293,7 +295,7 @@ background-color: black;
 	$.getJSON("Servlet_Companies", function(result){
         $.each(result, function(i, field){
        
-        	$("#listcompany").append("<li> <a class='nav-link' href='Servlet_editCompany?id="+field.business_id+"'>"+field.business_name+"</a></li>");            
+        	$("#listcompany").append("<li> <a class='nav-link' href='Servlet_editCompany?id="+field.business_id+"'>"+field.alias+"</a></li>");            
         });
     });
   </script>

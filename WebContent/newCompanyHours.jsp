@@ -25,39 +25,10 @@ if( request.getAttribute("company")!=null){
            
           </div>
           
-      <ul class="nav cal nav-pills pb-1">
-  <li class="nav-item">
-    <a class="nav-link report "  href="#">General</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link report"  href="#">Orders</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link report"  href="#">Clients</a>
-  </li>
- 
-</ul>
-<div class=" mb-3 bg-white shadow">
+      
+<div class="p-3 bg-white shadow">
   
-       <form action="Servlet_editCompany" method="post" id="editCompany" class="   p-3  mx-auto">
-  <div class=" form-group">
-    <label for="title">Full Name</label>
-    <input  class="form-control" name="name" id="name" value="${company.getName()}">
-  </div>
-  <div class=" form-group">
-    <label for="title">Alias</label>
-    <input  class="form-control" name="alias" id="alias" value="${company.getAlias()}">
-  </div>
-  <div class=" form-group">
-    <label for="title">Phone</label>
-    <input  class="form-control" name="phone" id="phone" value="${company.getPhone()}">
-  </div>
-    <div class=" form-group ">
-    <label for="price">Address</label>
-     <div class="autocomplete">
-    <input class="form-control col-md-auto"  name="address" id="address" value="${company.getAddress()}">
-  </div>
-   </div>
+     
    
     <div class=" form-group">
     <label for="availiblity">Open hours</label>
@@ -99,29 +70,16 @@ if( request.getAttribute("company")!=null){
 
       </div>
     
-  <div class="form-group">
-    <label >Description</label>
-    <textarea class="form-control" name="description" id="description" rows="4"></textarea>
-  </div>
 
 
- <input type="hidden"  id="lat" name="lat" value="">
-<input type="hidden" id="lng" name="lng" value="">
-<input type="hidden" id="user" name="user" value="${session.getId()}">
 
-  
-</form>
-
-  <p class="mb-3 pl-3" id="result"></p>
+  <p class="mb-3 " id="result"></p>
   
     <div class=" form-group">
-  <button class="m-3 btn btn-primary btn-md " id="submit" type="button"  >Submit</button>
+  <button class=" btn btn-primary btn-md " id="submit" type="button" disabled >Next</button>
   
  </div>
-    <div class="p-3 form-group">
     
-    <button type="button" class=" btn btn-danger btn-md btn-block">Delete this company</button>
-    </div>
 </div>   
 </div> 
   </div>
@@ -135,13 +93,12 @@ if( request.getAttribute("company")!=null){
     
 
 	
-
     <script>
-   
+    $("#submit").attr("disabled", false);
     
     function listaTunnit(){  
     	
-    	  $.getJSON("Servlet_listatunnit?id=${company.getId()}&param=business_id&table=hours", function(result){
+    	  $.getJSON("Servlet_listatunnit?id=${company.getId()}", function(result){
     		
     	        $.each(result, function(i, field) { 
     	        	  
@@ -172,7 +129,7 @@ if( request.getAttribute("company")!=null){
  		   $.ajax({
                 type: "POST",
                 url: "Servlet_listatunnit",
-                data: { from: from, to: to, day: day, id: business_id },
+                data: { from: from, to: to, day: day, business_id: business_id },
                 success: function (data) {
               	      
   					addError(data, day);
@@ -215,97 +172,16 @@ if( request.getAttribute("company")!=null){
    
   
 
-  
-
-
-    
-    
-   
-    
- 
     $('#submit').click(function() {
     
-	
- 
-   	 if($("#editCompany").valid()){
-		
-   		 const coords = geocode();
+    	document.location="newService.jsp";
     	
-    	coords.done(function(){
-    		console.log("coords.done");
-   		   $.ajax({
-                  type: "POST",
-                  url: "Servlet_editCompany",
-                  data: $('#editCompany').serialize(),
-                  success: function () {
-                	 
-                	  $("#result").text("Saved!");
-                          
-                  }
-              }); 
-   	 });
-    	
-    	}
-   	
-    
     });
     
   
     
     
-    
-      $("#editCompany").validate({ 
-    	  errorClass: 'errors',
-          rules: {
-          	
-        	  name: { 
-        		  required : true 
-        		  },
-          	
-          	alias: {
-                  required: true,
-                  minlength: 2
-              },
-              phone: {
-                  required: true,
-                  number: true,
-              },
-              
-              address: {
-                  required: true,
-                  
-              },
-            
-              
-              description: {
-                  required: true,
-                  minlength: 2
-              }
-          },	
-          messages: {
-          	name: {     
-  				required: "This field is required.",						
-  			},
-  			alias: {
-  				required: "This field is required.",
-  				
-  			},
-  			phone: {
-  				required: "This field is required.",
-  				number: "Must be a number"				
-  			},
-  			address: {
-  				required: "This field is required.",
-  								
-  			},
-  			description: {
-  				required: "This field is required.",
-  								
-  			}
-  		}
-  		
-   
-      });
+
       
      
       $(document).ready(function() {
