@@ -12,11 +12,13 @@ public class Services {
 		this.hour = hour;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Services [id=" + id + ", business_id=" + business_id + ", title=" + title + ", description="
-				+ description + ", to=" + to + ", from=" + from + ", days=" + days + ", owner=" + owner + ", price="
-				+ price + ", image=" + image + "]";
+				+ description + ", to=" + to + ", from=" + from + ", days=" + days + ", hour=" + hour + ", owner="
+				+ owner + ", price=" + price + ", image=" + image + "]";
 	}
 
 	public String getId() {

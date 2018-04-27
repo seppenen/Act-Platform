@@ -41,7 +41,45 @@
   </div>
    </div>
 
+   <div class=" form-group">
+    <label for="availiblity">Open hours</label>
+  
+   <div class="form-row ">
+    <div class="col-md-2  ">   
+      <input class="form-control" name="from" id="from" placeholder="From">
+    </div> 
+    <label for=""> - </label>
+    <div class="col-md-2">
+      <input class="form-control"  name="to" id="to" placeholder="To" >
+    </div>
+     <div class="col-md-auto">
+   
+    <select  class="form-control" name="day" id="day">
+     
+      <option value="Monday">Monday</option>
+      <option value="Tuesday">Tuesday</option>
+      <option value="Wednesday">Wednesday</option>
+      <option value="Thursday">Thursday</option>
+      <option value="Friday">Friday</option>
+      <option value="Saturday">Saturday</option>
+      <option value="Sunday">Sunday</option>
+    </select>    </div>
+    
+         <div class="col-md-auto">
+      <input type="hidden" id="business_id" name="business_id" value="">
+   
+    <button class="btn btn-primary btn-md " id="add_day" name="add_day" type="button" >Add</button>
+  </div>
+    
+   
+  </div>
+ <div id="date_error" style="color:red;"></div>
+      </div>
+  
+   <div id="openhours" class="form-group">
 
+
+      </div>
     
   <div class="form-group">
     <label >Description</label>
@@ -59,7 +97,7 @@
   <p class="mb-3 pl-3" id="result"></p>
   
     <div class="form-group">
-  <button class="m-3 btn btn-primary btn-md " id="submit" type="button"  >Next</button>
+  <button class="m-3 btn btn-primary btn-md " id="submit" type="button"  >Save</button>
 <img src="images/spinner.gif" class="mx-auto " id="spinner">
  </div>
 </div>   
@@ -79,13 +117,108 @@
     <script>
    
  
+    $(document).ready(function() {
+  	  listaTunnit();
+  	getId();
+  	 $('#to').timepicker({ timeFormat: 'HH:mm',  interval: 15  });
+	    $('#from').timepicker({ timeFormat: 'HH:mm' , interval: 15  });
+    });
   
-  
-  
+    function checkId(){
+    	
+    	if($("#business_id").val()==""){
+    		
+    		getId();
+    	}
+    }
+    function getId(){
+    	
+    	 $.ajax({
+    	        type: "GET",
+    	        url: "Servlet_createId?param=0",
+    	        success: function (data) {
+    	        	$("#business_id").val(data.trim());
+    	        	
+    	        	checkId();
+    	        }
+    	    });
+    	 
+    	 
+    	
+    }
+   
+    
     $("#spinner").hide();
     
-   
+    function listaTunnit(){  
+    	
+  	  $.getJSON("Servlet_listatunnit?id="+$("#service_id").val()+"&param=service_id&table=hours_service", function(result){
+  		
+  	        $.each(result, function(i, field) { 
+  	        	  
+  	         $("#openhours").append("<div id='openhour' class='pt-3 form-row'><div class='col-md-2'>"+field.day+": </div><div class='col-md-2'> "+field.start+" - "+field.end+"</div> <div class='col-md-2'><button class=' btn btn-primary btn-sm' value="+field.id+" id='delete' title="+field.day+" type='button' disabled >Delete</button></div></div>");
+  	     });
+  	 });
+  }
   
+function addError(data,day){
+      
+  	if(data.length=="0"){
+  		$("#date_error").text(day+ " already exist.");
+  	}else{
+  		
+				$("#openhours").append("<div id='openhour' class='pt-3 form-row'><div class='col-md-2'>"+$("#day").val()+": </div><div class='col-md-2'> "+$("#from").val()+" - "+$("#to").val()+"</div> <div class='col-md-2'><button class=' btn btn-primary btn-sm' value="+data+" id='delete' title="+$("#day").val()+" type='button' enabled  >Delete</button></div></div>");
+
+  	}
+  	
+  	
+  }
+  
+$("#add_day").click(function() {
+	  $("#date_error").text("");
+	 
+	
+	var from =  $("#from").val();
+	var to =  $("#to").val();
+	var day =  $("#day").val();
+	var business_id =  $("#business_id").val();
+ 	 if(from!="" && to!=""){
+ 		
+ 		   $.ajax({
+                type: "POST",
+                url: "Servlet_listatunnit?s=1&temp=1",
+                data: { from: from, to: to, day: day, id: business_id },
+                success: function (data) {
+                	console.log(data.trim().length);
+  					addError(data.trim(), day);
+  					
+  					
+                }
+            });
+ 	 }else{
+ 		 $("#date_error").text("Time is required.");
+ 	 }
+
+   });
+   
+$(document).on('click', '#delete', function(event) {
+	
+	  
+	var id = $(this).val();
+	$(this).parents('#openhour').remove();
+	
+	
+ 		   $.ajax({
+                type: "GET",
+                url: "Servlet_poistaTunti?s=1&id="+id,
+               
+                success: function (data) {
+  	
+
+                }
+            });
+ 		   
+});
 
     function initAutocomplete() {
     
@@ -127,10 +260,13 @@
     
     
    
-    $('#next').click(function() {
- 
-    	document.location="Servlet_NewCompany?id=${company.getId()}";
-    });
+ $("#spinner").hide();
+    
+    $(document).ready(function(){
+   	 $('#to').timepicker({ timeFormat: 'HH:mm',  interval: 15  });
+   	    $('#from').timepicker({ timeFormat: 'HH:mm' , interval: 15  });
+   });
+   
     
     $('#submit').click(function() {
     
@@ -150,7 +286,7 @@
                 	 console.log(data);
                 	  $("#result").text("Company added successfully!");
                 	   
-                	  document.location="Servlet_NewCompany?id="+data;
+                	 
                 	  
                 	  
                   }

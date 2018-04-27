@@ -32,7 +32,7 @@ public class Servlet_tilaukset extends HttpServlet {
 		dao dao= new dao();
 		try {
 			String[] sarakkeet={"id","title","start","status"};
-			String strJSON=dao.haeTiedotJSON(sarakkeet,"orders","owner",user.getId(),"id");	
+			String strJSON=dao.haeTiedotJSON(sarakkeet,"orders","user_id",user.getId(),"id");	
 	
 			PrintWriter out = response.getWriter();
 		    response.setContentType("text/html"); 

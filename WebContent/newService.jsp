@@ -37,6 +37,52 @@
       <option value="5">5</option>
     </select>
   </div>
+  
+    <div class=" form-group">
+    <label for="availiblity">Open hours</label>
+  
+   <div class="form-row ">
+    <div class="col-md-2  ">   
+      <input class="form-control" name="from" id="from" placeholder="From">
+    </div> 
+    <label for=""> - </label>
+    <div class="col-md-2">
+      <input class="form-control"  name="to" id="to" placeholder="To" >
+    </div>
+     <div class="col-md-auto">
+   
+    <select  class="form-control" name="day" id="day">
+     
+      <option value="Monday">Monday</option>
+      <option value="Tuesday">Tuesday</option>
+      <option value="Wednesday">Wednesday</option>
+      <option value="Thursday">Thursday</option>
+      <option value="Friday">Friday</option>
+      <option value="Saturday">Saturday</option>
+      <option value="Sunday">Sunday</option>
+    </select>    </div>
+    
+         <div class="col-md-auto">
+      <input type="hidden" id="service_id" name="service_id" value="">
+   
+    <button class="btn btn-primary btn-md " id="add_day" name="add_day" type="button" >Add</button>
+  </div>
+    
+   
+  </div>
+ <div id="date_error" style="color:red;"></div>
+      </div>
+  
+   <div id="openhours" class="form-group">
+
+
+      </div>
+    
+
+
+
+  <p class="mb-3 " id="result"></p>
+  
   <div class="form-group">
     <label >Description</label>
     <textarea class="form-control" name="description" id="description" rows="4"></textarea>
@@ -45,6 +91,7 @@
 
   
  <input type="hidden" id="business_id" name="business_id" value="">
+
  <input type="hidden" id="image" name="image" value="">
 
   
@@ -66,7 +113,7 @@
         <label class="custom-file-label" for="uploadFile">Choose file</label>
         </div> 
         <div class="input-group-append">
-        <input class="btn btn-primary" type="button" value="Upload" onclick="lataa()" /> 
+        <input class="btn btn-primary" type="button" id="upload" value="Upload" onclick="lataa()" disabled/> 
         
  </div></div> 
       <label class="mb-3 pl-3" id="picture"></label>
@@ -90,7 +137,113 @@
 
 
     <script>
+    
+
+   
+    $("#upload").prop('disabled', false);
+
+    function listaTunnit(){  
+    	
+    	  $.getJSON("Servlet_listatunnit?id="+$("#service_id").val()+"&param=service_id&table=hours_service", function(result){
+    		
+    	        $.each(result, function(i, field) { 
+    	        	  
+    	         $("#openhours").append("<div id='openhour' class='pt-3 form-row'><div class='col-md-2'>"+field.day+": </div><div class='col-md-2'> "+field.start+" - "+field.end+"</div> <div class='col-md-2'><button class=' btn btn-primary btn-sm' value="+field.id+" id='delete' title="+field.day+" type='button' disabled >Delete</button></div></div>");
+    	     });
+    	 });
+    }
+    
+ function addError(data,day){
+        
+    	if(data.length=="0"){
+    		$("#date_error").text(day+ " already exist.");
+    	}else{
+    		
+				$("#openhours").append("<div id='openhour' class='pt-3 form-row'><div class='col-md-2'>"+$("#day").val()+": </div><div class='col-md-2'> "+$("#from").val()+" - "+$("#to").val()+"</div> <div class='col-md-2'><button class=' btn btn-primary btn-sm' value="+data+" id='delete' title="+$("#day").val()+" type='button' enabled  >Delete</button></div></div>");
+
+    	}
+    	
+    	
+    }
+ 
+ $("#add_day").click(function() {
+ 	  $("#date_error").text("");
+ 	 
+ 	
+ 	var from =  $("#from").val();
+ 	var to =  $("#to").val();
+ 	var day =  $("#day").val();
+ 	var id =  $("#service_id").val();
+  	 if(from!="" && to!=""){
+  		
+  		   $.ajax({
+                 type: "POST",
+                 url: "Servlet_listatunnit?s=0&temp=1",
+                 data: { from: from, to: to, day: day, id: id },
+                 success: function (data) {
+                 	console.log(data.trim().length);
+   					addError(data.trim(), day);
+   					
+   					
+                 }
+             });
+  	 }else{
+  		 $("#date_error").text("Time is required.");
+  	 }
+
+    });
+ 
+ 
+ $(document).on('click', '#delete', function(event) {
+ 	
+ 	  
+		var id = $(this).val();
+		$(this).parents('#openhour').remove();
+		
+		
+	 		   $.ajax({
+	                type: "GET",
+	                url: "Servlet_poistaTunti?s=0&id="+id,
+	               
+	                success: function (data) {
+	  	
+	
+	                }
+	            });
+	 		   
+});
+
+
+
+ 
+    function checkId(){
+    	
+    	if($("#service_id").val()==""){
+    		
+    		getId();
+    	}
+    }
+    function getId(){
+    	
+    	 $.ajax({
+    	        type: "GET",
+    	        url: "Servlet_createId?param=1",
+    	        success: function (data) {
+    	        	$("#service_id").val(data.trim());
+    	        	
+    	        	checkId();
+    	        }
+    	    });
+    	 
+    	 
+    	
+    }
+   
+    
+    
     $(document).ready(function(){
+    	 listaTunnit();
+    	getId();
     	 $('#to').timepicker({ timeFormat: 'HH:mm',  interval: 15  });
     	    $('#from').timepicker({ timeFormat: 'HH:mm' , interval: 15  });
     });
@@ -128,7 +281,7 @@
   		var value=$(this).val();
   	$("#business_id").val(value);		
       });
-      
+    
       $('#done').click(function() {
     	 if(  $("#newProduct").valid()){
     		 
@@ -136,16 +289,21 @@
                    type: "POST",
                    url: "Servlet_newService",
                    data: $('#newProduct').serialize(),
-                   success: function () {
+                   success: function (data) {
                  	  $('#newProduct').trigger("reset");
-                 	 $('#picture').html("<h6>Service successfully added</h6>");
-                           
+                 	
+                 	 $('#picture').html("Service successfully added!");
+                 	 
+                 	$("#done").prop('disabled', true);
+                 	$("#upload").prop('disabled', true);
+                 
                    }
                });
     	 }
     	  
       });
      
+      
       $("#newProduct").validate({ 
     	  errorClass: 'errors',
           rules: {
@@ -231,11 +389,13 @@
                   processData : false,
                   contentType : false,
                   success : function(data) {
-                	  $("#done").prop('disabled', false);
+                	  
                     
                     $('#picture').html("Loaded file: "+data);
-                    $('#image').val(data);
+                    $('#image').val(data.trim());
                     console.log(data);
+                  
+                    $("#done").prop('disabled', false);
                     
                   },
                   error : function(jqXHR, textStatus, errorThrown) {
@@ -250,6 +410,7 @@
   		
   	}
       
+     
       
     </script>
 

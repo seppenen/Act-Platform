@@ -29,7 +29,7 @@ public class Servlet_tilauksetJSON extends HttpServlet {
 	try {
 		
 		String[] sarakkeet={"service_id"};
-		String strJSON = dao.haeTiedotJSON(sarakkeet,"business_service","owner",user.getId(),"");
+		String strJSON = dao.haeTiedotJSON(sarakkeet,"business_service","user_id",user.getId(),"");
 		PrintWriter out = response.getWriter(  );
 	    response.setContentType("text/html"); 
 	    

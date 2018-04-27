@@ -34,7 +34,7 @@ public class Servlet_editService extends HttpServlet {
 			 dao dao = new dao();
 			 
 			 try {
-				if(dao.iftrue("service_id", "business_service", "service_id", id, "owner", user.getId()) || user.getStatus()==1) {
+				if(dao.iftrue("service_id", "business_service", "service_id", id, "business_id", user.getId()) || user.getStatus()==1) {
 					 
 					
 					
@@ -71,19 +71,18 @@ public class Servlet_editService extends HttpServlet {
 		User user = (User)session.getAttribute("session");
 		
 		try {
-			String str = request.getParameter("image");
-			str= str.substring(0, str.length() - 2);
-			System.out.println("Company OK " + str+"K");
+			String str = request.getParameter("image").trim();
+	
 		Dao_service dao= new Dao_service();
 		Services service=new Services();
 		service.setTitle(request.getParameter("title"));		
-		service.setBusiness_id(request.getParameter("company"));
+		service.setId(request.getParameter("service_id"));
 		service.setPrice(request.getParameter("price"));
 		service.setOwner(user.getId());	
 		service.setImage(str);
 		service.setHour(request.getParameter("hour"));
 		service.setDescription(request.getParameter("description"));
-		
+		System.out.println(service.toString());
 		if(dao.updateService(service)) {
 			
 			System.out.println("Service update OK");

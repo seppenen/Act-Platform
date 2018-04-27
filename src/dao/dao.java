@@ -37,6 +37,23 @@ public class dao {
 			con.close();
 		}
 	}
+	
+	public void  rowDelete(String row, String id) throws Exception{		
+		
+		sql = "DELETE FROM " +row+" WHERE temp = ? AND user_id=?"; 		
+		con=yhdista();
+		if(con!=null){ //jos yhteys onnistui
+			stmtPrep = con.prepareStatement(sql); 
+			stmtPrep.setString(1, "1");
+			stmtPrep.setString(2, id);
+			
+			stmtPrep.executeUpdate();
+			
+			con.close();
+		}
+			
+	}
+	
 
 
 
@@ -48,11 +65,14 @@ public class dao {
 		if (hakuarvo2.length() > 0) {
 			sql += " AND " + ehto + "=?";
 		}
+		
+	
 		try {
 			con = yhdista();
 			if (con != null) {
 				stmtPrep = con.prepareStatement(sql);
 				stmtPrep.setString(1, hakuarvo1);
+			
 				if (hakuarvo2.length() > 0) {
 					stmtPrep.setString(2, hakuarvo2);
 				}
@@ -86,7 +106,7 @@ public class dao {
 		if (string!="") {
 			sql += " ORDER BY " + string;
 		}
-
+System.out.println(sql);
 		con = yhdista();
 		if (con != null) { 
 			stmtPrep = con.prepareStatement(sql);

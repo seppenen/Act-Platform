@@ -29,7 +29,7 @@ public class Servlet_calendar extends HttpServlet {
 		try {
 
 			String[] sarakkeet={"title","id","start","end"};
-			String strJSON=dao.haeTiedotJSON(sarakkeet,"orders","owner",user.getId(),"id");	
+			String strJSON=dao.haeTiedotJSON(sarakkeet,"orders","user_id",user.getId(),"id");	
 	System.out.println(session.getId());
 			PrintWriter out = response.getWriter();
 		    response.setContentType("text/html"); 

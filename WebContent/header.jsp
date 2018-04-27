@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ page import="model.User"%>
     <%
 
     if(session.getAttribute("savePath")==null){
@@ -10,6 +11,7 @@
 if(session.getAttribute("session")==null){
 
 response.sendRedirect("index.jsp");
+
 }
 %>
     <%@ page import="model.User"%>  
@@ -17,10 +19,7 @@ response.sendRedirect("index.jsp");
     <%@ page import="model.Order"%>
     <%! @SuppressWarnings("unchecked") %>
     
-    <% String id= request.getParameter("id");
-    
 
-%>
 
 
 <!doctype html>
@@ -231,6 +230,13 @@ background-color: black;
                   Settings
                 </a>
               </li>
+              
+              <li class="nav-item">
+                <a class="nav-link"  href="Servlet_Login?out=1">
+                  <span data-feather="settings"></span>
+                  Logout
+                </a>
+              </li>
              
             </ul>
 
@@ -292,10 +298,26 @@ background-color: black;
   	 
   	});
   
-	$.getJSON("Servlet_Companies", function(result){
-        $.each(result, function(i, field){
-       
-        	$("#listcompany").append("<li> <a class='nav-link' href='Servlet_editCompany?id="+field.business_id+"'>"+field.alias+"</a></li>");            
-        });
-    });
+
+
+  
+  function getCompanies(){
+	  
+		$.getJSON("Servlet_Companies", function(result){
+			if(result==""){
+				
+				getCompanies();
+			}else{
+				
+				$.each(result, function(i, field){
+				       
+		        	$("#listcompany").append("<li> <a class='nav-link' href='Servlet_editCompany?id="+field.business_id+"'>"+field.alias+"</a></li>");            
+		        });
+		    
+		}
+			
+		});
+  }
+
+  getCompanies();
   </script>

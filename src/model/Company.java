@@ -105,12 +105,12 @@ public class Company {
 
 	@Override
 	public String toString() {
-		return "Company [id=" + id + ", name=" + name + ", owner=" + owner + ", address=" + address + ", hashtag="
-				+ alias + ", description=" + description + ", lat=" + lat + ", lng=" + lng + ", opentime=" + opentime
-				+ ", day=" + day + ", closetime=" + closetime + "]";
+		return "Company [id=" + id + ", name=" + name + ", owner=" + owner + ", phone=" + phone + ", address=" + address
+				+ ", alias=" + alias + ", description=" + description + ", lat=" + lat + ", lng=" + lng + ", opentime="
+				+ opentime + ", day=" + day + ", closetime=" + closetime + "]";
 	}
 
-	
+
 
 	
 	

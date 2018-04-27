@@ -27,36 +27,9 @@ public class Servlet_NewCompany extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		System.out.println("Servlet_NewCompany.doGet()");
-		HttpSession session = request.getSession();
-		User user = (User)session.getAttribute("session");
-		 if (user!=null) {
-			 
-			 Dao_user dao = new Dao_user();
-			 
-			 if(dao.haeCompany(user)) {
-				 
-				 Dao_business dao_business = new Dao_business();
-				  
-				 String id = request.getParameter("id");
-				 try {
-					 Company company =dao_business.haeCompany(id);
-					System.out.println(id + " " + company.toString());	
-					 request.setAttribute("company", company);
-					 String jsp = "/newCompanyHours.jsp"; 
-						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(jsp);
-						dispatcher.forward(request, response);
-					
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
 				
-			 }
-			 
-			 
-			 
-		 }
+		
 		
 	}
 
@@ -67,6 +40,7 @@ public class Servlet_NewCompany extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("session");
+		String id = request.getParameter("business_id");
 		String name = request.getParameter("name");
 		String alias = request.getParameter("alias");
 		String phone = request.getParameter("phone");
@@ -77,7 +51,7 @@ public class Servlet_NewCompany extends HttpServlet {
 		String lng = request.getParameter("lng");
 		Dao_business dao = new Dao_business();
 		Company company = new Company();
-		
+		company.setId(id);
 		company.setName(name);
 		company.setAlias(alias);
 		company.setPhone(phone);
@@ -86,16 +60,17 @@ public class Servlet_NewCompany extends HttpServlet {
 		company.setOwner(user.getId());
 		company.setLat(lat);
 		company.setLng(lng);
+		System.out.println(company.toString());
 		try {
 			
-			if(dao.newCompany(company)) {
+			if(dao.updateCompany(company)) {
+				dao.vahvistaTunnit(company);
 				
-				PrintWriter out = response.getWriter();
-			    response.setContentType("text/html"); 
 			
-			    out.println(company.getId());
+			}else{
+				
+				System.out.println("Service NO OK");
 			}
-			
 		} catch (Exception e) {			
 			e.printStackTrace();
 		} 

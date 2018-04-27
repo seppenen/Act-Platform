@@ -1,8 +1,9 @@
 package dao;
 
+import java.sql.Statement;
 import java.util.ArrayList;
 
-
+import model.Hour;
 import model.Services;
 import model.User;
 
@@ -27,7 +28,7 @@ public class Dao_service extends dao{
 					service.setPrice(rs.getString("price"));
 					service.setDescription(rs.getString("service_desc"));
 					service.setBusiness_id(rs.getString("business_id"));
-					service.setOwner(rs.getString("owner"));
+					service.setOwner(rs.getString("user_id"));
 					service.setImage(rs.getString("picture"));
 					service.setHour(rs.getString("hour"));
 				
@@ -46,7 +47,7 @@ public class Dao_service extends dao{
 	public boolean updateService(Services service) {
 		boolean paluuArvo = true;
 		
-		sql="UPDATE business_service SET title=?, price=?, service_desc=?, picture=?, hour=?  WHERE service_id=?";
+		sql="UPDATE business_service SET title=?, price=?, service_desc=?, picture=?, hour=?, temp=?, business_id =? WHERE service_id=?";
 		try {
 			con = yhdista();
 			stmtPrep = con.prepareStatement(sql);
@@ -55,7 +56,9 @@ public class Dao_service extends dao{
 			stmtPrep.setString(3, service.getDescription());
 			stmtPrep.setString(4, service.getImage());
 			stmtPrep.setString(5, service.getHour());
-			stmtPrep.setString(6, service.getId());
+			stmtPrep.setString(6, "0");
+			stmtPrep.setString(7, service.getBusiness_id());
+			stmtPrep.setString(8, service.getId());
 
 			stmtPrep.executeUpdate();
 			con.close();
@@ -77,22 +80,28 @@ public class Dao_service extends dao{
 		}		
 	}
 	
-	public boolean newService(Services service) {
+	public boolean newService(Services service ) {
 		boolean paluuArvo = true;
 		
-		sql = "INSERT INTO business_service (business_id, title, price, service_desc, owner, picture, hour) VALUES (?,?,?,?,?,?,?)";
+		sql = "INSERT INTO business_service (business_id, title, price, service_desc, user_id, picture, hour) VALUES (?,?,?,?,?,?,?)";
 		try {
 			con = yhdista();
-			stmtPrep = con.prepareStatement(sql);
+			stmtPrep = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmtPrep.setString(1, service.getBusiness_id());
 			stmtPrep.setString(2, service.getTitle());
 			stmtPrep.setString(3, service.getPrice());
 			stmtPrep.setString(4, service.getDescription());
 			stmtPrep.setString(5, service.getOwner());
 			stmtPrep.setString(6, service.getImage());
-			stmtPrep.setString(6, service.getHour());
+			stmtPrep.setString(7, service.getHour());
 
 			stmtPrep.executeUpdate();
+			rs=stmtPrep.getGeneratedKeys();
+			
+			if (rs.next()) {
+				String id = rs.getString(1);
+				service.setId(id);
+			}
 			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -101,10 +110,37 @@ public class Dao_service extends dao{
 		return paluuArvo;
 	}
 	
+	public Services newServiceID(User user, Services service) {
+		
+		
+		sql = "INSERT INTO business_service (user_id, temp) VALUES (?,?)";
+		try {
+			con = yhdista();
+			stmtPrep = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmtPrep.setString(1, user.getId());
+			stmtPrep.setString(2, "1");
+
+			stmtPrep.executeUpdate();
+			rs=stmtPrep.getGeneratedKeys();
+			
+			if (rs.next()) {
+				String id = rs.getString(1);
+				service.setId(id);
+				
+			}
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		return service;
+	
+	}
+	
 	public ArrayList<Services> haeServices(String id) {
 		ArrayList <Services> list = new ArrayList<Services>();
 
-		sql = "SELECT * FROM business_service WHERE owner = ?";
+		sql = "SELECT * FROM business_service WHERE user_id = ?";
 		try {
 			con = yhdista();
 			stmtPrep = con.prepareStatement(sql);
@@ -120,9 +156,7 @@ public class Dao_service extends dao{
 				service.setPrice(rs.getString("price"));
 				service.setDescription(rs.getString("service_desc"));
 				service.setImage(rs.getString("picture"));
-				service.setFrom(rs.getString("timefrom"));
-				service.setTo(rs.getString("timeto"));
-				service.setDays(rs.getString("days"));
+			
 				;
 				
 				list.add(service);
@@ -137,19 +171,29 @@ public class Dao_service extends dao{
 		return list;
 	}
 	
-	public boolean lisaaTunnit(Services service){
+	public boolean lisaaTunnit(Services service, Hour hour, String temp){
 		boolean paluuArvo=true;		
-		sql="INSERT INTO hours_service (start, end, day, service_id) VALUES(?,?,?,?);";						  
+		sql="INSERT INTO hours_service (start, end, day, service_id, temp, user_id) VALUES(?,?,?,?,?,?);";						  
 		try {
 			con = yhdista();
-			stmtPrep=con.prepareStatement(sql); 
+			stmtPrep = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);  
 			
 			stmtPrep.setString(1, service.getFrom());
 			stmtPrep.setString(2, service.getTo());
 			stmtPrep.setString(3, service.getDays());
 			stmtPrep.setString(4, service.getId());
+			stmtPrep.setString(5, temp);
+			stmtPrep.setString(6, service.getOwner());
 					
 			stmtPrep.executeUpdate();
+			
+			rs=stmtPrep.getGeneratedKeys();
+			
+			if (rs.next()) {
+				String id = rs.getString(1);
+				hour.setId(id);
+			}
+			
 	        con.close();
 		} catch (Exception e) {				
 			e.printStackTrace();
@@ -157,7 +201,25 @@ public class Dao_service extends dao{
 		}				
 		return paluuArvo;
 	}
+	
+	public boolean vahvistaTunnit(Services service) {
+		boolean paluuArvo = true;
+		
+		sql="UPDATE hours_service SET temp=?  WHERE service_id=?";
+		try {
+			con = yhdista();
+			stmtPrep = con.prepareStatement(sql);
+			stmtPrep.setString(1, "0");
+			stmtPrep.setString(2, service.getId());
 
+			stmtPrep.executeUpdate();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			paluuArvo = false;
+		}
+		return paluuArvo;
+	}
 
 
 	public boolean poistaTunti(String id) throws Exception{		

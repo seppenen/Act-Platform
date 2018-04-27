@@ -31,11 +31,9 @@ public class Servlet_Companies extends HttpServlet {
 
 		
 		try {		
-			String[] sarakkeet={"business_id","alias"};
-			String strJSON=dao.haeTiedotJSON(sarakkeet,"business","user_id",String.valueOf(user.getId()),"");	
-			if(user.getStatus()==1) {
-				strJSON=dao.haeTiedotJSON(sarakkeet,"business","","","");
-			}
+			String[] sarakkeet={"business_id", "alias"};
+			String strJSON=dao.haeTiedotJSON(sarakkeet,"business","business_name is not NULL AND user_id ", String.valueOf(user.getId()),"");	
+
 					
 			PrintWriter out = response.getWriter();
 		    response.setContentType("text/html"); 

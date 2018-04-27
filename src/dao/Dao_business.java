@@ -4,6 +4,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.Company;
+import model.Hour;
+import model.Services;
+import model.User;
 
 
 
@@ -34,6 +37,7 @@ public Company haeCompany(String id) throws Exception{
 				company.setPhone(rs.getString("phone"));
 				company.setAddress(rs.getString("business_address"));			
 				company.setDescription(rs.getString("description"));
+				company.setOwner(rs.getString("user_id"));
 
 				
 			}					
@@ -43,6 +47,32 @@ public Company haeCompany(String id) throws Exception{
 	return company;
 }
 
+public Company newCompanyID(User user, Company company) {
+	
+	
+	sql = "INSERT INTO business (user_id, temp) VALUES (?,?)";
+	try {
+		con = yhdista();
+		stmtPrep = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		stmtPrep.setString(1, user.getId());
+		stmtPrep.setString(2, "1");
+
+		stmtPrep.executeUpdate();
+		rs=stmtPrep.getGeneratedKeys();
+		
+		if (rs.next()) {
+			String id = rs.getString(1);
+			company.setId(id);
+			
+		}
+		con.close();
+	} catch (Exception e) {
+		e.printStackTrace();
+		
+	}
+	return company;
+
+}
 public boolean newCompany(Company Company) {
 	boolean paluuArvo = true;
 	
@@ -78,16 +108,19 @@ public boolean newCompany(Company Company) {
 public boolean updateCompany(Company Company) {
 	boolean paluuArvo = true;
 	
-	sql="UPDATE business SET name=?, alias=?, phone=?, business_address=?, lat=?, lng=?, description=? WHERE business_id=?";
+	sql="UPDATE business SET business_name=?, business_address=?, lat=?, lng=?, description=?, alias=?, phone=?,temp= ? WHERE business_id=?";
 	try {
 		con = yhdista();
 		stmtPrep = con.prepareStatement(sql);
-		stmtPrep.setString(1, Company.getOwner());
-		stmtPrep.setString(2, Company.getName());
-		stmtPrep.setString(3, Company.getAddress());
-		stmtPrep.setString(4, Company.getLat());
-		stmtPrep.setString(5, Company.getLng());
-
+		stmtPrep.setString(1, Company.getName());
+		stmtPrep.setString(2, Company.getAddress());
+		stmtPrep.setString(3, Company.getLat());
+		stmtPrep.setString(4, Company.getLng());
+		stmtPrep.setString(5, Company.getDescription());
+		stmtPrep.setString(6, Company.getAlias());
+		stmtPrep.setString(7, Company.getPhone());
+		stmtPrep.setString(8, "0");
+		stmtPrep.setString(9, Company.getId());
 		stmtPrep.executeUpdate();
 		con.close();
 	} catch (Exception e) {
@@ -98,19 +131,27 @@ public boolean updateCompany(Company Company) {
 }
 
 
-public boolean lisaaTunnit(Company company){
+public boolean lisaaTunnit(Company company, Hour hour, String temp){
 	boolean paluuArvo=true;		
-	sql="INSERT INTO hours (start, end, day, business_id) VALUES(?,?,?,?);";						  
+	sql="INSERT INTO hours (start, end, day, business_id, temp, user_id) VALUES(?,?,?,?,?,?);";						  
 	try {
 		con = yhdista();
-		stmtPrep=con.prepareStatement(sql); 
+		stmtPrep = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS); 
 		
 		stmtPrep.setString(1, company.getOpentime());
 		stmtPrep.setString(2, company.getClosetime());
 		stmtPrep.setString(3, company.getDay());
 		stmtPrep.setString(4, company.getId());
+		stmtPrep.setString(5, temp);
+		stmtPrep.setString(6, company.getOwner());
 				
 		stmtPrep.executeUpdate();
+		rs=stmtPrep.getGeneratedKeys();
+		
+		if (rs.next()) {
+			String id = rs.getString(1);
+			hour.setId(id);
+		}
         con.close();
 	} catch (Exception e) {				
 		e.printStackTrace();
@@ -119,7 +160,24 @@ public boolean lisaaTunnit(Company company){
 	return paluuArvo;
 }
 
+public boolean vahvistaTunnit(Company company) {
+	boolean paluuArvo = true;
+	
+	sql="UPDATE hours SET temp=?  WHERE business_id=?";
+	try {
+		con = yhdista();
+		stmtPrep = con.prepareStatement(sql);
+		stmtPrep.setString(1, "0");
+		stmtPrep.setString(2, company.getId());
 
+		stmtPrep.executeUpdate();
+		con.close();
+	} catch (Exception e) {
+		e.printStackTrace();
+		paluuArvo = false;
+	}
+	return paluuArvo;
+}
 
 public boolean poistaTunti(String id) throws Exception{		
 	boolean ok=false;

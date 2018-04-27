@@ -145,15 +145,19 @@ if( request.getAttribute("company")!=null){
     		
     	        $.each(result, function(i, field) { 
     	        	  
-    	         $("#openhours").append("<div class='pt-3 form-row'><div class='col-md-2'>"+field.day+": </div><div class='col-md-2'> "+field.start+" - "+field.end+"</div> <div class='col-md-2'><button class=' btn btn-primary btn-sm' value="+field.id+" id='delete' title="+field.day+" type='button' >Delete</button></div></div>");
+    	         $("#openhours").append("<div id='openhour' class='pt-3 form-row'><div class='col-md-2'>"+field.day+": </div><div class='col-md-2'> "+field.start+" - "+field.end+"</div> <div class='col-md-2'><button class=' btn btn-primary btn-sm' value="+field.id+" id='delete' title="+field.day+" type='button' >Delete</button></div></div>");
     	     });
     	 });
     }
 
     function addError(data,day){
     
-    	if(data!=1){
+    	if(data.length=="0"){
     		$("#date_error").text(day+ " already exist.");
+    	}else{
+    		
+				$("#openhours").append("<div id='openhour' class='pt-3 form-row'><div class='col-md-2'>"+$("#day").val()+": </div><div class='col-md-2'> "+$("#from").val()+" - "+$("#to").val()+"</div> <div class='col-md-2'><button class=' btn btn-primary btn-sm' value="+data+" id='delete' title="+$("#day").val()+" type='button' >Delete</button></div></div>");
+
     	}
     	
     	
@@ -171,14 +175,13 @@ if( request.getAttribute("company")!=null){
  		
  		   $.ajax({
                 type: "POST",
-                url: "Servlet_listatunnit",
+                url: "Servlet_listatunnit?s=1&temp=0",
                 data: { from: from, to: to, day: day, id: business_id },
                 success: function (data) {
-              	      
-  					addError(data, day);
-  					$("#openhours").empty();
-  					listaTunnit();
-
+                	console.log(data.trim().length);
+  					addError(data.trim(), day);
+  					
+  					
                 }
             });
  	 }else{
@@ -189,19 +192,21 @@ if( request.getAttribute("company")!=null){
   
   $(document).on('click', '#delete', function(event) {
 	
-	  $("#openhours").empty(); 
-		var id = $(this).val(); 
+	  
+		var id = $(this).val();
+		$(this).parents('#openhour').remove();
 		
 		
 	 		   $.ajax({
 	                type: "GET",
-	                url: "Servlet_poistaTunti?id="+id,
+	                url: "Servlet_poistaTunti?s=1&id="+id,
 	               
 	                success: function (data) {
 	  	
-	  					listaTunnit();;
+	
 	                }
 	            });
+	 		   
  });
 		
   
@@ -213,15 +218,7 @@ if( request.getAttribute("company")!=null){
    	    $('#from').timepicker({ timeFormat: 'HH:mm' , interval: 15  });
    });
    
-  
 
-  
-
-
-    
-    
-   
-    
  
     $('#submit').click(function() {
     

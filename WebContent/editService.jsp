@@ -74,8 +74,8 @@ if( request.getAttribute("service")!=null){
 
   <div class="form-group">
     <label for="">Availability / hour</label>
-    <select  class="form-control" name="hours" id="hours">
-      <option value="-1"></option>
+    <select  class="form-control" name="hour" id="hour">
+      <option id="default" value="${service.getHour()}">${service.getHour()}</option>
       <option value="1">1</option>
       <option value="2">2</option>
       <option value="3">3</option>
@@ -95,7 +95,8 @@ if( request.getAttribute("service")!=null){
 
   
 </form>
-<p><span id="imagediv" class="mb-3 pl-3" > </span> </p>
+<p><span id="imagediv" class="mb-3 pl-3" > </span>
+<img src="images/spinner.gif" class="mx-auto " id="spinner"> </p>
      
      <label class="mb-3 pl-3" for="exampleFormControlTextarea1">Picture size 841x120</label>
 
@@ -120,8 +121,8 @@ if( request.getAttribute("service")!=null){
  </form>
   
     <div class="form-group">
-  <button class="m-3 btn btn-primary btn-md " id="done" type="button"  >Submit</button>
-<img src="images/spinner.gif" class="mx-auto " id="spinner">
+  <button class="m-3 btn btn-primary btn-md " id="done" onclick="submit()"type="button"  >Save</button>
+
  </div>
 </div>   
 </div> 
@@ -137,19 +138,30 @@ if( request.getAttribute("service")!=null){
 
     <script>
     
-    if ("${service.getImage()}"!=""){
+    function Image(){
     	
+    	
+    if ("${service.getImage()}"!=""){
+    	$("#image").val("${service.getImage()}")
     	$("#imagediv").append("<img style='width:50%;' src='images/uploads/${service.getImage()}'>   <input class='ml-3 btn btn-sm btn-primary' id='poista' type='button' value='Delete'  />");
     }else{
-    	
+    	 $("#done").prop('disabled', true);
+
     	 $("#uploadbtn").prop('disabled', false);
     }
+    }
+    
+    $("#hour").change(function(){	
+  	  $("#hour option[id='default']").remove();
+  	 		
+    });
     $(document).ready(function(){
+    	  Image();
     	 $('#to').timepicker({ timeFormat: 'HH:mm',  interval: 15  });
     	    $('#from').timepicker({ timeFormat: 'HH:mm' , interval: 15  });
     	    
     	    
- 		 listaTunnit();
+ 		
     	      
     	    
     });
@@ -162,7 +174,7 @@ if( request.getAttribute("service")!=null){
   		
   	        $.each(result, function(i, field) { 
   	        	  
-  	         $("#openhours").append("<div class='pt-3 form-row'><div class='col-md-2'>"+field.day+": </div><div class='col-md-2'> "+field.start+" - "+field.end+"</div> <div class='col-md-2'><button class=' btn btn-primary btn-sm' value="+field.id+" id='delete' title="+field.day+" type='button' >Delete</button></div></div>");
+  	         $("#openhours").append("<div  id='openhour' class='pt-3 form-row'><div class='col-md-2'>"+field.day+": </div><div class='col-md-2'> "+field.start+" - "+field.end+"</div> <div class='col-md-2'><button class=' btn btn-primary btn-sm' value="+field.id+" id='delete' title="+field.day+" type='button' >Delete</button></div></div>");
   	     });
   	 });
   }
@@ -171,26 +183,31 @@ if( request.getAttribute("service")!=null){
 
 	  $(document).on('click', '#delete', function(event) {
 			
-		  $("#openhours").empty(); 
-			var id = $(this).val(); 
-			
+	var id = $(this).val(); 
+			$(this).parents('#openhour').remove();
 			
 		 		   $.ajax({
 		                type: "GET",
-		                url: "Servlet_poistaTunti?id="+id,
+		                url: "Servlet_poistaTunti?s=0&id="+id,
 		               
 		                success: function (data) {
 		  	
-		  					listaTunnit();;
+		  				
 		                }
 		            });
 	 });
 			
-	    function addError(data,day){
-	        
-	    	if(data!=1){
+	  function addError(data,day){
+		    
+	    	if(data.length=="0"){
 	    		$("#date_error").text(day+ " already exist.");
+	    	}else{
+	    		
+	    		console.log(data);
+					$("#openhours").append("<div id='openhour' class='pt-3 form-row'><div class='col-md-2'>"+$("#day").val()+": </div><div class='col-md-2'> "+$("#from").val()+" - "+$("#to").val()+"</div> <div class='col-md-2'><button class=' btn btn-primary btn-sm' value="+data+" id='delete' title="+$("#day").val()+" type='button' >Delete</button></div></div>");
+
 	    	}
+	    	
 	    	
 	    }
 	  
@@ -202,8 +219,11 @@ if( request.getAttribute("service")!=null){
 	                url: "Servlet_poistaKuva?id=${service.getId()}",
 	               
 	                success: function (data) {
-	  	
-	  					listaTunnit();;
+	                	$("#imagediv").empty();
+	                	$("#image").val("");
+	                 	 $("#done").prop('disabled', true);
+
+	  					
 	                }
 	            });
 	    	 $("#uploadbtn").prop('disabled', false);
@@ -223,13 +243,13 @@ if( request.getAttribute("service")!=null){
 	 		
 	 		   $.ajax({
 	                type: "POST",
-	                url: "Servlet_listatunnit?service=1",
+	                url: "Servlet_listatunnit?s=0&temp=0",
 	                data: { from: from, to: to, day: day, id: service_id },
 	                success: function (data) {
 	              	      
-	  					addError(data, day);
-	  					$("#openhours").empty();
-	  					listaTunnit();
+	                	console.log(data.trim());
+	  					addError(data.trim(), day);
+	  					
 
 	                }
 	            });
@@ -240,15 +260,11 @@ if( request.getAttribute("service")!=null){
 	   });
    
       
+  
       
-      $("#company").change(function(){	
-    	  $("#hours option[value='-1']").remove();
-    	  $("#company option[id='-1']").remove(); 
-  		var value=$(this).val();
-  	$("#business_id").val(value);		
-      });
       
-      $('#done').click(function() {
+      
+      function submit() {
     	 if(  $("#newProduct").valid()){
     		 
     		   $.ajax({
@@ -257,13 +273,15 @@ if( request.getAttribute("service")!=null){
                    data: $('#newProduct').serialize(),
                    success: function () {
                  	  $('#newProduct').trigger("reset");
-                 	 $('#picture').html("<h6>Service successfully edited</h6>");
-                           
+                 	
+                 	
+                    
+     
                    }
                });
     	 }
     	  
-      });
+      };
      
       $("#newProduct").validate({ 
     	  errorClass: 'errors',
@@ -282,7 +300,7 @@ if( request.getAttribute("service")!=null){
                   number: true,
               },
              
-              hours: {
+              hour: {
                   required: true
               },
               description: {
@@ -302,6 +320,11 @@ if( request.getAttribute("service")!=null){
   				required: "This field is required.",
   				number: "Must be a number"				
   			},
+  			hour: {
+  				required: "This field is required.",
+  							
+  			},
+  			
   			updateDescription: {
   				required: "This field is required.",
   				number: "Must be a number"				
@@ -354,8 +377,21 @@ if( request.getAttribute("service")!=null){
                 	  $("#done").prop('disabled', false);
                     
                     $('#picture').html("Loaded file: "+data);
-                    $('#image').val(data);
-                    console.log(data);
+                    $('#image').val(data.trim());
+             		$("#spinner").show();
+
+                    $("#uploadbtn").prop('disabled', true);
+                    submit();
+			setTimeout(function(){
+            	 $("#done").prop('disabled', false);
+
+   					 $("#imagediv").append("<img style='width:50%; height:120px;' src='images/uploads/"+data.trim()+"'>   <input class='ml-3 btn btn-sm btn-primary' id='poista' type='button' value='Delete'  />");
+
+                 		$("#spinner").hide();
+                 		}, 2000);
+                 		
+                 		
+                   
                     
                   },
                   error : function(jqXHR, textStatus, errorThrown) {
@@ -369,7 +405,7 @@ if( request.getAttribute("service")!=null){
   		$("#spinner").hide();
   		
   	}
-      
+      listaTunnit();
       
     </script>
 

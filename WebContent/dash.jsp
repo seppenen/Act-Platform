@@ -4,7 +4,7 @@
         <main role="main" class=" col-md-9 ml-sm-auto col-lg-10 pt-3 ml-1  px-4">
           <div class="d-flex cal justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
        <h2 class="display-4 pl-3 pt-3">Dashboard</h2>    
-       
+      
         <ul class="nav nav-pills pt-1">
   <li class="nav-item">
     <a class="nav-link report " value="1" href="#">Day</a>

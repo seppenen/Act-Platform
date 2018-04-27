@@ -68,7 +68,7 @@ public class Servlet_upload extends HttpServlet {
     	
 	    System.out.println("nimi "+ fullname);
 	    
-	    out.println(fullname);	
+	    out.println(fullname.trim());	
     }
    
     private String extractFileName(Part part) {

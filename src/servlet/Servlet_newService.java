@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.Dao_service;
+import model.Hour;
 import model.Services;
 import model.User;
 
@@ -36,13 +38,13 @@ public class Servlet_newService extends HttpServlet {
 		User user = (User)session.getAttribute("session");
 		
 		try {
-			String str = request.getParameter("image");
-			str= str.substring(0, str.length() - 2);
-			System.out.println("Company OK " + str+"K");
+			String str = request.getParameter("image").trim();
+		
 		Dao_service dao= new Dao_service();
 		Services service=new Services();
+		service.setId(request.getParameter("service_id"));
 		service.setTitle(request.getParameter("title"));		
-		service.setBusiness_id(request.getParameter("company"));
+		service.setBusiness_id(request.getParameter("business_id"));
 		service.setPrice(request.getParameter("price"));
 		service.setHour(request.getParameter("hours"));
 		service.setOwner(user.getId());
@@ -51,9 +53,10 @@ public class Servlet_newService extends HttpServlet {
 		service.setImage(str);
 		service.setDescription(request.getParameter("description"));
 		
-		if(dao.newService(service)) {
-			
-			
+		if(dao.updateService(service)) {
+			dao.vahvistaTunnit(service);
+		
+		    
 		}else{
 			
 			System.out.println("Service NO OK");
