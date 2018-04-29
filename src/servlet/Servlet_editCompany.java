@@ -38,17 +38,17 @@ public class Servlet_editCompany extends HttpServlet {
 		
 		try {
 			
-			if(dao.iftrue("*", "business", "business_id", id, "user_id", user.getId()) || user.getStatus()==1) {
+			if(dao.iftrue("*", "business", "business_id", id, "user_id", user.getId())) {
 				
 				Company company = dao_business.haeCompany(id);
 				request.setAttribute("company", company);
-				System.out.println(company.toString());
+			
 				String jsp = "/editCompany.jsp"; 
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(jsp);
 				dispatcher.forward(request, response);	
 			}else{
 				request.setAttribute("errMsg", "NO ACCESS");
-				request.getRequestDispatcher("/main.jsp").forward(request, response);
+				request.getRequestDispatcher("/dash.jsp").forward(request, response);
 			}
 			
 			
@@ -73,7 +73,7 @@ public class Servlet_editCompany extends HttpServlet {
 		String lng = request.getParameter("lng");
 		Dao_business dao = new Dao_business();
 		Company company = new Company();
-		
+		company.setId(id);
 		company.setName(name);
 		company.setAlias(alias);
 		company.setPhone(phone);
@@ -82,11 +82,12 @@ public class Servlet_editCompany extends HttpServlet {
 		company.setOwner(user.getId());
 		company.setLat(lat);
 		company.setLng(lng);
+		
 		try {
 			
-			if(dao.newCompany(company)) {
+			if(dao.updateCompany(company)) {
 				
-				System.out.println("Company ready");
+			
 			}
 			
 		} catch (Exception e) {			

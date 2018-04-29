@@ -4,10 +4,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.Hour;
+import model.Order;
 import model.Services;
 import model.User;
 
 public class Dao_service extends dao{
+	
+
 	
 	public Services haeService(String id) {
 
@@ -140,7 +143,7 @@ public class Dao_service extends dao{
 	public ArrayList<Services> haeServices(String id) {
 		ArrayList <Services> list = new ArrayList<Services>();
 
-		sql = "SELECT * FROM business_service WHERE user_id = ?";
+		sql = "SELECT * FROM business_service WHERE business_id = ?";
 		try {
 			con = yhdista();
 			stmtPrep = con.prepareStatement(sql);
@@ -148,16 +151,11 @@ public class Dao_service extends dao{
 			rs = stmtPrep.executeQuery();
 			if(rs!=null){ 								
 				while(rs.next()){
-				
+					
 					Services service = new Services();
 				service.setBusiness_id(rs.getString("business_id"));
 				service.setId(rs.getString("service_id"));
-				service.setTitle(rs.getString("title"));
-				service.setPrice(rs.getString("price"));
-				service.setDescription(rs.getString("service_desc"));
-				service.setImage(rs.getString("picture"));
-			
-				;
+				
 				
 				list.add(service);
 				}
@@ -184,6 +182,7 @@ public class Dao_service extends dao{
 			stmtPrep.setString(4, service.getId());
 			stmtPrep.setString(5, temp);
 			stmtPrep.setString(6, service.getOwner());
+			
 					
 			stmtPrep.executeUpdate();
 			

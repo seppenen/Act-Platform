@@ -39,27 +39,27 @@ public class Servlet_Login extends HttpServlet {
 				try {
 					if(dao.iftrue("service_id", "business_service", "temp", "1", "user_id", user.getId())) {
 						
-						dao.rowDelete("business_service",user.getId());
+						dao.rowDelete("business_service", "temp","1","user_id",user.getId());
 						
 					}
 					
 					
 					if(dao.iftrue("id", "hours_service", "temp", "1", "user_id", user.getId())) {
 						
-						dao.rowDelete("hours_service",user.getId());
+						dao.rowDelete("hours_service","temp","1","user_id",user.getId());
 						
 					}
 					
 					
 					if(dao.iftrue("business_id", "business", "temp", "1", "user_id", user.getId())) {
 						
-						dao.rowDelete("business",user.getId());
+						dao.rowDelete("business","temp","1","user_id",user.getId());
 						
 					}
 					
 					if(dao.iftrue("id", "hours", "temp", "1", "user_id", user.getId())) {
 						
-						dao.rowDelete("hours",user.getId());
+						dao.rowDelete("hours","temp","1","user_id",user.getId());
 						
 					}
 					
@@ -94,13 +94,12 @@ public class Servlet_Login extends HttpServlet {
 			User user = dao.haeAsiakas(email, password);
 			
 			if (user != null) {
+	
 				
-				Dao_order tilaus = new Dao_order();
-				ArrayList<Order> tilaukset = tilaus.haeTilaukset(user.getId());
 
 				HttpSession session = request.getSession(true);
 				session.setAttribute("session", user);
-				request.setAttribute("tilaukset", tilaukset);
+				
 			
 				response.sendRedirect("dash.jsp");	
 

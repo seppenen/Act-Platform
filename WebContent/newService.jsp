@@ -65,7 +65,7 @@
          <div class="col-md-auto">
       <input type="hidden" id="service_id" name="service_id" value="">
    
-    <button class="btn btn-primary btn-md " id="add_day" name="add_day" type="button" >Add</button>
+    <button class="btn btn-primary btn-md " id="add_day" name="add_day" type="button" disabled >Add</button>
   </div>
     
    
@@ -173,15 +173,16 @@
  	var from =  $("#from").val();
  	var to =  $("#to").val();
  	var day =  $("#day").val();
- 	var id =  $("#service_id").val();
+ 	var service_id =  $("#service_id").val();
+
   	 if(from!="" && to!=""){
   		
   		   $.ajax({
                  type: "POST",
                  url: "Servlet_listatunnit?s=0&temp=1",
-                 data: { from: from, to: to, day: day, id: id },
+                 data: { from: from, to: to, day: day, service_id: service_id, },
                  success: function (data) {
-                 	console.log(data.trim().length);
+                 	console.log(data);
    					addError(data.trim(), day);
    					
    					
@@ -278,8 +279,10 @@
       $("#company").change(function(){	
     	  $("#hours option[value='-1']").remove();
     	  $("#company option[id='-1']").remove(); 
+    	  
   		var value=$(this).val();
   	$("#business_id").val(value);		
+	$("#add_day").prop('disabled', false);
       });
     
       $('#done').click(function() {

@@ -62,7 +62,7 @@ body {
      
       <h1 class="mb-3 ">Login</h1>
       
-      <input type="email" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+      <input type="email" name="inputEmail" autocomplete="on" class="form-control" placeholder="Email address" required autofocus>
       
       <input type="password" name="inputPassword" class="form-control" placeholder="Password" required>
       <div class="mb-3" id="errorMsg">

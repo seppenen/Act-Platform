@@ -37,7 +37,7 @@ public class Servlet_Companies extends HttpServlet {
 					
 			PrintWriter out = response.getWriter();
 		    response.setContentType("text/html"); 
-		    System.out.println(strJSON);
+		  
 		    out.println(strJSON);
 		    
 		} catch (Exception e) {

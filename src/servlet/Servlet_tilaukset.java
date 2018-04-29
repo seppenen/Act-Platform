@@ -29,16 +29,27 @@ public class Servlet_tilaukset extends HttpServlet {
 		System.out.println("Servlet_tilaukset.doGet()");
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("session");
+		String id= request.getParameter("id");
 		dao dao= new dao();
 		try {
 			String[] sarakkeet={"id","title","start","status"};
-			String strJSON=dao.haeTiedotJSON(sarakkeet,"orders","user_id",user.getId(),"id");	
-	
+			String strJSON=null;
+			if(id==null) {
+				
+				
+				strJSON=dao.haeTiedotJSON(sarakkeet,"orders","user_id",user.getId(),"id");	
+		
+			}else if(id!=null){
+				
+				strJSON=dao.haeTiedotJSON(sarakkeet,"orders","business_id",id,"id");	
+
+			}
+
 			PrintWriter out = response.getWriter();
 		    response.setContentType("text/html"); 
 		
 		    out.println(strJSON);
-
+		    
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

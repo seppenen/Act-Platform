@@ -124,11 +124,39 @@ if( request.getAttribute("service")!=null){
   <button class="m-3 btn btn-primary btn-md " id="done" onclick="submit()"type="button"  >Save</button>
 
  </div>
+ <div class="p-3 form-group">
+
+		<button type="button" data-toggle="modal" data-target="#modal"
+			class=" btn btn-danger btn-md btn-block">Delete this item</button>
+	</div>
 </div>   
 </div> 
   </div>
         </main>
       </div>
+
+<div class="modal fade" id="modal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Delete
+					${company.getName()}</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">I understand the consequences delete
+				this service</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" id="delete_service" data-dismiss="modal"
+					class="btn btn-danger">Delete</button>
+			</div>
+		</div>
+	</div>
+</div>
 
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     <script>
@@ -137,6 +165,21 @@ if( request.getAttribute("service")!=null){
 
 
     <script>
+    
+    $("#delete_service").click(function() {
+
+		$.ajax({
+			type : "GET",
+			url : "Servlet_deleteRow?param=0&id=" + $("#service_id").val(),
+
+			success : function() {
+
+				document.location = "services.jsp";
+
+			}
+		});
+
+	});
     
     function Image(){
     	
@@ -171,7 +214,10 @@ if( request.getAttribute("service")!=null){
     function listaTunnit(){  
     	
     	  $.getJSON("Servlet_listatunnit?id=${service.getId()}&param=service_id&table=hours_service", function(result){
-  		
+  		 if (result==""){
+  			 
+  			listaTunnit()
+  		 }
   	        $.each(result, function(i, field) { 
   	        	  
   	         $("#openhours").append("<div  id='openhour' class='pt-3 form-row'><div class='col-md-2'>"+field.day+": </div><div class='col-md-2'> "+field.start+" - "+field.end+"</div> <div class='col-md-2'><button class=' btn btn-primary btn-sm' value="+field.id+" id='delete' title="+field.day+" type='button' >Delete</button></div></div>");
@@ -244,7 +290,7 @@ if( request.getAttribute("service")!=null){
 	 		   $.ajax({
 	                type: "POST",
 	                url: "Servlet_listatunnit?s=0&temp=0",
-	                data: { from: from, to: to, day: day, id: service_id },
+	                data: { from: from, to: to, day: day, service_id: service_id },
 	                success: function (data) {
 	              	      
 	                	console.log(data.trim());
@@ -272,7 +318,9 @@ if( request.getAttribute("service")!=null){
                    url: "Servlet_editService",
                    data: $('#newProduct').serialize(),
                    success: function () {
-                 	  $('#newProduct').trigger("reset");
+                 	
+                 	 
+                 	 $("#picture").text("Saved!");
                  	
                  	
                     

@@ -31,6 +31,7 @@ public class Servlet_listatunnit extends HttpServlet {
 		dao dao = new dao();
 
 		String id = request.getParameter("id");
+		
 		String param = request.getParameter("param");
 		String table = request.getParameter("table");
 		HttpSession session = request.getSession();
@@ -62,7 +63,8 @@ public class Servlet_listatunnit extends HttpServlet {
 		String from = request.getParameter("from");
 		String to = request.getParameter("to");
 		String day = request.getParameter("day");
-		String id = request.getParameter("id");
+		String business_id = request.getParameter("business_id");
+		String service_id = request.getParameter("service_id");
 		String temp = request.getParameter("temp");
 		String s = request.getParameter("s");
 
@@ -71,38 +73,38 @@ public class Servlet_listatunnit extends HttpServlet {
 		dao jdao = new dao();
 		Hour hour = new Hour();
 		PrintWriter out = response.getWriter();
-	
+
 		try {
 			if (s.equals("1")) {
 				System.out.println("Servlet_lisäätunnit_Company");
-				Company company = dao.haeCompany(id);
-				
+				Company company = dao.haeCompany(business_id);
+
 				company.setOpentime(from);
 				company.setClosetime(to);
 				company.setDay(day);
 
 				String[] sarakkeet = { "day" };
-				String strJSON = jdao.haeTiedotJSON(sarakkeet, "hours", "business_id", id, "");
+				String strJSON = jdao.haeTiedotJSON(sarakkeet, "hours", "business_id", business_id, "");
 				if (!strJSON.contains(day)) {
 					dao.lisaaTunnit(company, hour, temp);
 					out.println(hour.getId());
-					
+
 				} else {
 					out.println("");
 				}
 
 			} else {
 				System.out.println("Servlet_lisäätunnit_Service");
-				Services service = dao_service.haeService(id);
+				Services service = dao_service.haeService(service_id);
 				service.setFrom(from);
 				service.setTo(to);
 				service.setDays(day);
 
 				String[] sarakkeet = { "day" };
-				String strJSON = jdao.haeTiedotJSON(sarakkeet, "hours_service", "service_id", id, "");
+				String strJSON = jdao.haeTiedotJSON(sarakkeet, "hours_service", "service_id", service_id, "");
 				if (!strJSON.contains(day)) {
-					dao_service.lisaaTunnit(service, hour,temp);
-					
+					dao_service.lisaaTunnit(service, hour, temp);
+
 					out.println(hour.getId());
 				} else {
 					out.println("");

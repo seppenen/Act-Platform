@@ -187,7 +187,7 @@ $("#add_day").click(function() {
  		   $.ajax({
                 type: "POST",
                 url: "Servlet_listatunnit?s=1&temp=1",
-                data: { from: from, to: to, day: day, id: business_id },
+                data: { from: from, to: to, day: day, business_id: business_id, service_id:"" },
                 success: function (data) {
                 	console.log(data.trim().length);
   					addError(data.trim(), day);

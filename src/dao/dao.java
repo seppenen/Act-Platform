@@ -11,12 +11,12 @@ import model.Services;
 
 public class dao {
 
-	public  Connection con = null;
-	public  ResultSet rs = null;
-	public  PreparedStatement stmtPrep = null;
-	public  String sql;
+	public Connection con = null;
+	public ResultSet rs = null;
+	public PreparedStatement stmtPrep = null;
+	public String sql;
 
-	public  Connection yhdista() throws Exception {
+	public Connection yhdista() throws Exception {
 
 		String url = "jdbc:mysql://localhost:3306/targo?autoReconnect=true&useSSL=false";
 
@@ -37,25 +37,29 @@ public class dao {
 			con.close();
 		}
 	}
-	
-	public void  rowDelete(String row, String id) throws Exception{		
-		
-		sql = "DELETE FROM " +row+" WHERE temp = ? AND user_id=?"; 		
-		con=yhdista();
-		if(con!=null){ //jos yhteys onnistui
-			stmtPrep = con.prepareStatement(sql); 
-			stmtPrep.setString(1, "1");
-			stmtPrep.setString(2, id);
-			
+
+	public void rowDelete(String table, String ehto1, String arvo1, String ehto2, String arvo2) throws Exception {
+
+		sql = "DELETE FROM " + table + " WHERE " + ehto1 + " = ?";
+
+		if (arvo2.length() > 0) {
+			sql += " AND " + ehto2 + "=?";
+		}
+
+		con = yhdista();
+		if (con != null) { // jos yhteys onnistui
+			stmtPrep = con.prepareStatement(sql);
+			stmtPrep.setString(1, arvo1);
+			if (arvo2.length() > 0) {
+				stmtPrep.setString(2, arvo2);
+			}
+
 			stmtPrep.executeUpdate();
-			
+
 			con.close();
 		}
-			
+
 	}
-	
-
-
 
 	public boolean iftrue(String sarake, String taulu, String hakusarake, String hakuarvo1, String ehto,
 			String hakuarvo2) throws Exception {
@@ -65,14 +69,13 @@ public class dao {
 		if (hakuarvo2.length() > 0) {
 			sql += " AND " + ehto + "=?";
 		}
-		
-	
+
 		try {
 			con = yhdista();
 			if (con != null) {
 				stmtPrep = con.prepareStatement(sql);
 				stmtPrep.setString(1, hakuarvo1);
-			
+
 				if (hakuarvo2.length() > 0) {
 					stmtPrep.setString(2, hakuarvo2);
 				}
@@ -87,11 +90,11 @@ public class dao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("boolean" + " " + paluu);
+
 		return paluu;
 	}
 
-	public  String haeTiedotJSON(String[] sarakkeet, String taulu, String ehtoSarake, String ehtoArvo, String string)
+	public String haeTiedotJSON(String[] sarakkeet, String taulu, String ehtoSarake, String ehtoArvo, String string)
 			throws Exception {
 		String palautusJSON = "";
 		String sarStr = "";
@@ -103,12 +106,12 @@ public class dao {
 		if (ehtoSarake.length() > 0) {
 			sql += " WHERE " + ehtoSarake + "=?";
 		}
-		if (string!="") {
+		if (string != "") {
 			sql += " ORDER BY " + string;
 		}
-System.out.println(sql);
+
 		con = yhdista();
-		if (con != null) { 
+		if (con != null) {
 			stmtPrep = con.prepareStatement(sql);
 			if (ehtoSarake.length() > 0) {
 				stmtPrep.setString(1, ehtoArvo);
@@ -138,7 +141,7 @@ System.out.println(sql);
 					palautusJSON += "}";
 					palautusJSON += ",";
 				}
-				
+
 				palautusJSON += "]";
 			}
 			con.close();

@@ -174,7 +174,7 @@ background-color: black;
   
   
  <body class="bg-light">
-  <div class="container-fluid hat sticky-top"> <h3>Company</h3></div>
+  <div class="container-fluid hat sticky-top"> <h3>Targo</h3></div>
     <div class="container bg-light">
       <div class="row ">
         <nav class="bg-light col-md-1 sidebar">
@@ -214,7 +214,7 @@ background-color: black;
              
               </li>
                <li class="nav-item" id="companylink">
-                <a class="nav-link" href="companies.jsp">
+                <a class="nav-link" href="#">
                   <span data-feather="shopping-cart"></span>
                   Companies
                 </a>
@@ -305,7 +305,7 @@ background-color: black;
 	  
 		$.getJSON("Servlet_Companies", function(result){
 			if(result==""){
-				
+				console.log("getCompanies() Error");
 				getCompanies();
 			}else{
 				

@@ -82,7 +82,7 @@ public class Servlet_editService extends HttpServlet {
 		service.setImage(str);
 		service.setHour(request.getParameter("hour"));
 		service.setDescription(request.getParameter("description"));
-		System.out.println(service.toString());
+		
 		if(dao.updateService(service)) {
 			
 			System.out.println("Service update OK");
