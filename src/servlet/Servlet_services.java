@@ -29,11 +29,16 @@ public class Servlet_services extends HttpServlet {
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("session");
 		dao dao= new dao();
+		String id=request.getParameter("id");
+		
 		try {		
 			
 			String[] sarakkeet={"service_id","title","picture"};
 			String strJSON=dao.haeTiedotJSON(sarakkeet,"business_service", "title is not NULL AND user_id",user.getId(),"business_id");	
+			if (id!=null) {
+				 strJSON=dao.haeTiedotJSON(sarakkeet,"business_service", "title is not NULL AND business_id",id,"");	
 			
+			}
 			PrintWriter out = response.getWriter();
 			response.setContentType("text/html"); 
 		  

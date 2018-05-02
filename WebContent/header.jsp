@@ -35,7 +35,6 @@ response.sendRedirect("index.jsp");
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
    <link href='cal/fullcalendar.min.css' rel='stylesheet' />
       <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet' />
@@ -44,10 +43,11 @@ response.sendRedirect("index.jsp");
 <script src='cal/lib/moment.min.js'></script>
 <script src='cal/lib/jquery.min.js'></script>
 <script src='cal/fullcalendar.min.js'></script> 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
    <style>
    
-   
+
    body {
   font-size: 15px;
 }
@@ -206,7 +206,7 @@ background-color: black;
   		 
               </li>
               <li class="nav-item" id="customers">
-                <a class="nav-link" href="users.jsp">
+                <a class="nav-link" href="#">
                   <span data-feather="users"></span>
                   Customers
                 </a>
@@ -224,12 +224,7 @@ background-color: black;
   		
   		</ul></div>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="settings.jsp">
-                  <span data-feather="settings"></span>
-                  Settings
-                </a>
-              </li>
+           
               
               <li class="nav-item">
                 <a class="nav-link"  href="Servlet_Login?out=1">

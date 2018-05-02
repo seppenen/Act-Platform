@@ -2,15 +2,46 @@ package model;
 
 public class Order {
 	
-	String id, user_id, service_id, business_id, title, start, end, status, kpl;
+	String id, user_id, service_id, business_id, title,  end, date,  phone,   message, status, owner;
 
-	public String getKpl() {
-		return kpl;
+	public String getOwner() {
+		return owner;
 	}
 
-	public void setKpl(String kpl) {
-		this.kpl = kpl;
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+
+
+
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
 
 	public String getId() {
 		return id;
@@ -34,12 +65,7 @@ public class Order {
 
 	
 
-	@Override
-	public String toString() {
-		return "Order [id=" + id + ", user_id=" + user_id + ", service_id=" + service_id + ", business_id="
-				+ business_id + ", title=" + title + ", start=" + start + ", end=" + end + ", status=" + status
-				+ ", kpl=" + kpl + "]";
-	}
+
 
 	public void setService_id(String service_id) {
 		this.service_id = service_id;
@@ -63,12 +89,12 @@ public class Order {
 
 
 
-	public String getStart() {
-		return start;
-	}
 
-	public void setStart(String start) {
-		this.start = start;
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", user_id=" + user_id + ", service_id=" + service_id + ", business_id="
+				+ business_id + ", title=" + title + ", end=" + end + ", date=" + date + ", phone=" + phone
+				+ ", message=" + message + ", status=" + status + ", owner=" + owner + "]";
 	}
 
 	public String getEnd() {

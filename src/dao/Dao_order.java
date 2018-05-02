@@ -26,7 +26,7 @@ public class Dao_order extends dao{
 					tilaus.setId(rs.getString("id"));
 					tilaus.setService_id(rs.getString("service_id"));
 					tilaus.setBusiness_id(rs.getString("business_id"));
-					tilaus.setStart(rs.getString("start"));
+					tilaus.setDate(rs.getString("start"));
 					tilaus.setEnd(rs.getString("end"));
 					tilaus.setTitle(rs.getString("title"));
 					tilaus.setUser_id(rs.getString("user_id"));
@@ -69,7 +69,7 @@ public class Dao_order extends dao{
 	public boolean uusiTulaus(Order order) {
 		boolean paluuArvo = true;
 		
-		sql = "INSERT INTO orders (user_id, service_id, business_id, title, time, date, status) VALUES(?,?,?,?,?,?,?)";
+		sql = "INSERT INTO orders (user_id, service_id, business_id, title, start, end, status, owner, phone, message) VALUES(?,?,?,?,?,?,?,?,?,?)";
 		try {
 			con = yhdista();
 			stmtPrep = con.prepareStatement(sql);
@@ -77,9 +77,13 @@ public class Dao_order extends dao{
 			stmtPrep.setString(2, order.getService_id());
 			stmtPrep.setString(3, order.getBusiness_id());
 			stmtPrep.setString(4, order.getTitle());
-			stmtPrep.setString(5, order.getStart());
+			stmtPrep.setString(5, order.getDate());
 			stmtPrep.setString(6, order.getEnd());
 			stmtPrep.setString(7, order.getStatus());
+			stmtPrep.setString(8, order.getOwner());
+			stmtPrep.setString(9, order.getPhone());
+			stmtPrep.setString(10, order.getMessage());
+			
 
 			stmtPrep.executeUpdate();
 			con.close();
