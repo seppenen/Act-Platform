@@ -173,12 +173,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script>
     $('#add').click(function() {
-        
-    	
-    	 
+          	   	 
       	 if($("#newOrder").valid()){
-   		
-      	
+   		      	
       		$('#modal').modal('hide');
      
        		console.log("coords.done");
@@ -188,10 +185,7 @@
                      data: $('#newOrder').serialize(),
                      success: function (data) {
                    	 console.log(data);
-                   
-                   	   
-  	  
-                   	  
+           	  
                      }
                  }); 
       	
