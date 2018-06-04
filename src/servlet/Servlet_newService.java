@@ -31,7 +31,6 @@ public class Servlet_newService extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Servlet_newService.doPost()");
 		HttpSession session = request.getSession();
@@ -47,10 +46,8 @@ public class Servlet_newService extends HttpServlet {
 		service.setBusiness_id(request.getParameter("business_id"));
 		service.setPrice(request.getParameter("price"));
 		service.setHour(request.getParameter("hours"));
-		service.setOwner(user.getId());
-		
-		
-		service.setImage(str);
+		service.setOwner(user.getId());				
+		service.setImage(str);		
 		service.setDescription(request.getParameter("description"));
 		
 		if(dao.updateService(service)) {

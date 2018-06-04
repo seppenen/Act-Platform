@@ -89,7 +89,10 @@ public class Servlet_Login extends HttpServlet {
 		String email = (request.getParameter("inputEmail"));
 		String password = (request.getParameter("inputPassword"));
 		
-		System.out.println(email+password);
+		PrintWriter out = response.getWriter();
+	    response.setContentType("text/html"); 
+	  
+	    out.print("test"+email);
 		try {
 			User user = dao.haeAsiakas(email, password);
 			

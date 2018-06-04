@@ -21,14 +21,11 @@ public class dao {
 		String url = "jdbc:mysql://localhost:3306/targo?autoReconnect=true&useSSL=false";
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+		
 			con = DriverManager.getConnection(url, "root", "phbzrtht");
 			return con;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException(e);
-
 		}
 	}
 
