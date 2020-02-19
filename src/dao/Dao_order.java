@@ -19,7 +19,7 @@ public class Dao_order extends dao{
 			stmtPrep.setString(1, hakusana);
 			
     		rs = stmtPrep.executeQuery();  
-			if(rs!=null){ //jos kysely onnistui	
+			if(rs!=null){ 
 				
 				while(rs.next()){
 					Order tilaus = new Order();

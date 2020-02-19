@@ -74,7 +74,7 @@ public class Dao_service extends dao{
 	public void poistaKuva(String id) throws Exception{		
 		sql="UPDATE business_service SET picture=? WHERE service_id=?"; 		
 		con=yhdista();
-		if(con!=null){ //jos yhteys onnistui
+		if(con!=null){ 
 			stmtPrep = con.prepareStatement(sql); 
 			stmtPrep.setString(1, "");	
 			stmtPrep.setString(2, id);
@@ -225,7 +225,7 @@ public class Dao_service extends dao{
 		boolean ok=false;
 		sql = "DELETE FROM hours_service WHERE id = ?"; 		
 		con=yhdista();
-		if(con!=null){ //jos yhteys onnistui
+		if(con!=null){ 
 			stmtPrep = con.prepareStatement(sql); 
 			stmtPrep.setString(1, id);			
 			stmtPrep.executeUpdate();

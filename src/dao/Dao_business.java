@@ -21,13 +21,13 @@ public Company haeCompany(String id) throws Exception{
 	
 		
 	con=yhdista();
-	if(con!=null){ //jos yhteys onnistui
+	if(con!=null){ 
 		stmtPrep = con.prepareStatement(sql); 
 		stmtPrep.setString(1, id);
 		
 			
 		rs = stmtPrep.executeQuery();  
-		if(rs!=null){ //jos kysely onnistui									
+		if(rs!=null){ 								
 			while(rs.next()){
 				company.setId(rs.getString("business_id"));
 				company.setName(rs.getString("business_name"));
@@ -183,7 +183,7 @@ public boolean poistaTunti(String id) throws Exception{
 	boolean ok=false;
 	sql = "DELETE FROM hours WHERE id = ?"; 		
 	con=yhdista();
-	if(con!=null){ //jos yhteys onnistui
+	if(con!=null){ 
 		stmtPrep = con.prepareStatement(sql); 
 		stmtPrep.setString(1, id);			
 		stmtPrep.executeUpdate();
