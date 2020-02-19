@@ -22,7 +22,7 @@ public class dao {
 
 		try {
 		
-			con = DriverManager.getConnection(url, "root", "phbzrtht");
+			con = DriverManager.getConnection(url, "root", "");
 			return con;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -98,7 +98,7 @@ public class dao {
 		for (int i = 0; i < sarakkeet.length; i++) {
 			sarStr += sarakkeet[i] + ",";
 		}
-		sarStr = sarStr.substring(0, sarStr.length() - 1); // poistetaan viimeinen pilkku
+		sarStr = sarStr.substring(0, sarStr.length() - 1); 
 		sql = "SELECT " + sarStr + " FROM " + taulu;
 		if (ehtoSarake.length() > 0) {
 			sql += " WHERE " + ehtoSarake + "=?";
@@ -120,7 +120,7 @@ public class dao {
 				palautusJSON += "[";
 				while (rs.next()) {
 					palautusJSON += "{";
-					for (int i = 1; i < numColumns + 1; i++) {// Kдydддn sarakkeet lдpi
+					for (int i = 1; i < numColumns + 1; i++) { 
 						palautusJSON += "\"";
 						palautusJSON += rsmd.getColumnName(i);
 						palautusJSON += "\":";
@@ -143,7 +143,7 @@ public class dao {
 			}
 			con.close();
 		}
-		// Siivotaan viimeinen pilkku pois
+		
 		palautusJSON = palautusJSON.substring(0, palautusJSON.length() - 2) + "]";
 		if (palautusJSON.length() == 1) {
 			palautusJSON = "{}";
