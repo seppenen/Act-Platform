@@ -58,12 +58,12 @@ public class dao {
 
 	}
 
-	public boolean iftrue(String sarake, String taulu, String hakusarake, String hakuarvo1, String ehto,
-			String hakuarvo2) throws Exception {
+	public boolean iftrue(String field, String coulmn, String search, String value1, String ehto,
+			String value2) throws Exception {
 		boolean paluu = true;
-		sql = "SELECT " + sarake + " FROM " + taulu + " WHERE " + hakusarake + "=?";
+		sql = "SELECT " + field + " FROM " + coulmn + " WHERE " + search + "=?";
 
-		if (hakuarvo2.length() > 0) {
+		if (value2.length() > 0) {
 			sql += " AND " + ehto + "=?";
 		}
 
@@ -71,10 +71,10 @@ public class dao {
 			con = yhdista();
 			if (con != null) {
 				stmtPrep = con.prepareStatement(sql);
-				stmtPrep.setString(1, hakuarvo1);
+				stmtPrep.setString(1, value1);
 
-				if (hakuarvo2.length() > 0) {
-					stmtPrep.setString(2, hakuarvo2);
+				if (value2.length() > 0) {
+					stmtPrep.setString(2, value2);
 				}
 				rs = stmtPrep.executeQuery();
 
@@ -91,15 +91,15 @@ public class dao {
 		return paluu;
 	}
 
-	public String haeTiedotJSON(String[] sarakkeet, String taulu, String ehtoSarake, String ehtoArvo, String string)
+	public String haeTiedotJSON(String[] fields, String column, String ehtoSarake, String ehtoArvo, String string)
 			throws Exception {
-		String palautusJSON = "";
+		String returnJSON = "";
 		String sarStr = "";
-		for (int i = 0; i < sarakkeet.length; i++) {
-			sarStr += sarakkeet[i] + ",";
+		for (int i = 0; i < fields.length; i++) {
+			sarStr += fields[i] + ",";
 		}
 		sarStr = sarStr.substring(0, sarStr.length() - 1); 
-		sql = "SELECT " + sarStr + " FROM " + taulu;
+		sql = "SELECT " + sarStr + " FROM " + column;
 		if (ehtoSarake.length() > 0) {
 			sql += " WHERE " + ehtoSarake + "=?";
 		}
@@ -115,40 +115,40 @@ public class dao {
 			}
 			rs = stmtPrep.executeQuery();
 			ResultSetMetaData rsmd = rs.getMetaData();
-			if (rs != null) { // jos kysely onnistui
+			if (rs != null) { 
 				int numColumns = rsmd.getColumnCount();
-				palautusJSON += "[";
+				returnJSON += "[";
 				while (rs.next()) {
-					palautusJSON += "{";
+					returnJSON += "{";
 					for (int i = 1; i < numColumns + 1; i++) { 
-						palautusJSON += "\"";
-						palautusJSON += rsmd.getColumnName(i);
-						palautusJSON += "\":";
-						palautusJSON += "\"";
+						returnJSON += "\"";
+						returnJSON += rsmd.getColumnName(i);
+						returnJSON += "\":";
+						returnJSON += "\"";
 						try {
-							palautusJSON += rs.getString(i);
+							returnJSON += rs.getString(i);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-						palautusJSON += "\"";
+						returnJSON += "\"";
 						if (i < numColumns) {
-							palautusJSON += ",";
+							returnJSON += ",";
 						}
 					}
-					palautusJSON += "}";
-					palautusJSON += ",";
+					returnJSON += "}";
+					returnJSON += ",";
 				}
 
-				palautusJSON += "]";
+				returnJSON += "]";
 			}
 			con.close();
 		}
 		
-		palautusJSON = palautusJSON.substring(0, palautusJSON.length() - 2) + "]";
-		if (palautusJSON.length() == 1) {
-			palautusJSON = "{}";
+		returnJSON = returnJSON.substring(0, returnJSON.length() - 2) + "]";
+		if (returnJSON.length() == 1) {
+			returnJSON = "{}";
 		}
-		return palautusJSON;
+		return returnJSON;
 	}
 
 }
