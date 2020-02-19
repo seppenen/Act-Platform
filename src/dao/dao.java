@@ -118,7 +118,7 @@ public class dao {
 			if (rs != null) { // jos kysely onnistui
 				int numColumns = rsmd.getColumnCount();
 				palautusJSON += "[";
-				while (rs.next()) {// Kдydддn tietueet lдpi
+				while (rs.next()) {
 					palautusJSON += "{";
 					for (int i = 1; i < numColumns + 1; i++) {// Kдydддn sarakkeet lдpi
 						palautusJSON += "\"";

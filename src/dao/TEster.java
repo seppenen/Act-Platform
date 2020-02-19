@@ -13,9 +13,11 @@ public class TEster {
 	private static String laske(String start, String min, int kesto, String date) {
 		
 		int [] days= {31, 28,31,30, 31,30, 31,31,30,31,30,31};
+		
 		int hour = Integer.parseInt(start);
 		int minute = Integer.parseInt(min);
 		int result = (hour + kesto );
+		
 		String res = null;
 		String[] daytaulukko = date.split("-");
 		int day = Integer.parseInt(daytaulukko[2]);
@@ -76,7 +78,7 @@ public class TEster {
 		
 
 
-		 return (daytaulukko[0] +"-"+ resultmonth + "-" + resultday + "T"+res +":"+minute);
+		 return (daytaulukko[0] +"-"+ resultmonth + "-" + resultday + "T "+res +":"+minute);
 
 	
 }
